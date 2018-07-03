@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#202021</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="textColor">#b1ffffff</color>
+    <color name="colorBackground">#b1181818</color>
+    <color name="Yellow">#EE971D</color>
+    <color name="Black">#000</color>
+    <color name="Toolbar">#1C1C1C</color>
+</resources>

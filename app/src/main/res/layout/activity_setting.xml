@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+
+    android:orientation="vertical">
+<LinearLayout
+    android:paddingLeft="10dp"
+    android:paddingBottom="10dp"
+    android:paddingRight="10dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#b1363434"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/comeback"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Hủy"
+            android:textColor="#d9c22b"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="Tùy Chọn Giờ Đi Ngủ"
+            android:textColor="#f1ecec"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Xong"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="bottom"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:text="Các Ngày Trong Tuần"
+            android:textColor="@color/textColor"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorBackground"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_toggle"
+            android:text="T2" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_toggle"
+            android:text="T3" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_toggle"
+            android:text="T4" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_toggle"
+            android:text="T5" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_toggle"
+            android:text="T6" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_toggle"
+            android:text="T7" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_toggle"
+            android:text="CN" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/colorBackground"
+        android:layout_marginTop="25dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:gravity="center|left"
+            android:paddingLeft="15dp"
+            android:text="Lời Nhắc Đi Ngủ"
+            android:textColor="@color/textColor"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/textViewNhacNho"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:text="15 Phút "
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/colorBackground"
+        android:layout_marginTop="25dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:gravity="center|left"
+            android:paddingLeft="15dp"
+            android:text="Âm Thanh Thức Giậy"
+            android:textColor="@color/textColor"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/textView_music"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:text="Dậy Sớm "
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="bottom"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:text="Âm Lượng Âm Thanh Thức Dậy"
+        android:textColor="@color/textColor"
+        android:textSize="18sp" />
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/colorBackground"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingLeft="15dp"
+            android:textSize="18sp"
+            android:textColor="@color/textColor"
+            android:gravity="center|left"
+            android:text="Âm Lượng"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="40dp" />
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:theme="@style/MySeekBarTheme"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+</LinearLayout>
