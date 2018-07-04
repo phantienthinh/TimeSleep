@@ -7,96 +7,149 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Black">
-<LinearLayout
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@color/Black"
+    xmlns:range="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_38sdp"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/moon" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Giờ Đi Ngủ"
-                android:textColor="@color/Yellow"
-                android:textSize="23sp" />
+                android:layout_weight="0.9"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:src="@drawable/moon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Giờ Đi Ngủ"
+                    android:textColor="@color/Yellow"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/alarm" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Giờ Thức Dậy"
+                    android:textColor="@color/Yellow"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/alarm" />
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_62sdp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/_10sdp"
+            android:weightSum="2">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_Seep"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Giờ Thức Dậy"
-                android:textColor="@color/Yellow"
-                android:textSize="22sp" />
+                android:layout_weight="1"
+                android:gravity="center|top"
+                android:text="00:00"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_35sdp" />
+
+
+            <TextView
+                android:id="@+id/txt_Time_WakeUp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|top"
+                android:text="00:00"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_35sdp" />
+
         </LinearLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.bozapro.circularsliderrange.CircularSliderRange
+                android:id="@+id/circular"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_250sdp"
+                android:layout_gravity="center"
+                android:padding="@dimen/_30sdp"
+                range:arc_color="@color/Yellow"
+                range:arc_dash_size="@dimen/_15sdp"
+                range:border_color="#505090"
+                range:border_thickness="@dimen/_14sdp"
+                range:end_angle="30"
+                range:end_thumb_image="@drawable/add"
+                range:start_angle="0"
+                range:start_thumb_color="#30AEFF"
+                range:start_thumb_size="@dimen/_35sdp"
+                range:end_thumb_size="@dimen/_35sdp"
+                range:thumb_size="@dimen/_50sdp"
+                range:start_thumb_image="@drawable/moon" />
+
+            <TextView
+                android:id="@+id/txt_Tong_Time"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/textColor"
+                android:textSize="40dp"
+                tools:layout_editor_absoluteY="0dp" />
+        </FrameLayout>
+
+
+        <!--<FrameLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center">-->
+
+
+        <!--</FrameLayout>-->
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barchart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
     </LinearLayout>
-
-    <LinearLayout
-        android:paddingLeft="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        >
-
-        <TextView
-            android:textSize="35sp"
-            android:gravity="center|top"
-            android:text="20:21"
-            android:textColor="@color/textColor"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-
-        <TextView
-            android:textSize="35sp"
-            android:gravity="center|top"
-            android:text="20:21"
-            android:textColor="@color/textColor"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-</LinearLayout>
 
 </LinearLayout>

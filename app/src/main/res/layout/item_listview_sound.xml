@@ -31,7 +31,7 @@
     <LinearLayout
         android:background="#6ebe76"
         android:layout_width="match_parent"
-        android:layout_height="1dp">
+        android:layout_height="@dimen/_1sdp">
     </LinearLayout>
 
 </LinearLayout>

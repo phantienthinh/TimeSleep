@@ -14,7 +14,7 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/_55sdp"
         android:background="#b1363434"
         android:orientation="horizontal"
         android:weightSum="5">
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="Hủy"
             android:textColor="#d9c22b"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_18sdp" />
 
         <TextView
             android:layout_width="0dp"
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:text="Tùy Chọn Giờ Đi Ngủ"
             android:textColor="#f1ecec"
-            android:textSize="20sp"
+            android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
 
         <TextView
@@ -46,28 +46,28 @@
             android:gravity="center"
             android:text="Xong"
             android:textColor="@color/textColor"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_18sdp" />
 
     </LinearLayout>
 
     <LinearLayout
-
+android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/_55sdp"
             android:gravity="bottom"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_15sdp"
             android:text="Các Ngày Trong Tuần"
             android:textColor="@color/textColor"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_18sdp" />
     </LinearLayout>
 
     <LinearLayout
-        android:padding="5dp"
+        android:padding="@dimen/_4sdp"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/colorBackground"
@@ -75,56 +75,63 @@
         android:weightSum="7">
 
         <Button
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/custom_toggle"
             android:text="T2" />
 
         <Button
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/custom_toggle"
             android:text="T3" />
 
         <Button
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/custom_toggle"
             android:text="T4" />
 
         <Button
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/custom_toggle"
             android:text="T5" />
 
         <Button
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/custom_toggle"
             android:text="T6" />
 
         <Button
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/custom_toggle"
             android:text="T7" />
 
         <Button
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/_3sdp"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/custom_toggle"
@@ -135,7 +142,7 @@
 
     <LinearLayout
         android:background="@color/colorBackground"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/_25sdp"
         android:weightSum="10"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -143,15 +150,15 @@
         <TextView
             android:layout_weight="7"
             android:layout_width="0dp"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/_55sdp"
             android:gravity="center|left"
-            android:paddingLeft="15dp"
+            android:paddingLeft="@dimen/_15sdp"
             android:text="Lời Nhắc Đi Ngủ"
             android:textColor="@color/textColor"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_18sdp" />
         <TextView
             android:id="@+id/textViewNhacNho"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18sdp"
             android:gravity="center"
             android:textColor="@color/textColor"
             android:text="15 Phút "
@@ -163,7 +170,7 @@
 
     <LinearLayout
         android:background="@color/colorBackground"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/_25sdp"
         android:weightSum="10"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -171,15 +178,15 @@
         <TextView
             android:layout_weight="7"
             android:layout_width="0dp"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/_55sdp"
             android:gravity="center|left"
-            android:paddingLeft="15dp"
+            android:paddingLeft="@dimen/_15sdp"
             android:text="Âm Thanh Thức Giậy"
             android:textColor="@color/textColor"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_18sdp" />
         <TextView
             android:id="@+id/textView_music"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18sdp"
             android:gravity="center"
             android:textColor="@color/textColor"
             android:text="Dậy Sớm "
@@ -191,34 +198,35 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/_55sdp"
         android:gravity="bottom"
-        android:paddingBottom="10dp"
+        android:paddingBottom="@dimen/_10sdp"
         android:paddingLeft="15dp"
         android:text="Âm Lượng Âm Thanh Thức Dậy"
         android:textColor="@color/textColor"
-        android:textSize="18sp" />
+        android:textSize="@dimen/_18sdp" />
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:background="@color/colorBackground"
         android:weightSum="10"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
-            android:paddingLeft="15dp"
-            android:textSize="18sp"
-            android:textColor="@color/textColor"
-            android:gravity="center|left"
-            android:text="Âm Lượng"
-            android:layout_weight="3"
             android:layout_width="0dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"
+            android:layout_weight="3.5"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/_15sdp"
+            android:text="Âm Lượng"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/_18sdp" />
 
         <SeekBar
             android:id="@+id/seekbar"
             android:theme="@style/MySeekBarTheme"
-            android:layout_weight="7"
+            android:layout_weight="6.5"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
 

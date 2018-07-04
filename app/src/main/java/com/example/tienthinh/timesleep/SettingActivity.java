@@ -306,7 +306,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void onclickSaveSound() {
-
+        dialogSound.cancel();
     }
 
     private void onClickTimeNhacNho() {
