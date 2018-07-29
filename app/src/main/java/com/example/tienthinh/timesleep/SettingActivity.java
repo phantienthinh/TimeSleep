@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,11 +21,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tienthinh.timesleep.Adapter.SoundAdapter;
+import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
 import com.example.tienthinh.timesleep.model.Sound;
 
 import java.util.ArrayList;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
+   private int i;
+    boolean dkT2 = false;
+    boolean dkT3 = false;
+    boolean dkT4 = false;
+    boolean dkT5 = false;
+    boolean dkT6 = false;
+    boolean dkT7 = false;
+    boolean dkCN = false;
+    // private TextView txt_xong;
+    public static boolean aBooleanT2, aBooleanT3, aBooleanT4, aBooleanT5, aBooleanT6, aBooleanT7, aBooleanCn;
+    private Button btn_t2, btn_t3, btn_t4, btn_t5, btn_t6, btn_t7, btn_cn;
     public static TextView txtNhacNho, txtSound;
     private SeekBar seekBar;
     private AudioManager audioManager;
@@ -72,11 +83,8 @@ public class SettingActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-                Toast.makeText(SettingActivity.this, "Media Volume : " + i, Toast.LENGTH_SHORT).show();
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
-                editor.putInt("volume", i);
-                editor.commit();
+                SharedPreferencesManager.setVolume(SettingActivity.this, i);
             }
 
             @Override
@@ -114,10 +122,9 @@ public class SettingActivity extends AppCompatActivity {
                     public void onItemClickImage(int position) {
                         switch (position) {
                             case 0:
-                                txtSound.setText("Little Comfort");
-                                editor.putString("BH1", txtSound.getText().toString());
-                                editor.putInt("position", position);
-                                editor.commit();
+                                i=position;
+                                //SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                                //SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -136,10 +143,9 @@ public class SettingActivity extends AppCompatActivity {
                                 }
                                 break;
                             case 1:
-                                txtSound.setText("Annie's Wonderland");
-                                editor.putString("BH1", txtSound.getText().toString());
-                                editor.putInt("position", position);
-                                editor.commit();
+                                i=position;
+                               // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -159,10 +165,9 @@ public class SettingActivity extends AppCompatActivity {
 
                                 break;
                             case 2:
-                                txtSound.setText("Havana");
-                                editor.putString("BH1", txtSound.getText().toString());
-                                editor.putInt("position", position);
-                                editor.commit();
+                                i=position;
+                               // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                              //  SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -182,10 +187,9 @@ public class SettingActivity extends AppCompatActivity {
 
                                 break;
                             case 3:
-                                txtSound.setText("This Game");
-                                editor.putString("BH1", txtSound.getText().toString());
-                                editor.putInt("position", position);
-                                editor.commit();
+                                i=position;
+                              //  SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -205,10 +209,9 @@ public class SettingActivity extends AppCompatActivity {
 
                                 break;
                             case 4:
-                                txtSound.setText("Grief And Sorrow");
-                                editor.putString("BH1", txtSound.getText().toString());
-                                editor.putInt("position", position);
-                                editor.commit();
+                                i=position;
+                               // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -228,10 +231,9 @@ public class SettingActivity extends AppCompatActivity {
 
                                 break;
                             case 5:
-                                txtSound.setText("Chúng ta không giống nhau");
-                                editor.putString("BH1", txtSound.getText().toString());
-                                editor.putInt("position", position);
-                                editor.commit();
+                                i=position;
+                                //SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -251,10 +253,9 @@ public class SettingActivity extends AppCompatActivity {
 
                                 break;
                             case 6:
-                                editor.putInt("position", position);
-                                txtSound.setText("Beautiful Girl");
-                                editor.putString("BH1", txtSound.getText().toString());
-                                editor.commit();
+                                i=position;
+                              //  SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                              //  SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -277,7 +278,7 @@ public class SettingActivity extends AppCompatActivity {
                     }
                 };
 
-                Array_List_sounds.get(preferences.getInt("position", 0)).setRadioButton(true);
+                Array_List_sounds.get(SharedPreferencesManager.getPositionSound(SettingActivity.this)).setRadioButton(true);
 
                 soundAdapter = new SoundAdapter(SettingActivity.this, R.layout.item_listview_sound, Array_List_sounds, onItemClickListenner);
 
@@ -285,19 +286,21 @@ public class SettingActivity extends AppCompatActivity {
 
                 dialogSound.show();
 
+                btn_Save_Sound = (Button) dialogSound.findViewById(R.id.btn_Save_Sound);
+
+                btn_Save_Sound.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onclickSaveSound();
+                    }
+                });
+
                 dialogSound.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         mediaPlayer.stop();
 
-                        btn_Save_Sound = (Button)dialogSound.findViewById(R.id.btn_Save_Sound) ;
 
-                        btn_Save_Sound.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                onclickSaveSound();
-                            }
-                        });
                     }
                 });
 
@@ -306,6 +309,37 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void onclickSaveSound() {
+        SharedPreferencesManager.setPositionSound(SettingActivity.this, i);
+        switch (i){
+            case 0:
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Little Comfort");
+                txtSound.setText("Little Comfort");
+                break;
+            case 1:
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Annie's Wonderland");
+                txtSound.setText("Annie's Wonderland");
+                break;
+            case 2:
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Havana");
+                txtSound.setText("Havana");
+                break;
+            case 3:
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"This Game");
+                txtSound.setText("This Game");
+                break;
+            case 4:
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Grief And Sorrow");
+                txtSound.setText("Grief And Sorrow");
+                break;
+            case 5:
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Chúng ta không giống nhau");
+                txtSound.setText("Chúng ta không giống nhau");
+                break;
+            case 6:
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Beautiful Girl");
+                txtSound.setText("Beautiful Girl");
+                break;
+        }
         dialogSound.cancel();
     }
 
@@ -555,10 +589,28 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        //txt_xong = findViewById(R.id.txt_xong);
         txtComeBack = (TextView) findViewById(R.id.comeback);
         txtNhacNho = (TextView) findViewById(R.id.textViewNhacNho);
         txtSound = (TextView) findViewById(R.id.textView_music);
         seekBar = (SeekBar) findViewById(R.id.seekbar);
+        btn_t2 = findViewById(R.id.btn_t2);
+        btn_t3 = findViewById(R.id.btn_t3);
+        btn_t4 = findViewById(R.id.btn_t4);
+        btn_t5 = findViewById(R.id.btn_t5);
+        btn_t6 = findViewById(R.id.btn_t6);
+        btn_t7 = findViewById(R.id.btn_t7);
+        btn_cn = findViewById(R.id.btn_cn);
+
+
+        btn_t2.setOnClickListener(this);
+        btn_t3.setOnClickListener(this);
+        btn_t4.setOnClickListener(this);
+        btn_t5.setOnClickListener(this);
+        btn_t6.setOnClickListener(this);
+        btn_t7.setOnClickListener(this);
+        btn_cn.setOnClickListener(this);
+        // txt_xong.setOnClickListener(this);
 
     }
 
@@ -570,39 +622,167 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        sharedPeferences();
+        showNgayThang();
+
         super.onResume();
         Log.e("resume", "onResume: ");
-        sharedPeferences();
+    }
+
+    private void showNgayThang() {
+        if (SharedPreferencesManager.getMonday(SettingActivity.this) == true) {
+            btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
+        }else {
+            btn_t2.setBackgroundResource(R.drawable.custom_toggle);
+        }
+        if (SharedPreferencesManager.getTuesday(SettingActivity.this) == true) {
+            btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
+        }else {
+            btn_t3.setBackgroundResource(R.drawable.custom_toggle);
+        }
+        if (SharedPreferencesManager.getWednesday(SettingActivity.this) == true) {
+            btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
+        }else {
+            btn_t4.setBackgroundResource(R.drawable.custom_toggle);
+        }
+        if (SharedPreferencesManager.getThursday(SettingActivity.this) == true) {
+            btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
+        }else {
+            btn_t5.setBackgroundResource(R.drawable.custom_toggle);
+        }
+        if (SharedPreferencesManager.getFriday(SettingActivity.this) == true) {
+            btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
+        }else {
+            btn_t6.setBackgroundResource(R.drawable.custom_toggle);
+        }
+        if (SharedPreferencesManager.getSaturday(SettingActivity.this) == true) {
+            btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
+        }else {
+            btn_t7.setBackgroundResource(R.drawable.custom_toggle);
+        }
+        if (SharedPreferencesManager.getSunday(SettingActivity.this) == true) {
+            btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
+        }else {
+            btn_cn.setBackgroundResource(R.drawable.custom_toggle);
+        }
     }
 
     private void sharedPeferences() {
-        seekBar.setProgress(preferences.getInt("volume", 0));
-        txtSound.setText(preferences.getString("BH1", ""));
-        txtNhacNho.setText(preferences.getString("NhacNho",""));
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e("res", "onRestart: ");
+        seekBar.setProgress(SharedPreferencesManager.getVolume(SettingActivity.this));
+        txtSound.setText(SharedPreferencesManager.getTenBaiHat(SettingActivity.this));
+        txtNhacNho.setText(preferences.getString("NhacNho", "Nhắc Nhở"));
     }
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        SettingActivity.this.finish();
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_t2:
+                if (dkT2 == false) {
+                    dkT2 = true;
+                    aBooleanT2 = true;
+                    btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
+                    SharedPreferencesManager.setMonday(this,true);
+                } else {
+                    dkT2 = false;
+                    aBooleanT2 = false;
+                    btn_t2.setBackgroundResource(R.drawable.custom_toggle);
+                    SharedPreferencesManager.setMonday(this,false);
+                }
+                break;
+            case R.id.btn_t3:
+                if (dkT3 == false) {
+                    dkT3 = true;
+                    aBooleanT3 = true;
+                    btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
+                    SharedPreferencesManager.setTuesday(this,true);
+                } else {
+                    dkT3 = false;
+                    aBooleanT3 = false;
+                    btn_t3.setBackgroundResource(R.drawable.custom_toggle);
+                    SharedPreferencesManager.setTuesday(this,false);
+                }
+                break;
+            case R.id.btn_t4:
+                if (dkT4 == false) {
+                    dkT4 = true;
+                    aBooleanT4 = true;
+                    btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
+                    SharedPreferencesManager.setWednesday(this,true);
+                } else {
+                    dkT4 = false;
+                    aBooleanT4 = false;
+                    btn_t4.setBackgroundResource(R.drawable.custom_toggle);
+                    SharedPreferencesManager.setWednesday(this,false);
+                }
+                break;
+            case R.id.btn_t5:
+                if (dkT5 == false) {
+                    dkT5 = true;
+                    aBooleanT5 = true;
+                    btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
+                    SharedPreferencesManager.setThursday(this,true);
+                } else {
+                    dkT5 = false;
+                    aBooleanT5 = false;
+                    btn_t5.setBackgroundResource(R.drawable.custom_toggle);
+                    SharedPreferencesManager.setThursday(this,false);
+                }
+                break;
+            case R.id.btn_t6:
+                if (dkT6 == false) {
+                    dkT6 = true;
+                    aBooleanT6 = true;
+                    btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
+                    SharedPreferencesManager.setFriday(this,true);
+                } else {
+                    dkT6 = false;
+                    aBooleanT6 = false;
+                    btn_t6.setBackgroundResource(R.drawable.custom_toggle);
+                    SharedPreferencesManager.setFriday(this,false);
+                }
+                break;
+            case R.id.btn_t7:
+                if (dkT7 == false) {
+                    dkT7 = true;
+                    aBooleanT7 = true;
+                    btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
+                    SharedPreferencesManager.setSaturday(this,true);
+                } else {
+                    dkT7 = false;
+                    aBooleanT7 = false;
+                    btn_t7.setBackgroundResource(R.drawable.custom_toggle);
+                    SharedPreferencesManager.setSaturday(this,false);
+                }
+                break;
+            case R.id.btn_cn:
+                if (dkCN == false) {
+                    dkCN = true;
+                    aBooleanCn = true;
+                    btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
+                    SharedPreferencesManager.setSunday(this,true);
+                } else {
+                    dkCN = false;
+                    aBooleanCn = false;
+                    btn_cn.setBackgroundResource(R.drawable.custom_toggle);
+                    SharedPreferencesManager.setSunday(this,false);
+                }
+                break;
+//            case R.id.txt_xong:
+//
+//
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
+//                SettingActivity.this.finish();
+//
+//                break;
         }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Nhấn Lần Nữa Để Thoát", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
     }
 }
