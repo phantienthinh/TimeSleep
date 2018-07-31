@@ -5,6 +5,51 @@
     android:background="#000"
 
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#b1363434"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/comeback"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/back"
+                android:gravity="center"
+                android:textColor="#d9c22b"
+                android:textSize="@dimen/_18sdp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="Tùy Chọn Giờ Đi Ngủ"
+            android:textColor="#f1ecec"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/txt_xong"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Xong"-->
+        <!--android:textColor="@color/textColor"-->
+        <!--android:textSize="@dimen/_18sdp" />-->
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,51 +59,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_55sdp"
-            android:background="#b1363434"
-            android:orientation="horizontal"
-            android:weightSum="5">
 
-            <LinearLayout
-                android:padding="20dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/comeback"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/back"
-                    android:gravity="center"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="#d9c22b"
-                    android:textSize="@dimen/_18sdp" />
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="Tùy Chọn Giờ Đi Ngủ"
-                android:textColor="#f1ecec"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="bold" />
-
-            <!--<TextView-->
-                <!--android:id="@+id/txt_xong"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Xong"-->
-                <!--android:textColor="@color/textColor"-->
-                <!--android:textSize="@dimen/_18sdp" />-->
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,13 +78,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:elevation="5dp"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="60dp"
             android:background="@color/colorBackground"
+            android:elevation="5dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/_4sdp"
+            android:padding="3dp"
             android:weightSum="7">
 
             <Button
@@ -160,12 +161,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:elevation="5dp"
-
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_25sdp"
             android:background="@color/colorBackground"
+            android:elevation="5dp"
             android:orientation="horizontal"
             android:weightSum="10">
 
@@ -180,12 +181,12 @@
                 android:textSize="@dimen/_18sdp" />
 
             <TextView
-                android:lines="1"
                 android:id="@+id/textViewNhacNho"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
+                android:lines="1"
                 android:text="15 Phút "
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_18sdp" />
@@ -193,11 +194,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:elevation="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_25sdp"
             android:background="@color/colorBackground"
+            android:elevation="5dp"
             android:orientation="horizontal"
             android:weightSum="10">
 
@@ -212,12 +213,12 @@
                 android:textSize="@dimen/_18sdp" />
 
             <TextView
-                android:lines="1"
                 android:id="@+id/textView_music"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
+                android:lines="1"
                 android:text="Dậy Sớm "
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_18sdp" />
@@ -235,11 +236,11 @@
             android:textSize="@dimen/_18sdp" />
 
         <LinearLayout
-            android:elevation="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/colorBackground"
+            android:elevation="5dp"
             android:orientation="horizontal"
             android:weightSum="10">
 

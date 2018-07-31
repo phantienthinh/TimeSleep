@@ -6,28 +6,27 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tienthinh.timesleep.services.MyServices;
+
 
 public class AlarmRecever extends BroadcastReceiver {
     public static String TAG = "Debug";
-     boolean monday;
-     boolean tuesday;
-     boolean wednesday;
-     boolean thursday;
-     boolean friday;
-     boolean saturday;
-     boolean sunday;
+    boolean mTimeSleep=false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, intent.getStringExtra("aaa"), Toast.LENGTH_SHORT).show();
-        monday = intent.getBooleanExtra("monday",false);
-        tuesday = intent.getBooleanExtra("tuesday",false);
-        wednesday = intent.getBooleanExtra("wednesday",false);
-        thursday = intent.getBooleanExtra("thursday",false);
-        friday = intent.getBooleanExtra("friday",false);
-        saturday = intent.getBooleanExtra("saturday",false);
-        sunday = intent.getBooleanExtra("sunday",false);
         Log.e(TAG, "onReceive: " );
+        mTimeSleep = intent.getBooleanExtra("TimeSleep",false);
+        if (mTimeSleep==true){
+            mTimeSleep=false;
+            context.startService(new Intent(context, MyServices.class));
+            intent=new Intent("sendTimeSleep");
+            context.sendBroadcast(intent);
+            Log.e(TAG, "mTimeSleep=true");
+        }else {
+            Log.e(TAG, "nguoc lai");
+        }
 
 
     }

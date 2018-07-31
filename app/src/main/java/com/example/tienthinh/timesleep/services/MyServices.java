@@ -9,10 +9,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.view.WindowManager;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -31,20 +34,19 @@ public class MyServices extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "service ok", Toast.LENGTH_SHORT).show();
-        khoiTaoNoification();
+
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 switch (intent.getAction()){
-                    case "TimeSleep":
-                        Toast.makeText(context, "Nhận thành công", Toast.LENGTH_SHORT).show();
+                    case "sendTimeSleep":
+                        khoiTaoNoification();
                         break;
                 }
             }
         };
         filter = new IntentFilter();
-        filter.addAction("TimeSleep");
+        filter.addAction("sendTimeSleep");
         getBaseContext().registerReceiver(receiver,filter);
 
         return START_NOT_STICKY;
@@ -70,10 +72,18 @@ public class MyServices extends Service {
                 .setSmallIcon(R.drawable.notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setChannelId(channelId)
-                .setContentTitle("Ứng dụng đã được bật");
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentTitle("Nhắc Nhở")
+                .setContentText("Đến đi ngủ rồi bây bề");
 
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(alarmSound);
 
         notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+
+
 
 //        String mau = "#5c5c5c";
 //
@@ -149,4 +159,5 @@ public class MyServices extends Service {
 
         notificationManager.notify(notificationId, notification);
     }
+
 }

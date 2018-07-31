@@ -27,7 +27,7 @@ import com.example.tienthinh.timesleep.model.Sound;
 import java.util.ArrayList;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
-   private int i;
+    private int i;
     boolean dkT2 = false;
     boolean dkT3 = false;
     boolean dkT4 = false;
@@ -46,8 +46,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private boolean aBooleanCheck15P = false;
     private boolean aBooleanCheck30P = false;
     private boolean aBooleanCheck5P = false;
-    private TextView txtComeBack, txt1Hour, txt30P, txt15P, txt5P, txtSleep, txt_Save;
+    private TextView txt1Hour, txt30P, txt15P, txt5P, txtSleep, txt_Save;
     private boolean doubleBackToExitPressedOnce = false;
+    private ImageView iv_comback;
     private Dialog dialog;
     private Dialog dialogSound;
     private ImageView imv_checkSleep, imv_check1Hour, imv_check30P, imv_check15P, imv_check5P;
@@ -122,7 +123,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     public void onItemClickImage(int position) {
                         switch (position) {
                             case 0:
-                                i=position;
+                                i = position;
                                 //SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
                                 //SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
@@ -143,9 +144,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                                 }
                                 break;
                             case 1:
-                                i=position;
-                               // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
-                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
+                                i = position;
+                                // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                                // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -165,9 +166,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                                 break;
                             case 2:
-                                i=position;
-                               // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
-                              //  SharedPreferencesManager.setPosition(SettingActivity.this, position);
+                                i = position;
+                                // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                                //  SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -187,9 +188,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                                 break;
                             case 3:
-                                i=position;
-                              //  SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
-                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
+                                i = position;
+                                //  SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                                // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -209,9 +210,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                                 break;
                             case 4:
-                                i=position;
-                               // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
-                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
+                                i = position;
+                                // SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                                // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -231,9 +232,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                                 break;
                             case 5:
-                                i=position;
+                                i = position;
                                 //SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
-                               // SharedPreferencesManager.setPosition(SettingActivity.this, position);
+                                // SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -253,9 +254,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                                 break;
                             case 6:
-                                i=position;
-                              //  SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
-                              //  SharedPreferencesManager.setPosition(SettingActivity.this, position);
+                                i = position;
+                                //  SharedPreferencesManager.setTenBaiHat(SettingActivity.this, txtSound.getText().toString().trim());
+                                //  SharedPreferencesManager.setPosition(SettingActivity.this, position);
                                 for (int i = 0; i < Array_List_sounds.size(); i++) {
                                     if (Array_List_sounds.get(i).isRadioButton()) {
                                         Array_List_sounds.get(i).setRadioButton(false);
@@ -310,33 +311,33 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void onclickSaveSound() {
         SharedPreferencesManager.setPositionSound(SettingActivity.this, i);
-        switch (i){
+        switch (i) {
             case 0:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Little Comfort");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Little Comfort");
                 txtSound.setText("Little Comfort");
                 break;
             case 1:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Annie's Wonderland");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Annie's Wonderland");
                 txtSound.setText("Annie's Wonderland");
                 break;
             case 2:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Havana");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Havana");
                 txtSound.setText("Havana");
                 break;
             case 3:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"This Game");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "This Game");
                 txtSound.setText("This Game");
                 break;
             case 4:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Grief And Sorrow");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Grief And Sorrow");
                 txtSound.setText("Grief And Sorrow");
                 break;
             case 5:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Chúng ta không giống nhau");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Chúng ta không giống nhau");
                 txtSound.setText("Chúng ta không giống nhau");
                 break;
             case 6:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this,"Beautiful Girl");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Beautiful Girl");
                 txtSound.setText("Beautiful Girl");
                 break;
         }
@@ -368,19 +369,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void DocLaiSharePreferences() {
-        if (preferences.getBoolean("aBooleanCheckSleep", false) == true) {
+        if (SharedPreferencesManager.getSleepNow(SettingActivity.this)==true) {
             imv_checkSleep.setVisibility(View.VISIBLE);
         } else {
-            if (preferences.getBoolean("aBooleanCheck1Hour", false) == true) {
+            if (SharedPreferencesManager.get1hour(SettingActivity.this)==true){
                 imv_check1Hour.setVisibility(View.VISIBLE);
             } else {
-                if (preferences.getBoolean("aBooleanCheck15P", false) == true) {
+                if (SharedPreferencesManager.get15p(SettingActivity.this)==true) {
                     imv_check15P.setVisibility(View.VISIBLE);
                 } else {
-                    if (preferences.getBoolean("aBooleanCheck5P", false) == true) {
+                    if (SharedPreferencesManager.get5p(SettingActivity.this)==true) {
                         imv_check5P.setVisibility(View.VISIBLE);
                     } else {
-                        if (preferences.getBoolean("aBooleanCheck30P", false) == true) {
+                        if (SharedPreferencesManager.get30p(SettingActivity.this)==true) {
                             imv_check30P.setVisibility(View.VISIBLE);
                         } else {
 
@@ -404,82 +405,52 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private void DieuKienSave() {
         if (imv_checkSleep.getVisibility() == View.VISIBLE) {
             txtNhacNho.setText("Lúc Đi Ngủ");
-            aBooleanCheckSleep = true;
-            aBooleanCheck1Hour = false;
-            aBooleanCheck15P = false;
-            aBooleanCheck5P = false;
-            aBooleanCheck30P = false;
-            editor.putString("NhacNho", txtNhacNho.getText().toString());
-            editor.putBoolean("aBooleanCheckSleep", aBooleanCheckSleep);
-            editor.putBoolean("aBooleanCheck30P", aBooleanCheck30P);
-            editor.putBoolean("aBooleanCheck5P", aBooleanCheck5P);
-            editor.putBoolean("aBooleanCheck15P", aBooleanCheck15P);
-            editor.putBoolean("aBooleanCheck1Hour", aBooleanCheck1Hour);
-            editor.commit();
+            SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
+            SharedPreferencesManager.setSleepNow(SettingActivity.this, true);
+            SharedPreferencesManager.set30p(SettingActivity.this, false);
+            SharedPreferencesManager.set5p(SettingActivity.this, false);
+            SharedPreferencesManager.set1hour(SettingActivity.this, false);
+            SharedPreferencesManager.set15p(SettingActivity.this, false);
             dialog.cancel();
         } else {
             if (imv_check5P.getVisibility() == View.VISIBLE) {
                 txtNhacNho.setText("5 Phút");
-                aBooleanCheckSleep = false;
-                aBooleanCheck1Hour = false;
-                aBooleanCheck15P = false;
-                aBooleanCheck5P = true;
-                aBooleanCheck30P = false;
-                editor.putString("NhacNho", txtNhacNho.getText().toString());
-                editor.putBoolean("aBooleanCheckSleep", aBooleanCheckSleep);
-                editor.putBoolean("aBooleanCheck30P", aBooleanCheck30P);
-                editor.putBoolean("aBooleanCheck5P", aBooleanCheck5P);
-                editor.putBoolean("aBooleanCheck15P", aBooleanCheck15P);
-                editor.putBoolean("aBooleanCheck1Hour", aBooleanCheck1Hour);
-                editor.commit();
+                SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
+                SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
+                SharedPreferencesManager.set30p(SettingActivity.this, false);
+                SharedPreferencesManager.set5p(SettingActivity.this, true);
+                SharedPreferencesManager.set1hour(SettingActivity.this, false);
+                SharedPreferencesManager.set15p(SettingActivity.this, false);
                 dialog.cancel();
             } else {
                 if (imv_check15P.getVisibility() == View.VISIBLE) {
                     txtNhacNho.setText("15 Phút");
-                    editor.putString("NhacNho", txtNhacNho.getText().toString());
-                    aBooleanCheckSleep = false;
-                    aBooleanCheck1Hour = false;
-                    aBooleanCheck15P = true;
-                    aBooleanCheck5P = false;
-                    aBooleanCheck30P = false;
-                    editor.putBoolean("aBooleanCheckSleep", aBooleanCheckSleep);
-                    editor.putBoolean("aBooleanCheck30P", aBooleanCheck30P);
-                    editor.putBoolean("aBooleanCheck5P", aBooleanCheck5P);
-                    editor.putBoolean("aBooleanCheck15P", aBooleanCheck15P);
-                    editor.putBoolean("aBooleanCheck1Hour", aBooleanCheck1Hour);
-                    editor.commit();
+                    SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
+                    SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
+                    SharedPreferencesManager.set30p(SettingActivity.this, false);
+                    SharedPreferencesManager.set5p(SettingActivity.this, false);
+                    SharedPreferencesManager.set1hour(SettingActivity.this, false);
+                    SharedPreferencesManager.set15p(SettingActivity.this, true);
                     dialog.cancel();
                 } else {
                     if (imv_check30P.getVisibility() == View.VISIBLE) {
                         txtNhacNho.setText("30 Phút");
-                        editor.putString("NhacNho", txtNhacNho.getText().toString());
-                        aBooleanCheckSleep = false;
-                        aBooleanCheck1Hour = false;
-                        aBooleanCheck15P = false;
-                        aBooleanCheck5P = false;
-                        aBooleanCheck30P = true;
-                        editor.putBoolean("aBooleanCheckSleep", aBooleanCheckSleep);
-                        editor.putBoolean("aBooleanCheck30P", aBooleanCheck30P);
-                        editor.putBoolean("aBooleanCheck5P", aBooleanCheck5P);
-                        editor.putBoolean("aBooleanCheck15P", aBooleanCheck15P);
-                        editor.putBoolean("aBooleanCheck1Hour", aBooleanCheck1Hour);
-                        editor.commit();
+                        SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
+                        SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
+                        SharedPreferencesManager.set30p(SettingActivity.this, true);
+                        SharedPreferencesManager.set5p(SettingActivity.this, false);
+                        SharedPreferencesManager.set1hour(SettingActivity.this, false);
+                        SharedPreferencesManager.set15p(SettingActivity.this, false);
                         dialog.cancel();
                     } else {
                         if (imv_check1Hour.getVisibility() == View.VISIBLE) {
                             txtNhacNho.setText("1 Giờ");
-                            editor.putString("NhacNho", txtNhacNho.getText().toString());
-                            aBooleanCheckSleep = false;
-                            aBooleanCheck1Hour = true;
-                            aBooleanCheck15P = false;
-                            aBooleanCheck5P = false;
-                            aBooleanCheck30P = false;
-                            editor.putBoolean("aBooleanCheckSleep", aBooleanCheckSleep);
-                            editor.putBoolean("aBooleanCheck30P", aBooleanCheck30P);
-                            editor.putBoolean("aBooleanCheck5P", aBooleanCheck5P);
-                            editor.putBoolean("aBooleanCheck15P", aBooleanCheck15P);
-                            editor.putBoolean("aBooleanCheck1Hour", aBooleanCheck1Hour);
-                            editor.commit();
+                            SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
+                            SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
+                            SharedPreferencesManager.set30p(SettingActivity.this, false);
+                            SharedPreferencesManager.set5p(SettingActivity.this, false);
+                            SharedPreferencesManager.set1hour(SettingActivity.this, true);
+                            SharedPreferencesManager.set15p(SettingActivity.this, false);
                             dialog.cancel();
                         } else {
                             Toast.makeText(this, "Bạn Chưa Chọn Thời Gian", Toast.LENGTH_SHORT).show();
@@ -578,19 +549,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onClickHuy() {
-        txtComeBack.setOnClickListener(new View.OnClickListener() {
+        iv_comback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
+                SettingActivity.this.finish();
             }
         });
     }
 
     private void initView() {
         //txt_xong = findViewById(R.id.txt_xong);
-        txtComeBack = (TextView) findViewById(R.id.comeback);
+        iv_comback = (ImageView) findViewById(R.id.comeback);
         txtNhacNho = (TextView) findViewById(R.id.textViewNhacNho);
         txtSound = (TextView) findViewById(R.id.textView_music);
         seekBar = (SeekBar) findViewById(R.id.seekbar);
@@ -632,37 +603,37 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private void showNgayThang() {
         if (SharedPreferencesManager.getMonday(SettingActivity.this) == true) {
             btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
-        }else {
+        } else {
             btn_t2.setBackgroundResource(R.drawable.custom_toggle);
         }
         if (SharedPreferencesManager.getTuesday(SettingActivity.this) == true) {
             btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
-        }else {
+        } else {
             btn_t3.setBackgroundResource(R.drawable.custom_toggle);
         }
         if (SharedPreferencesManager.getWednesday(SettingActivity.this) == true) {
             btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
-        }else {
+        } else {
             btn_t4.setBackgroundResource(R.drawable.custom_toggle);
         }
         if (SharedPreferencesManager.getThursday(SettingActivity.this) == true) {
             btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
-        }else {
+        } else {
             btn_t5.setBackgroundResource(R.drawable.custom_toggle);
         }
         if (SharedPreferencesManager.getFriday(SettingActivity.this) == true) {
             btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
-        }else {
+        } else {
             btn_t6.setBackgroundResource(R.drawable.custom_toggle);
         }
         if (SharedPreferencesManager.getSaturday(SettingActivity.this) == true) {
             btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
-        }else {
+        } else {
             btn_t7.setBackgroundResource(R.drawable.custom_toggle);
         }
         if (SharedPreferencesManager.getSunday(SettingActivity.this) == true) {
             btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
-        }else {
+        } else {
             btn_cn.setBackgroundResource(R.drawable.custom_toggle);
         }
     }
@@ -670,7 +641,47 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private void sharedPeferences() {
         seekBar.setProgress(SharedPreferencesManager.getVolume(SettingActivity.this));
         txtSound.setText(SharedPreferencesManager.getTenBaiHat(SettingActivity.this));
-        txtNhacNho.setText(preferences.getString("NhacNho", "Nhắc Nhở"));
+        txtNhacNho.setText(SharedPreferencesManager.getNhacNho(SettingActivity.this));
+//
+//        if (SharedPreferencesManager.get1hour(SettingActivity.this)==true){
+//            imv_check1Hour.setVisibility(View.VISIBLE);
+//            imv_checkSleep.setVisibility(View.GONE);
+//            imv_check30P.setVisibility(View.GONE);
+//            imv_check15P.setVisibility(View.GONE);
+//            imv_check5P.setVisibility(View.GONE);
+//        }else {
+//            if (SharedPreferencesManager.get5p(SettingActivity.this)==true){
+//                imv_check1Hour.setVisibility(View.GONE);
+//                imv_checkSleep.setVisibility(View.GONE);
+//                imv_check30P.setVisibility(View.GONE);
+//                imv_check15P.setVisibility(View.GONE);
+//                imv_check5P.setVisibility(View.VISIBLE);
+//            }else {
+//                if (SharedPreferencesManager.get15p(SettingActivity.this)==true){
+//                    imv_check1Hour.setVisibility(View.GONE);
+//                    imv_checkSleep.setVisibility(View.GONE);
+//                    imv_check30P.setVisibility(View.GONE);
+//                    imv_check15P.setVisibility(View.VISIBLE);
+//                    imv_check5P.setVisibility(View.GONE);
+//                }else {
+//                    if (SharedPreferencesManager.get30p(SettingActivity.this)==true){
+//                        imv_check1Hour.setVisibility(View.GONE);
+//                        imv_checkSleep.setVisibility(View.GONE);
+//                        imv_check30P.setVisibility(View.VISIBLE);
+//                        imv_check15P.setVisibility(View.GONE);
+//                        imv_check5P.setVisibility(View.GONE);
+//                    }else {
+//                        if (SharedPreferencesManager.getSleepNow(SettingActivity.this)==true){
+//                            imv_check1Hour.setVisibility(View.GONE);
+//                            imv_checkSleep.setVisibility(View.VISIBLE);
+//                            imv_check30P.setVisibility(View.GONE);
+//                            imv_check15P.setVisibility(View.GONE);
+//                            imv_check5P.setVisibility(View.GONE);
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -689,12 +700,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dkT2 = true;
                     aBooleanT2 = true;
                     btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
-                    SharedPreferencesManager.setMonday(this,true);
+                    SharedPreferencesManager.setMonday(this, true);
                 } else {
                     dkT2 = false;
                     aBooleanT2 = false;
                     btn_t2.setBackgroundResource(R.drawable.custom_toggle);
-                    SharedPreferencesManager.setMonday(this,false);
+                    SharedPreferencesManager.setMonday(this, false);
                 }
                 break;
             case R.id.btn_t3:
@@ -702,12 +713,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dkT3 = true;
                     aBooleanT3 = true;
                     btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
-                    SharedPreferencesManager.setTuesday(this,true);
+                    SharedPreferencesManager.setTuesday(this, true);
                 } else {
                     dkT3 = false;
                     aBooleanT3 = false;
                     btn_t3.setBackgroundResource(R.drawable.custom_toggle);
-                    SharedPreferencesManager.setTuesday(this,false);
+                    SharedPreferencesManager.setTuesday(this, false);
                 }
                 break;
             case R.id.btn_t4:
@@ -715,12 +726,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dkT4 = true;
                     aBooleanT4 = true;
                     btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
-                    SharedPreferencesManager.setWednesday(this,true);
+                    SharedPreferencesManager.setWednesday(this, true);
                 } else {
                     dkT4 = false;
                     aBooleanT4 = false;
                     btn_t4.setBackgroundResource(R.drawable.custom_toggle);
-                    SharedPreferencesManager.setWednesday(this,false);
+                    SharedPreferencesManager.setWednesday(this, false);
                 }
                 break;
             case R.id.btn_t5:
@@ -728,12 +739,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dkT5 = true;
                     aBooleanT5 = true;
                     btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
-                    SharedPreferencesManager.setThursday(this,true);
+                    SharedPreferencesManager.setThursday(this, true);
                 } else {
                     dkT5 = false;
                     aBooleanT5 = false;
                     btn_t5.setBackgroundResource(R.drawable.custom_toggle);
-                    SharedPreferencesManager.setThursday(this,false);
+                    SharedPreferencesManager.setThursday(this, false);
                 }
                 break;
             case R.id.btn_t6:
@@ -741,12 +752,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dkT6 = true;
                     aBooleanT6 = true;
                     btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
-                    SharedPreferencesManager.setFriday(this,true);
+                    SharedPreferencesManager.setFriday(this, true);
                 } else {
                     dkT6 = false;
                     aBooleanT6 = false;
                     btn_t6.setBackgroundResource(R.drawable.custom_toggle);
-                    SharedPreferencesManager.setFriday(this,false);
+                    SharedPreferencesManager.setFriday(this, false);
                 }
                 break;
             case R.id.btn_t7:
@@ -754,12 +765,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dkT7 = true;
                     aBooleanT7 = true;
                     btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
-                    SharedPreferencesManager.setSaturday(this,true);
+                    SharedPreferencesManager.setSaturday(this, true);
                 } else {
                     dkT7 = false;
                     aBooleanT7 = false;
                     btn_t7.setBackgroundResource(R.drawable.custom_toggle);
-                    SharedPreferencesManager.setSaturday(this,false);
+                    SharedPreferencesManager.setSaturday(this, false);
                 }
                 break;
             case R.id.btn_cn:
@@ -767,12 +778,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     dkCN = true;
                     aBooleanCn = true;
                     btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
-                    SharedPreferencesManager.setSunday(this,true);
+                    SharedPreferencesManager.setSunday(this, true);
                 } else {
                     dkCN = false;
                     aBooleanCn = false;
                     btn_cn.setBackgroundResource(R.drawable.custom_toggle);
-                    SharedPreferencesManager.setSunday(this,false);
+                    SharedPreferencesManager.setSunday(this, false);
                 }
                 break;
 //            case R.id.txt_xong:
@@ -785,4 +796,5 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 //                break;
         }
     }
+
 }

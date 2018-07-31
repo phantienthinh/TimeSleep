@@ -186,4 +186,57 @@ public class SharedPreferencesManager {
     }
 
 
+    public static void setNhacNho(Context context, String is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putString("KEY_NhacNho", is).apply();
+    }
+
+    public static String getNhacNho(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("KEY_NhacNho", "Lúc Đi Ngủ");
+    }
+
+    public static void set15p(Context context, boolean is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putBoolean("KEY_Check15P", is).apply();
+    }
+
+    public static boolean get15p(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("KEY_Check15P", false);
+    }
+
+    public static void set30p(Context context, boolean is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putBoolean("KEY_Check30P", is).apply();
+    }
+
+    public static boolean get30p(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("KEY_Check30P", false);
+    }
+
+    public static void setSleepNow(Context context, boolean is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putBoolean("KEY_CheckSleepNow", is).apply();
+    }
+
+    public static boolean getSleepNow(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("KEY_CheckSleepNow", true);
+    }
+
+    public static void set5p(Context context, boolean is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putBoolean("KEY_Check5P", is).apply();
+    }
+
+    public static boolean get5p(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("KEY_Check5P", false);
+    }
+
+    public static void set1hour(Context context, boolean is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putBoolean("KEY_Check1hour", is).apply();
+    }
+
+    public static boolean get1hour(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("KEY_Check1hour", false);
+    }
 }
