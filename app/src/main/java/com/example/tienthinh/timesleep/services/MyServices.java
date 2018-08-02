@@ -3,7 +3,6 @@ package com.example.tienthinh.timesleep.services;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,7 +14,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.view.WindowManager;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -34,20 +32,21 @@ public class MyServices extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        khoiTaoNoification();
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                switch (intent.getAction()){
+                switch (intent.getAction()) {
                     case "sendTimeSleep":
                         khoiTaoNoification();
+                        stopSelf();
                         break;
                 }
             }
         };
         filter = new IntentFilter();
         filter.addAction("sendTimeSleep");
-        getBaseContext().registerReceiver(receiver,filter);
+        getBaseContext().registerReceiver(receiver, filter);
 
         return START_NOT_STICKY;
 
@@ -57,6 +56,11 @@ public class MyServices extends Service {
     @Override
     public void onDestroy() {
         Toast.makeText(this, "Service Cancle", Toast.LENGTH_SHORT).show();
+        try {
+            getBaseContext().unregisterReceiver(receiver);
+        }catch (Exception e){
+
+        }
         super.onDestroy();
     }
 
@@ -68,21 +72,21 @@ public class MyServices extends Service {
 
     private void khoiTaoNoification() {
         String channelId = "channel-01";
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setChannelId(channelId)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setSound(alarmSound)
                 .setContentTitle("Nhắc Nhở")
-                .setContentText("Đến đi ngủ rồi bây bề");
+                .setContentText("Đến giờ đi ngủ rồi bây bề");
 
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        builder.setSound(alarmSound);
+
 
         notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
-
 
 
 //        String mau = "#5c5c5c";
@@ -154,10 +158,11 @@ public class MyServices extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
             notificationManager.createNotificationChannel(mChannel);
+        } else {
+
         }
 
 
         notificationManager.notify(notificationId, notification);
     }
-
 }

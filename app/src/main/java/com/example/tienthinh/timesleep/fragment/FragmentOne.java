@@ -1,19 +1,14 @@
 package com.example.tienthinh.timesleep.fragment;
 
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,12 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.bozapro.circularsliderrange.CircularSliderRange;
-import com.bozapro.circularsliderrange.ThumbEvent;
 import com.example.tienthinh.timesleep.MainActivity;
 import com.example.tienthinh.timesleep.R;
+import com.example.tienthinh.timesleep.Widget.ThumbEvent;
 import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
-import com.example.tienthinh.timesleep.services.MyServices;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.LimitLine;
@@ -38,7 +31,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class FragmentOne extends Fragment implements View.OnClickListener {
     private ImageView iv_sleep;
@@ -47,33 +39,14 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
     BarChart barChart;
     private TextView tv_sleep;
     private TextView tv_wake_up;
-    private int hourDiNgu;
-    private int minuteDiNgu;
     private RelativeLayout relativeLayout, relativeLayoutBarchar;
-    private int bienDem;
-    private int k;
     private Context context;
-    private CircularSliderRange sliderRange;
+    private com.example.tienthinh.timesleep.Widget.CircularSliderRange sliderRange;
     private View view;
-    private int positionClock;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
-
     // private int minute1;
-    private int nguTruoc, thuc, second, tongNgu, tongHourSleep, tongMinuteSleep;
-    private int a;
-    private int b;
-    private int sau = 0;
-
+    private int nguTruoc, thuc, second,tongHourSleep, tongMinuteSleep;
     private ToggleButton toggleOnOff;
     private TextView txt_Tong_Time, txt_Time_Sleep, txt_Time_Weke_up;
-    private boolean KT = false;
-    private boolean TrangThai = false;
-    private boolean Time = false;
-    private AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
-    private Calendar calendarSleep;
-    private Calendar calendarWakeUp;
 
 
     @Nullable
@@ -88,6 +61,8 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
         createMPAndroidChart();
         //thêm đối tượng arrlist +  BarDataSet
         addArrayList();
+        //createTouchEvent
+        createTouchEvent();
         //click vào clock
         onClickClock();
         //khởi tạo ui
@@ -95,6 +70,26 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 
 
         return view;
+    }
+
+    private void createTouchEvent() {
+
+        sliderRange.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action){
+                    case MotionEvent.ACTION_DOWN:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
     }
 
     private void uiCreate() {
@@ -113,75 +108,9 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
     }
 
     private void onClickClock() {
-        sliderRange.setOnSliderRangeMovedListener(new CircularSliderRange.OnSliderRangeMovedListener() {
+        sliderRange.setOnSliderRangeMovedListener(new com.example.tienthinh.timesleep.Widget.CircularSliderRange.OnSliderRangeMovedListener() {
             @Override
             public void onStartSliderMoved(double pos) {
-                // KiemTraLonBeNgu();
-//                if (bienDem % 2 == 0) {
-//                    nguTruoc = nguTruoc + 360;
-//                    second = (nguTruoc * 120);
-//                    hour = second / 3600;
-//                    minute = (second % 3600) / 60;
-//                    epKieu();
-//
-//                    if (minute < 10) {
-//                        txt_Time_Sleep.setText(hour + ":" + "0" + minute);
-//                    } else {
-//                        txt_Time_Sleep.setText(hour + ":" + minute);
-//                    }
-//
-//                } else {
-//                    second = (nguTruoc * 120);
-//                    hour = second / 3600;
-//                    minute = (second % 3600) / 60;
-//                    epKieu();
-//                    if (minute < 10) {
-//                        txt_Time_Sleep.setText(hour + ":" + "0" + minute);
-//                    } else {
-//                        txt_Time_Sleep.setText(hour + ":" + minute);
-//                    }
-//                }
-
-//                if (KT == true && TrangThai == true) {
-//                    k=ngu+360;
-//                    txt_Time_Sleep.setText("12" + ":" + "00");
-//                    second = (k * 120);
-//                    hour = second / 3600;
-//
-//                    minute = (second % 3600) / 60;
-//
-//                    epKieu();
-//
-//                    if (minute < 10) {
-//                        txt_Time_Sleep.setText(hour + ":" + "0" + minute);
-//                    } else {
-//                        txt_Time_Sleep.setText(hour + ":" + minute);
-//                    }
-//
-////
-////                    if (hour==23&&minute==55&&Time==false){
-////                        k=ngu;
-////                        Time=true;
-////                    }else {
-////
-////                    }
-//
-//
-//
-////                    Log.e("TT", "vào");
-//                } else {
-////                    Log.e("TT1", "Tạch");
-//                    second = (ngu * 120);
-//                    hour = second / 3600;
-//                    minute = (second % 3600) / 60;
-//                    epKieu();
-//                    if (minute < 10) {
-//                        txt_Time_Sleep.setText(hour + ":" + "0" + minute);
-//                    } else {
-//                        txt_Time_Sleep.setText(hour + ":" + minute);
-//                    }
-//
-//                }
                 nguTruoc = (int) pos;
                 second = (nguTruoc * 240);
                 MainActivity.hourSleep = second / 3600;
@@ -194,10 +123,6 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
                 } else {
                     txt_Time_Sleep.setText(MainActivity.hourSleep + ":" + MainActivity.minuteSleep);
                 }
-
-//                calendarSleep.set(Calendar.HOUR, MainActivity.hourSleep);
-//                calendarSleep.set(Calendar.MINUTE, MainActivity.minuteSleep);
-
                 String chuoi = txt_Time_Sleep.getText().toString().trim();
                 SharedPreferencesManager.setTimeSleep(getContext(), chuoi);
                 SharedPreferencesManager.setPositionClockSleep(context, nguTruoc);
@@ -205,7 +130,6 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
                 SharedPreferencesManager.setMinuteSleep(context, MainActivity.minuteSleep);
                 MainActivity.hourSleep=SharedPreferencesManager.getHourSleep(context);
                 MainActivity.minuteSleep = SharedPreferencesManager.getMinuteSleep(context);
-
             }
 
             @Override
@@ -226,7 +150,6 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
                 SharedPreferencesManager.setPositionClockWakeUp(context, thuc);
                 SharedPreferencesManager.setHourWakeUp(context, MainActivity.hourWakeUp);
                 SharedPreferencesManager.setMinuteWakeUp(context, MainActivity.minuteWakeUp);
-
             }
 
             @Override
@@ -238,7 +161,6 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
                     sendBroadcastTimeSleepActivity();
                 } else {
                 }
-
             }
 
             @Override
@@ -248,61 +170,82 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
                     sendBroadcastTimeWakeUpActivity();
                 } else {
                 }
-
             }
         });
-    }
 
-//    private void KiemTraLonBeNgu() {
+//        sliderRange.setOnSliderRangeMovedListener(new CircularSliderRange.OnSliderRangeMovedListener() {
+//            @Override
+//            public void onStartSliderMoved(double pos) {
+//                nguTruoc = (int) pos;
+//                second = (nguTruoc * 240);
+//                MainActivity.hourSleep = second / 3600;
+//                MainActivity.minuteSleep = (second % 3600) / 60;
 //
-////        if (ngu==0&&raw==359&&KT==true){
-////            bienDem++;
-////        }else {
-////            if (raw==0&&ngu==359&&KT==false){
-////                bienDem--;
-////            }
-////
-////        }
+//                epKieu1();
 //
-//        if (hour==0&&minute==0&&KT==true){
-//            bienDem++;
-//        }else {
-//            if(hour==0&&minute==0&&KT==false){
-//                bienDem--;
+//                if (MainActivity.minuteSleep < 10) {
+//                    txt_Time_Sleep.setText(MainActivity.hourSleep + ":" + "0" + MainActivity.minuteSleep);
+//                } else {
+//                    txt_Time_Sleep.setText(MainActivity.hourSleep + ":" + MainActivity.minuteSleep);
+//                }
+//
+//
+//
+//                String chuoi = txt_Time_Sleep.getText().toString().trim();
+//                SharedPreferencesManager.setTimeSleep(getContext(), chuoi);
+//                SharedPreferencesManager.setPositionClockSleep(context, nguTruoc);
+//                SharedPreferencesManager.setHourSleep(context, MainActivity.hourSleep);
+//                SharedPreferencesManager.setMinuteSleep(context, MainActivity.minuteSleep);
+//                MainActivity.hourSleep=SharedPreferencesManager.getHourSleep(context);
+//                MainActivity.minuteSleep = SharedPreferencesManager.getMinuteSleep(context);
+//
 //            }
 //
-//        }
+//            @Override
+//            public void onEndSliderMoved(double pos) {
+//                thuc = (int) pos;
+//                second = (thuc * 240);
+//                MainActivity.hourWakeUp = second / 3600;
+//                MainActivity.minuteWakeUp = (second % 3600) / 60;
+//                epKieu2();
+//                if (MainActivity.minuteWakeUp < 10) {
+//                    txt_Time_Weke_up.setText(MainActivity.hourWakeUp + ":" + "0" + MainActivity.minuteWakeUp);
+//                } else {
+//                    txt_Time_Weke_up.setText(MainActivity.hourWakeUp + ":" + MainActivity.minuteWakeUp);
 //
+//                }
+//                String chuoi = txt_Time_Weke_up.getText().toString().trim();
+//                SharedPreferencesManager.setTimeWakeUp(getContext(), chuoi);
+//                SharedPreferencesManager.setPositionClockWakeUp(context, thuc);
+//                SharedPreferencesManager.setHourWakeUp(context, MainActivity.hourWakeUp);
+//                SharedPreferencesManager.setMinuteWakeUp(context, MainActivity.minuteWakeUp);
 //
+//            }
 //
-//        if (nguTruoc > sau) {
-//            Log.e("giatri", nguTruoc + "truoc :" + sau + "sau");
+//            @Override
+//            public void onStartSliderEvent(ThumbEvent event) {
+//                //là đi ngủ
+//                TinhTimeNguEnd();
 //
+//                if (toggleOnOff.isChecked() == true) {
+//                    sendBroadcastTimeSleepActivity();
+//                } else {
+//                }
 //
-//            KT = true;
+//            }
 //
-//            sau = nguTruoc;
-////            Log.e("tang", "Đang Tăng");
+//            @Override
+//            public void onEndSliderEvent(ThumbEvent event) {
+//                TinhTimeNguStart();
+//                if (toggleOnOff.isChecked() == true) {
+//                    sendBroadcastTimeWakeUpActivity();
+//                } else {
+//                }
 //
-//        } else {
-//
-//        }
-//        if (nguTruoc == sau) {
-//
-//        }
-//        if (nguTruoc < sau) {
-//            Log.e("giatri", nguTruoc + "truoc :" + sau + "sau");
-//            KT = false;
-//
-//            sau = nguTruoc;
-//
-//        }
-//
-//
-//        Log.e("biendem", bienDem + "");
-//
-//
-//    }
+//            }
+//        });
+    }
+
 
     private void TinhTimeNguStart() {
 //        if (thuc > nguTruoc) {
@@ -625,6 +568,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 
     private void initView() {
         relativeLayoutBarchar = view.findViewById(R.id.relativeLayoutBarchar);
+        barChart = (BarChart) view.findViewById(R.id.barchart);
         iv_sleep = view.findViewById(R.id.iv_sleep);
         iv_wake_up = view.findViewById(R.id.iv_wake_up);
         tv_sleep = view.findViewById(R.id.tv_sleep);
@@ -634,9 +578,8 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
         txt_Tong_Time = (TextView) view.findViewById(R.id.txt_Tong_Time);
         txt_Time_Sleep = (TextView) view.findViewById(R.id.txt_Seep);
         txt_Time_Weke_up = (TextView) view.findViewById(R.id.txt_Time_WakeUp);
-        sliderRange = (CircularSliderRange) view.findViewById(R.id.circular);
+        sliderRange = (com.example.tienthinh.timesleep.Widget.CircularSliderRange) view.findViewById(R.id.circular);
         sliderRange.setRotation(-90);
-        barChart = (BarChart) view.findViewById(R.id.barchart);
 
         toggleOnOff.setOnClickListener(this);
         relativeLayout.setOnClickListener(this);
@@ -674,11 +617,11 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
                 if (toggleOnOff.isChecked() == true) {
                     setUiViewOn();
                     SharedPreferencesManager.setToggleOnOff(context, true);
-                    context.startService(new Intent(context, MyServices.class));
+//                    context.startService(new Intent(context, MyServices.class));
                 } else {
                     setUiViewOff();
                     SharedPreferencesManager.setToggleOnOff(context, false);
-                    context.stopService(new Intent(context, MyServices.class));
+//                    context.stopService(new Intent(context, MyServices.class));
 
                 }
                 break;
