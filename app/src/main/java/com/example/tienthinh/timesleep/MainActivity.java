@@ -28,11 +28,11 @@ import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+    long timeMondayWakeUp, timeTuesdayWakeUp, timeWednesdayWakeUp, timeThursdayWakeUp, timeFridayWakeUp, timeSaturdayWakeUp, timeSundayWakeUp;
     private static final String KEYSLEEP = "KEY";
-//    private static final String KEYTIME = "KEYTIME";
     boolean mTruoc5p, mTruoc15p, mTruoc30p, mTruoc1h, mSleepNow;
     private long oneWeek = 604800000;
-    private long timeSystem;
+    long timeSystem, timeSystemWakeUp;
     private long twoDay = 172800000;
     private long threeDay = 259200000;
     private long fourDay = 345600000;
@@ -47,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
     public static String TAG = "debug";
     long timesleepMonday, timesleepTuesday, timesleepWednesday, timesleepThursday, timesleepFriday, timesleepSaturday, timesleepSunday;
     long t2, t3, t4, t5, t6, t7, cn;
+    long t2_WU, t3_WU, t4_WU, t5_WU, t6_WU, t7_WU, cn_WU;
     private Calendar mCalendarMondaySleep, mCalendarTuesdaySleep, mCalendarWednesdaySleep, mCalendarThursdaySleep, mCalendarFridaySleep;
     private Calendar mCalendarSaturdaySleep;
     private Calendar mCalendarSundaySleep;
+    private Calendar mCaSundayWakeUp, mCaMondayWakeUp, mCaTuesdayWakeUp, mCaWednesdayWakeUp, mCaThursdayWakeUp, mCaFridayWakeUp, mCaSaturdayWakeUp;
     AlarmManager mAlarmManagerMondaySleep;
     PendingIntent mPendingIntentMondaySleep;
     AlarmManager mAlarmManagerTuesdaySleep;
@@ -64,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
     PendingIntent mPendingIntentSaturdaySleep;
     AlarmManager mAlarmManagerSundaySleep;
     PendingIntent mPendingIntentSundaySleep;
+
+    PendingIntent mPdMondayWakeUp, mPdTuesdayWakeUp, mPdWednesdayWakeUp, mPdThursdayWakeUp, mPdFridaydayWakeUp, mPdSaturdayWakeUp, mPdSundayWakeUp;
+    AlarmManager mALMondayWakeUp, mALTuesdayWakeUp, mALWednesdayWakeUp, mALThursdayWakeUp, mALFridayWakeUp, mALSaturdayWakeUp, mALSundayWakeUp;
     boolean mBooleanMonday;
     boolean mBooleanTuesday;
     boolean mBooleanWednesday;
@@ -118,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         createAlarmService();
         khoiTaoBroadCast();
         createWakeLock();
+        //lấy thứ
         Calendar calendar = Calendar.getInstance();
         date = calendar.get(Calendar.DAY_OF_WEEK);
 
@@ -133,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createCalendar() {
+        //calendar h đi ngủ
         mCalendarMondaySleep = Calendar.getInstance();
         mCalendarTuesdaySleep = Calendar.getInstance();
         mCalendarWednesdaySleep = Calendar.getInstance();
@@ -140,9 +147,19 @@ public class MainActivity extends AppCompatActivity {
         mCalendarFridaySleep = Calendar.getInstance();
         mCalendarSaturdaySleep = Calendar.getInstance();
         mCalendarSundaySleep = Calendar.getInstance();
+
+        //calendar h thức dậy
+        mCaMondayWakeUp = Calendar.getInstance();
+        mCaTuesdayWakeUp = Calendar.getInstance();
+        mCaWednesdayWakeUp = Calendar.getInstance();
+        mCaThursdayWakeUp = Calendar.getInstance();
+        mCaFridayWakeUp = Calendar.getInstance();
+        mCaSaturdayWakeUp = Calendar.getInstance();
+        mCaSundayWakeUp = Calendar.getInstance();
     }
 
     private void createAlarmService() {
+        //alarm h ngủ
         mAlarmManagerMondaySleep = (AlarmManager) getSystemService(ALARM_SERVICE);
         mAlarmManagerTuesdaySleep = (AlarmManager) getSystemService(ALARM_SERVICE);
         mAlarmManagerWednesdaySleep = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -150,6 +167,17 @@ public class MainActivity extends AppCompatActivity {
         mAlarmManagerFridaySleep = (AlarmManager) getSystemService(ALARM_SERVICE);
         mAlarmManagerSaturdaySleep = (AlarmManager) getSystemService(ALARM_SERVICE);
         mAlarmManagerSundaySleep = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        //alarm h thức dậy
+        mALMondayWakeUp = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mALTuesdayWakeUp = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mALWednesdayWakeUp = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mALThursdayWakeUp = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mALFridayWakeUp = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mALSaturdayWakeUp = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mALSundayWakeUp = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+
     }
 
     private void khoiTaoBroadCast() {
@@ -159,12 +187,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (intent.getAction()) {
                     case "TimeSleepActivity":
                         Log.e(TAG, "đã vào TimeSleepActivity ");
-                        cancleAlarmManager();
+                        cancleAlarmManagerSleep();
                         readSharedPreDay();
 
                         //thứ2
                         if (mBooleanMonday == true) {
-                            setCalendarMonday();
+                            setCalendarMondaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerMondaySleep, mPendingIntentMondaySleep);
                             intent = new Intent(MainActivity.this, AlarmRecever.class);
@@ -176,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         //thứ 3
                         if (mBooleanTuesday == true) {
-                            setCalendarTuesday();
+                            setCalendarTuesdaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerTuesdaySleep, mPendingIntentTuesdaySleep);
                             intent = new Intent(MainActivity.this, AlarmRecever.class);
@@ -189,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //thứ 4
                         if (mBooleanWednesday == true) {
-                            setCalendarWednesday();
+                            setCalendarWednesdaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerWednesdaySleep, mPendingIntentWednesdaySleep);
                             intent = new Intent(MainActivity.this, AlarmRecever.class);
@@ -203,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //thứ 5
                         if (mBooleanThursday == true) {
-                            setCalendarThursday();
+                            setCalendarThursdaySleep();
                             soSanh();
 
                             cancleAlarm(mAlarmManagerThursdaySleep, mPendingIntentThursdaySleep);
@@ -218,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //thứ 6
                         if (mBooleanFriday == true) {
-                            setCalendarFriday();
+                            setCalendarFridaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerFridaySleep, mPendingIntentFridaySleep);
                             intent = new Intent(MainActivity.this, AlarmRecever.class);
@@ -231,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                        thứ 7
                         if (mBooleanSaturday == true) {
-                            setCalendarSaturday();
+                            setCalendarSaturdaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerSaturdaySleep, mPendingIntentSaturdaySleep);
                             intent = new Intent(MainActivity.this, AlarmRecever.class);
@@ -246,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //chủ nhật
                         if (mBooleanSunday == true) {
-                            setCalendarSunday();
+                            setCalendarSundaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerSundaySleep, mPendingIntentSundaySleep);
                             intent = new Intent(MainActivity.this, AlarmRecever.class);
@@ -260,6 +288,98 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case "TimeWakeUpActivity":
+                        cancleAlarmManagerWakeUp();
+                        readSharedPreDay();
+
+                        //thứ 2
+                        if (mBooleanMonday == true) {
+                            setCalendarMondayWakeUp();
+                            soSanhTimeWakeUp();
+                            cancleAlarm(mALMondayWakeUp, mPdMondayWakeUp);
+                            intent = new Intent(MainActivity.this,AlarmRecever.class);
+                            intent.putExtra(KEYSLEEP,22);
+                            intent.putExtra("KEYTIME_T2_WU",t2_WU);
+                            createAlarm(intent,mPdMondayWakeUp,mALMondayWakeUp,t2_WU,22);
+                        } else {
+                            cancleAlarm(mALMondayWakeUp, mPdMondayWakeUp);
+                        }
+
+                        //thứ 3
+                        if (mBooleanTuesday == true) {
+                            setCalendarTuesdayWakeUp();
+                            soSanhTimeWakeUp();
+                            cancleAlarm(mALTuesdayWakeUp, mPdTuesdayWakeUp);
+                            intent = new Intent(MainActivity.this,AlarmRecever.class);
+                            intent.putExtra(KEYSLEEP,23);
+                            intent.putExtra("KEYTIME_T3_WU",t3_WU);
+                            createAlarm(intent,mPdTuesdayWakeUp,mALTuesdayWakeUp,t3_WU,23);
+
+                        } else {
+                            cancleAlarm(mALTuesdayWakeUp, mPdTuesdayWakeUp);
+                        }
+
+                        //thứ 4
+                        if (mBooleanWednesday == true) {
+                            setmCalendarWednesdayWakeUp();
+                            soSanhTimeWakeUp();
+                            cancleAlarm(mALWednesdayWakeUp, mPdWednesdayWakeUp);
+                            intent = new Intent(MainActivity.this,AlarmRecever.class);
+                            intent.putExtra(KEYSLEEP,24);
+                            intent.putExtra("KEYTIME_T4_WU",t4_WU);
+                            createAlarm(intent,mPdWednesdayWakeUp,mALWednesdayWakeUp,t4_WU,24);
+                        } else {
+                            cancleAlarm(mALWednesdayWakeUp, mPdWednesdayWakeUp);
+                        }
+                        //thứ 5
+                        if (mBooleanThursday == true) {
+                            setmCalendarThursdayWakeUp();
+                            soSanhTimeWakeUp();
+                            cancleAlarm(mALThursdayWakeUp, mPdThursdayWakeUp);
+                            intent = new Intent(MainActivity.this,AlarmRecever.class);
+                            intent.putExtra(KEYSLEEP,25);
+                            intent.putExtra("KEYTIME_T5_WU",t5_WU);
+                            createAlarm(intent,mPdThursdayWakeUp,mALThursdayWakeUp,t5_WU,25);
+                        } else {
+                            cancleAlarm(mALThursdayWakeUp, mPdThursdayWakeUp);
+                        }
+                        //thứ 6
+                        if (mBooleanFriday == true) {
+                            setmCalendarFridayWakeUp();
+                            soSanhTimeWakeUp();
+                            cancleAlarm(mALFridayWakeUp, mPdFridaydayWakeUp);
+                            intent = new Intent(MainActivity.this,AlarmRecever.class);
+                            intent.putExtra(KEYSLEEP,26);
+                            intent.putExtra("KEYTIME_T6_WU",t6_WU);
+                            createAlarm(intent,mPdFridaydayWakeUp,mALFridayWakeUp,t6_WU,26);
+                        } else {
+                            cancleAlarm(mALFridayWakeUp, mPdFridaydayWakeUp);
+                        }
+                        //thứ 7
+                        if (mBooleanSaturday == true) {
+                            setmCalendarSaturdayWakeUp();
+                            soSanhTimeWakeUp();
+                            cancleAlarm(mALSaturdayWakeUp, mPdSaturdayWakeUp);
+                            intent = new Intent(MainActivity.this,AlarmRecever.class);
+                            intent.putExtra(KEYSLEEP,27);
+                            intent.putExtra("KEYTIME_T7_WU",t7_WU);
+                            createAlarm(intent,mPdSaturdayWakeUp,mALSaturdayWakeUp,t7_WU,27);
+                        } else {
+                            cancleAlarm(mALSaturdayWakeUp, mPdSaturdayWakeUp);
+                        }
+                        //chủ nhật
+                        if (mBooleanSunday == true) {
+                            setmCalendarSundayWakeUp();
+                            soSanhTimeWakeUp();
+                            cancleAlarm(mALSundayWakeUp, mPdSundayWakeUp);
+                            intent = new Intent(MainActivity.this,AlarmRecever.class);
+                            intent.putExtra(KEYSLEEP,28);
+                            intent.putExtra("KEYTIME_CN_WU",cn_WU);
+                            createAlarm(intent,mPdSundayWakeUp,mALSundayWakeUp,cn_WU,28);
+                        } else {
+                            cancleAlarm(mALSundayWakeUp, mPdSundayWakeUp);
+                        }
+
+
                         break;
                 }
             }
@@ -268,6 +388,322 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction("TimeSleepActivity");
         filter.addAction("TimeWakeUpActivity");
         MainActivity.this.registerReceiver(receiver, filter);
+    }
+
+    private void soSanhTimeWakeUp() {
+        switch (date) {
+            case 1:
+                timeWakeUpSunday();
+                break;
+            case 2:
+                timeWakeUpMonday();
+                break;
+            case 3:
+                timeWakeUpTuesday();
+                break;
+            case 4:
+                timeWakeUpWednesday();
+                break;
+            case 5:
+                timeWakeUpThursday();
+                break;
+            case 6:
+                timeWakeUpFriday();
+                break;
+            case 7:
+                timeWakeUpSaturday();
+                break;
+        }
+    }
+
+    private void timeWakeUpSaturday() {
+        if (mTruoc30p == true) {
+            setTimeWakeupSaturday(truoc30p);
+        } else if (mTruoc15p == true) {
+            setTimeWakeupSaturday(truoc15p);
+        } else if (mTruoc5p == true) {
+            setTimeWakeupSaturday(truoc5p);
+        } else if (mTruoc1h == true) {
+            setTimeWakeupSaturday(truoc1hour);
+        } else if (mSleepNow == true) {
+            setTimeWakeupSaturday(0);
+        } else {
+        }
+    }
+
+    private void setTimeWakeupSaturday(long mlong) {
+        if (timeSystemWakeUp < (timeFridayWakeUp - mlong)) {
+            t6_WU = timeFridayWakeUp - mlong;
+        } else {
+            t6_WU = timeFridayWakeUp - mlong + oneWeek;
+        }
+        t3_WU = timeTuesdayWakeUp + (fourDay - mlong);
+        t4_WU = timeWednesdayWakeUp + (fiveDay - mlong);
+        t5_WU = timeFridayWakeUp + (sixDay - mlong);
+        t7_WU = timeSaturdayWakeUp + (oneDay - mlong);
+        cn_WU = timeSundayWakeUp + (twoDay - mlong);
+        t2_WU = timeMondayWakeUp + (threeDay - mlong);
+    }
+
+    private void timeWakeUpFriday() {
+        if (mTruoc30p == true) {
+            setTimeWakeupFriday(truoc30p);
+        } else if (mTruoc15p == true) {
+            setTimeWakeupFriday(truoc15p);
+        } else if (mTruoc5p == true) {
+            setTimeWakeupFriday(truoc5p);
+        } else if (mTruoc1h == true) {
+            setTimeWakeupFriday(truoc1hour);
+        } else if (mSleepNow == true) {
+            setTimeWakeupFriday(0);
+        } else {
+        }
+    }
+
+    private void setTimeWakeupFriday(long mlong) {
+        if (timeSystemWakeUp < (timeFridayWakeUp - mlong)) {
+            t6_WU = timeFridayWakeUp - mlong;
+        } else {
+            t6_WU = timeFridayWakeUp - mlong + oneWeek;
+        }
+        t3_WU = timeTuesdayWakeUp + (fourDay - mlong);
+        t4_WU = timeWednesdayWakeUp + (fiveDay - mlong);
+        t5_WU = timeThursdayWakeUp + (sixDay - mlong);
+        t7_WU = timeSaturdayWakeUp + (oneDay - mlong);
+        cn_WU = timeSundayWakeUp + (twoDay - mlong);
+        t2_WU = timeMondayWakeUp + (threeDay - mlong);
+    }
+
+    private void timeWakeUpThursday() {
+        if (mTruoc30p == true) {
+            setTimeWakeupThursday(truoc30p);
+        } else if (mTruoc15p == true) {
+            setTimeWakeupThursday(truoc15p);
+        } else if (mTruoc5p == true) {
+            setTimeWakeupThursday(truoc5p);
+        } else if (mTruoc1h == true) {
+            setTimeWakeupThursday(truoc1hour);
+        } else if (mSleepNow == true) {
+            setTimeWakeupThursday(0);
+        } else {
+        }
+
+    }
+
+    private void setTimeWakeupThursday(long mlong) {
+        if (timeSystemWakeUp < (timeThursdayWakeUp - mlong)) {
+            t5_WU = timeThursdayWakeUp - mlong;
+        } else {
+            t5_WU = timeThursdayWakeUp - mlong + oneWeek;
+        }
+        t3_WU = timeTuesdayWakeUp + (fiveDay - mlong);
+        t4_WU = timeWednesdayWakeUp + (sixDay - mlong);
+        t6_WU = timeFridayWakeUp + (oneDay - mlong);
+        t7_WU = timeSaturdayWakeUp + (twoDay - mlong);
+        cn_WU = timeSundayWakeUp + (threeDay - mlong);
+        t2_WU = timeMondayWakeUp + (fourDay - mlong);
+    }
+
+    private void timeWakeUpWednesday() {
+
+        if (mTruoc30p == true) {
+            setTimeWakeupWednesday(truoc30p);
+        } else if (mTruoc15p == true) {
+            setTimeWakeupWednesday(truoc15p);
+        } else if (mTruoc5p == true) {
+            setTimeWakeupWednesday(truoc5p);
+        } else if (mTruoc1h == true) {
+            setTimeWakeupWednesday(truoc1hour);
+        } else if (mSleepNow == true) {
+            setTimeWakeupWednesday(0);
+        } else {
+        }
+
+    }
+
+    private void setTimeWakeupWednesday(long mlong) {
+        if (timeSystemWakeUp < (timeWednesdayWakeUp - mlong)) {
+            t4_WU = timeWednesdayWakeUp - mlong;
+        } else {
+            t4_WU = timeWednesdayWakeUp - mlong + oneWeek;
+        }
+        t3_WU = timeTuesdayWakeUp + (sixDay - mlong);
+        t5_WU = timeThursdayWakeUp + (oneDay - mlong);
+        t6_WU = timeFridayWakeUp + (twoDay - mlong);
+        t7_WU = timeSaturdayWakeUp + (threeDay - mlong);
+        cn_WU = timeSundayWakeUp + (fourDay - mlong);
+        t2_WU = timeMondayWakeUp + (fiveDay - mlong);
+    }
+
+    private void timeWakeUpTuesday() {
+        if (mTruoc30p == true) {
+            setTimeWakeupTuesday(truoc30p);
+        } else if (mTruoc15p == true) {
+            setTimeWakeupTuesday(truoc15p);
+        } else if (mTruoc5p == true) {
+            setTimeWakeupTuesday(truoc5p);
+        } else if (mTruoc1h == true) {
+            setTimeWakeupTuesday(truoc1hour);
+        } else if (mSleepNow == true) {
+            setTimeWakeupTuesday(0);
+        } else {
+        }
+    }
+
+    private void setTimeWakeupTuesday(long mlong) {
+        if (timeSystemWakeUp < (timeTuesdayWakeUp - mlong)) {
+            t3_WU = timeTuesdayWakeUp + (oneDay - mlong);
+        } else {
+            t3_WU = timeTuesdayWakeUp - mlong + oneWeek;
+        }
+        t4_WU = timeWednesdayWakeUp + (oneDay - mlong);
+        t5_WU = timeThursdayWakeUp + (twoDay - mlong);
+        t6_WU = timeFridayWakeUp + (threeDay - mlong);
+        t7_WU = timeSaturdayWakeUp + (fourDay - mlong);
+        cn_WU = timeSundayWakeUp + (fiveDay - mlong);
+        t2_WU = timeMondayWakeUp + (sixDay - mlong);
+    }
+
+    private void timeWakeUpMonday() {
+        if (mTruoc30p == true) {
+            setTimeWakeupMonDay(truoc30p);
+        } else if (mTruoc15p == true) {
+            setTimeWakeupMonDay(truoc15p);
+        } else if (mTruoc5p == true) {
+            setTimeWakeupMonDay(truoc5p);
+        } else if (mTruoc1h == true) {
+            setTimeWakeupMonDay(truoc1hour);
+        } else if (mSleepNow == true) {
+            setTimeWakeupMonDay(0);
+        } else {
+        }
+
+    }
+
+    private void setTimeWakeupMonDay(long mlong) {
+        t3_WU = timeTuesdayWakeUp + (oneDay - mlong);
+        t4_WU = timeWednesdayWakeUp + (twoDay - mlong);
+        t5_WU = timeThursdayWakeUp + (threeDay - mlong);
+        t6_WU = timeFridayWakeUp + (fourDay - mlong);
+        t7_WU = timeSaturdayWakeUp + (fiveDay - mlong);
+        cn_WU = timeSundayWakeUp + (sixDay - mlong);
+        if (timeSystemWakeUp < (timeMondayWakeUp - mlong)) {
+            t2_WU = timeMondayWakeUp - mlong;
+        } else {
+            t2_WU = timeMondayWakeUp - mlong + oneWeek;
+        }
+    }
+
+    private void timeWakeUpSunday() {
+
+        if (mTruoc30p == true) {
+            setTimeWakeupCN(truoc30p);
+        } else if (mTruoc15p == true) {
+            setTimeWakeupCN(truoc15p);
+        } else if (mTruoc5p == true) {
+            setTimeWakeupCN(truoc5p);
+        } else if (mTruoc1h == true) {
+            setTimeWakeupCN(truoc1hour);
+        } else if (mSleepNow == true) {
+            setTimeWakeupCN(0);
+        } else {
+        }
+
+
+    }
+
+    private void setTimeWakeupCN(long mlong) {
+        t2_WU = timeMondayWakeUp + (oneDay - mlong);
+        t3_WU = timeTuesdayWakeUp + (twoDay - mlong);
+        t4_WU = timeWednesdayWakeUp + (threeDay - mlong);
+        t5_WU = timeThursdayWakeUp + (fourDay - mlong);
+        t6_WU = timeFridayWakeUp + (fiveDay - mlong);
+        t7_WU = timeSaturdayWakeUp + (sixDay - mlong);
+        if (timeSystemWakeUp < (timeSundayWakeUp - mlong)) {
+            cn_WU = timeSundayWakeUp - mlong;
+        } else {
+            cn_WU = timeSundayWakeUp - mlong + oneWeek;
+        }
+    }
+
+    private void setCalendarMondayWakeUp() {
+        mCaMondayWakeUp.set(Calendar.HOUR_OF_DAY, hourWakeUp);
+        mCaMondayWakeUp.set(Calendar.MINUTE, minuteWakeUp);
+        mCaMondayWakeUp.set(Calendar.SECOND, 0);
+        mCaMondayWakeUp.set(Calendar.MILLISECOND, 0);
+        timeMondayWakeUp = mCaMondayWakeUp.getTimeInMillis();
+        timeSystemWakeUp = System.currentTimeMillis();
+
+    }
+
+    private void setCalendarTuesdayWakeUp() {
+        mCaTuesdayWakeUp.set(Calendar.HOUR_OF_DAY, hourWakeUp);
+        mCaTuesdayWakeUp.set(Calendar.MINUTE, minuteWakeUp);
+        mCaTuesdayWakeUp.set(Calendar.SECOND, 0);
+        mCaTuesdayWakeUp.set(Calendar.MILLISECOND, 0);
+        timeTuesdayWakeUp = mCaTuesdayWakeUp.getTimeInMillis();
+        timeSystemWakeUp = System.currentTimeMillis();
+
+    }
+
+    private void setmCalendarWednesdayWakeUp() {
+        mCaWednesdayWakeUp.set(Calendar.HOUR_OF_DAY, hourWakeUp);
+        mCaWednesdayWakeUp.set(Calendar.MINUTE, minuteWakeUp);
+        mCaWednesdayWakeUp.set(Calendar.SECOND, 0);
+        mCaWednesdayWakeUp.set(Calendar.MILLISECOND, 0);
+        timeWednesdayWakeUp = mCaWednesdayWakeUp.getTimeInMillis();
+        timeSystemWakeUp = System.currentTimeMillis();
+
+    }
+
+    private void setmCalendarThursdayWakeUp() {
+        mCaThursdayWakeUp.set(Calendar.HOUR_OF_DAY, hourWakeUp);
+        mCaThursdayWakeUp.set(Calendar.MINUTE, minuteWakeUp);
+        mCaThursdayWakeUp.set(Calendar.SECOND, 0);
+        mCaThursdayWakeUp.set(Calendar.MILLISECOND, 0);
+        timeThursdayWakeUp = mCaThursdayWakeUp.getTimeInMillis();
+        timeSystemWakeUp = System.currentTimeMillis();
+
+    }
+
+    private void setmCalendarFridayWakeUp() {
+        mCaFridayWakeUp.set(Calendar.HOUR_OF_DAY, hourWakeUp);
+        mCaFridayWakeUp.set(Calendar.MINUTE, minuteWakeUp);
+        mCaFridayWakeUp.set(Calendar.SECOND, 0);
+        mCaFridayWakeUp.set(Calendar.MILLISECOND, 0);
+        timeFridayWakeUp = mCaFridayWakeUp.getTimeInMillis();
+        timeSystemWakeUp = System.currentTimeMillis();
+
+    }
+
+    private void setmCalendarSaturdayWakeUp() {
+        mCaSaturdayWakeUp.set(Calendar.HOUR_OF_DAY, hourWakeUp);
+        mCaSaturdayWakeUp.set(Calendar.MINUTE, minuteWakeUp);
+        mCaSaturdayWakeUp.set(Calendar.SECOND, 0);
+        mCaSaturdayWakeUp.set(Calendar.MILLISECOND, 0);
+        timeSaturdayWakeUp = mCaSaturdayWakeUp.getTimeInMillis();
+        timeSystemWakeUp = System.currentTimeMillis();
+
+    }
+
+    private void setmCalendarSundayWakeUp() {
+        mCaSundayWakeUp.set(Calendar.HOUR_OF_DAY, hourWakeUp);
+        mCaSundayWakeUp.set(Calendar.MINUTE, minuteWakeUp);
+        mCaSundayWakeUp.set(Calendar.SECOND, 0);
+        mCaSundayWakeUp.set(Calendar.MILLISECOND, 0);
+        timeSundayWakeUp = mCaSundayWakeUp.getTimeInMillis();
+        timeSystemWakeUp = System.currentTimeMillis();
+
+    }
+
+    private void cancleAlarmManagerWakeUp() {
+        cancleAlarm(mALMondayWakeUp, mPdMondayWakeUp);
+        cancleAlarm(mALTuesdayWakeUp, mPdTuesdayWakeUp);
+        cancleAlarm(mALWednesdayWakeUp, mPdWednesdayWakeUp);
+        cancleAlarm(mALThursdayWakeUp, mPdThursdayWakeUp);
+        cancleAlarm(mALFridayWakeUp, mPdFridaydayWakeUp);
+        cancleAlarm(mALSaturdayWakeUp, mPdSaturdayWakeUp);
+        cancleAlarm(mALSundayWakeUp, mPdSundayWakeUp);
     }
 
     private void soSanh() {
@@ -341,11 +777,11 @@ public class MainActivity extends AppCompatActivity {
         t3 = timesleepTuesday + (threeDay - mlong);
         t4 = timesleepWednesday + (fourDay - mlong);
         t5 = timesleepThursday + (fiveDay - mlong);
-        t6 = timesleepFriday - (sixDay - mlong);
-        if (timeSystem<(timesleepSaturday-mlong)){
+        t6 = timesleepFriday + (sixDay - mlong);
+        if (timeSystem < (timesleepSaturday - mlong)) {
             t7 = timesleepSaturday - mlong;
-        }else {
-            t7 = timesleepSaturday - mlong+oneWeek;
+        } else {
+            t7 = timesleepSaturday - mlong + oneWeek;
         }
         cn = timesleepSunday + (oneDay - mlong);
     }
@@ -378,10 +814,10 @@ public class MainActivity extends AppCompatActivity {
         t3 = timesleepTuesday + (fourDay - mlong);
         t4 = timesleepWednesday + (fiveDay - mlong);
         t5 = timesleepThursday + (sixDay - mlong);
-        if (timeSystem<(timesleepFriday-mlong)){
+        if (timeSystem < (timesleepFriday - mlong)) {
             t6 = timesleepFriday - mlong;
-        }else {
-            t6 = timesleepFriday - mlong+oneWeek;
+        } else {
+            t6 = timesleepFriday - mlong + oneWeek;
         }
         t7 = timesleepSaturday + (oneDay - mlong);
         cn = timesleepSunday + (twoDay - mlong);
@@ -416,10 +852,10 @@ public class MainActivity extends AppCompatActivity {
         t2 = timesleepMonday + (fourDay - mlong);
         t3 = timesleepTuesday + (fiveDay - mlong);
         t4 = timesleepWednesday + (sixDay - mlong);
-        if (timeSystem<(timesleepThursday-mlong)){
+        if (timeSystem < (timesleepThursday - mlong)) {
             t5 = timesleepThursday - mlong;
-        }else {
-            t5 = timesleepThursday - mlong +oneWeek;
+        } else {
+            t5 = timesleepThursday - mlong + oneWeek;
         }
         t6 = timesleepFriday + (oneDay - mlong);
         t7 = timesleepSaturday + (twoDay - mlong);
@@ -457,10 +893,10 @@ public class MainActivity extends AppCompatActivity {
     private void setTimeT4(long mlong) {
         t2 = timesleepMonday + (fiveDay - mlong);
         t3 = timesleepTuesday + (sixDay - mlong);
-        if (timeSystem<(timesleepWednesday-mlong)){
+        if (timeSystem < (timesleepWednesday - mlong)) {
             t4 = timesleepWednesday - mlong;
-        }else {
-            t4 = timesleepWednesday -mlong +oneWeek;
+        } else {
+            t4 = timesleepWednesday - mlong + oneWeek;
         }
         t5 = timesleepThursday + (oneDay - mlong);
         t6 = timesleepFriday + (twoDay - mlong);
@@ -498,10 +934,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setTimeT3(long mlong) {
         t2 = timesleepMonday + (sixDay - mlong);
-        if (timeSystem<(timesleepTuesday-mlong)){
+        if (timeSystem < (timesleepTuesday - mlong)) {
             t3 = timesleepTuesday - mlong;
-        }else {
-            t3 = timesleepTuesday - mlong +oneWeek;
+        } else {
+            t3 = timesleepTuesday - mlong + oneWeek;
         }
         t4 = timesleepWednesday + (oneDay - mlong);
         t5 = timesleepThursday + (twoDay - mlong);
@@ -539,10 +975,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setTimeT2(long mlong) {
-        if (timeSystem < (timesleepMonday - mlong)){
-            t2 = timesleepMonday-mlong;
-        }else {
-            t2 = timesleepMonday - mlong+oneWeek;
+        if (timeSystem < (timesleepMonday - mlong)) {
+            t2 = timesleepMonday - mlong;
+        } else {
+            t2 = timesleepMonday - mlong + oneWeek;
         }
         t3 = timesleepTuesday + (oneDay - mlong);
         t4 = timesleepWednesday + (twoDay - mlong);
@@ -553,17 +989,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void cancleAlarmManager() {
-        try {
-            mAlarmManagerMondaySleep.cancel(mPendingIntentMondaySleep);
-            mAlarmManagerTuesdaySleep.cancel(mPendingIntentTuesdaySleep);
-            mAlarmManagerWednesdaySleep.cancel(mPendingIntentWednesdaySleep);
-            mAlarmManagerThursdaySleep.cancel(mPendingIntentThursdaySleep);
-            mAlarmManagerFridaySleep.cancel(mPendingIntentFridaySleep);
-            mAlarmManagerSaturdaySleep.cancel(mPendingIntentSaturdaySleep);
-            mAlarmManagerSundaySleep.cancel(mPendingIntentSundaySleep);
-        } catch (Exception e) {
-        }
+    private void cancleAlarmManagerSleep() {
+
+        cancleAlarm(mAlarmManagerMondaySleep, mPendingIntentMondaySleep);
+        cancleAlarm(mAlarmManagerTuesdaySleep, mPendingIntentTuesdaySleep);
+        cancleAlarm(mAlarmManagerWednesdaySleep, mPendingIntentWednesdaySleep);
+        cancleAlarm(mAlarmManagerThursdaySleep, mPendingIntentThursdaySleep);
+        cancleAlarm(mAlarmManagerFridaySleep, mPendingIntentFridaySleep);
+        cancleAlarm(mAlarmManagerSaturdaySleep, mPendingIntentSaturdaySleep);
+        cancleAlarm(mAlarmManagerSundaySleep, mPendingIntentSundaySleep);
 
 
     }
@@ -598,8 +1032,14 @@ public class MainActivity extends AppCompatActivity {
 
         //1*24*60*60*1000
     }
+    private void createAlarm(Intent intent, PendingIntent pendingIntent, AlarmManager alarmManager, long time, int id) {
+        intent.putExtra("TimeWakeUp", true);
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
 
-    private void setCalendarMonday() {
+        //1*24*60*60*1000
+    }
+    private void setCalendarMondaySleep() {
         //  mCalendarMondaySleep.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         mCalendarMondaySleep.set(Calendar.HOUR_OF_DAY, hourSleep);
         mCalendarMondaySleep.set(Calendar.MINUTE, minuteSleep);
@@ -610,7 +1050,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setCalendarTuesday() {
+    private void setCalendarTuesdaySleep() {
         // mCalendarTuesdaySleep.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
         mCalendarTuesdaySleep.set(Calendar.HOUR_OF_DAY, hourSleep);
         mCalendarTuesdaySleep.set(Calendar.MINUTE, minuteSleep);
@@ -620,7 +1060,7 @@ public class MainActivity extends AppCompatActivity {
         timeSystem = System.currentTimeMillis();
     }
 
-    private void setCalendarWednesday() {
+    private void setCalendarWednesdaySleep() {
         //   mCalendarWednesdaySleep.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
         mCalendarWednesdaySleep.set(Calendar.HOUR_OF_DAY, hourSleep);
         mCalendarWednesdaySleep.set(Calendar.MINUTE, minuteSleep);
@@ -631,7 +1071,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setCalendarThursday() {
+    private void setCalendarThursdaySleep() {
         // mCalendarThursdaySleep.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
         mCalendarThursdaySleep.set(Calendar.HOUR_OF_DAY, hourSleep);
         mCalendarThursdaySleep.set(Calendar.MINUTE, minuteSleep);
@@ -641,7 +1081,7 @@ public class MainActivity extends AppCompatActivity {
         timeSystem = System.currentTimeMillis();
     }
 
-    private void setCalendarFriday() {
+    private void setCalendarFridaySleep() {
         // mCalendarFridaySleep.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
         mCalendarFridaySleep.set(Calendar.HOUR_OF_DAY, hourSleep);
         mCalendarFridaySleep.set(Calendar.MINUTE, minuteSleep);
@@ -651,7 +1091,7 @@ public class MainActivity extends AppCompatActivity {
         timeSystem = System.currentTimeMillis();
     }
 
-    private void setCalendarSaturday() {
+    private void setCalendarSaturdaySleep() {
         //   mCalendarSaturdaySleep.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
         mCalendarSaturdaySleep.set(Calendar.HOUR_OF_DAY, hourSleep);
         mCalendarSaturdaySleep.set(Calendar.MINUTE, minuteSleep);
@@ -661,7 +1101,7 @@ public class MainActivity extends AppCompatActivity {
         timeSystem = System.currentTimeMillis();
     }
 
-    private void setCalendarSunday() {
+    private void setCalendarSundaySleep() {
         //     mCalendarSundaySleep.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         mCalendarSundaySleep.set(Calendar.HOUR_OF_DAY, hourSleep);
         mCalendarSundaySleep.set(Calendar.MINUTE, minuteSleep);
@@ -677,7 +1117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
     }
@@ -712,6 +1152,15 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onDestroy() {
+        try {
+            MainActivity.this.unregisterReceiver(receiver);
+        } catch (Exception e) {
+
+        }
+        super.onDestroy();
+    }
 
     private void ganTimeSoSanhCN() {
         if (mTruoc30p == true) {

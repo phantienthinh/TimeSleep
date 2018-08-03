@@ -552,9 +552,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         iv_comback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                startActivity(intent);
-                SettingActivity.this.finish();
+//                Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+//                startActivity(intent);
+               finish();
             }
         });
     }
@@ -686,9 +686,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        SettingActivity.this.finish();
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//        SettingActivity.this.finish();
         super.onBackPressed();
     }
 
@@ -786,14 +786,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     SharedPreferencesManager.setSunday(this, false);
                 }
                 break;
-//            case R.id.txt_xong:
-//
-//
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//                SettingActivity.this.finish();
-//
-//                break;
         }
     }
 
