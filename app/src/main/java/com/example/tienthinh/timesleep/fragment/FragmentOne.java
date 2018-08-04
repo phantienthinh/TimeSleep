@@ -615,6 +615,13 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.btn_on_off:
                 if (toggleOnOff.isChecked() == true) {
+
+//                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+//                        context.startForegroundService(new Intent(context, MyServices.class));
+//                    }else {
+//                        context.startService(new Intent(context,MyServices.class));
+//                    }
+
                     setUiViewOn();
                     SharedPreferencesManager.setToggleOnOff(context, true);
 //                    context.startService(new Intent(context, MyServices.class));

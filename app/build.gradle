@@ -31,7 +31,7 @@ dependencies {
     implementation 'com.android.support:support-vector-drawable:27.1.1'
     testImplementation 'junit:junit:4.12'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
-
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.tienthinh.timesleep.Recever.AlarmRecever;
+import com.example.tienthinh.timesleep.Recever.AlarmReceverWakeUp;
 import com.example.tienthinh.timesleep.fragment.FragmentOne;
 import com.example.tienthinh.timesleep.fragment.FragmentThree;
 import com.example.tienthinh.timesleep.fragment.FragmentTwo;
@@ -30,6 +30,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     long timeMondayWakeUp, timeTuesdayWakeUp, timeWednesdayWakeUp, timeThursdayWakeUp, timeFridayWakeUp, timeSaturdayWakeUp, timeSundayWakeUp;
     private static final String KEYSLEEP = "KEY";
+    private static final String KEYSLEEPWAKEUP = "KEYWU";
     boolean mTruoc5p, mTruoc15p, mTruoc30p, mTruoc1h, mSleepNow;
     private long oneWeek = 604800000;
     long timeSystem, timeSystemWakeUp;
@@ -132,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void createWakeLock() {
 
-        PowerManager mgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
-        wakeLock.acquire();
+//        PowerManager mgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//        PowerManager.WakeLock wakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
+//        wakeLock.acquire();
 //        wakeLock.release();
     }
 
@@ -290,14 +291,14 @@ public class MainActivity extends AppCompatActivity {
                     case "TimeWakeUpActivity":
                         cancleAlarmManagerWakeUp();
                         readSharedPreDay();
-
+                        Log.e(TAG, "vao TimeWakeUpActivity" );
                         //thứ 2
                         if (mBooleanMonday == true) {
                             setCalendarMondayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALMondayWakeUp, mPdMondayWakeUp);
-                            intent = new Intent(MainActivity.this,AlarmRecever.class);
-                            intent.putExtra(KEYSLEEP,22);
+                            intent = new Intent(MainActivity.this,AlarmReceverWakeUp.class);
+                            intent.putExtra(KEYSLEEPWAKEUP,22);
                             intent.putExtra("KEYTIME_T2_WU",t2_WU);
                             createAlarm(intent,mPdMondayWakeUp,mALMondayWakeUp,t2_WU,22);
                         } else {
@@ -309,8 +310,8 @@ public class MainActivity extends AppCompatActivity {
                             setCalendarTuesdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALTuesdayWakeUp, mPdTuesdayWakeUp);
-                            intent = new Intent(MainActivity.this,AlarmRecever.class);
-                            intent.putExtra(KEYSLEEP,23);
+                            intent = new Intent(MainActivity.this,AlarmReceverWakeUp.class);
+                            intent.putExtra(KEYSLEEPWAKEUP,23);
                             intent.putExtra("KEYTIME_T3_WU",t3_WU);
                             createAlarm(intent,mPdTuesdayWakeUp,mALTuesdayWakeUp,t3_WU,23);
 
@@ -323,8 +324,8 @@ public class MainActivity extends AppCompatActivity {
                             setmCalendarWednesdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALWednesdayWakeUp, mPdWednesdayWakeUp);
-                            intent = new Intent(MainActivity.this,AlarmRecever.class);
-                            intent.putExtra(KEYSLEEP,24);
+                            intent = new Intent(MainActivity.this,AlarmReceverWakeUp.class);
+                            intent.putExtra(KEYSLEEPWAKEUP,24);
                             intent.putExtra("KEYTIME_T4_WU",t4_WU);
                             createAlarm(intent,mPdWednesdayWakeUp,mALWednesdayWakeUp,t4_WU,24);
                         } else {
@@ -335,8 +336,8 @@ public class MainActivity extends AppCompatActivity {
                             setmCalendarThursdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALThursdayWakeUp, mPdThursdayWakeUp);
-                            intent = new Intent(MainActivity.this,AlarmRecever.class);
-                            intent.putExtra(KEYSLEEP,25);
+                            intent = new Intent(MainActivity.this,AlarmReceverWakeUp.class);
+                            intent.putExtra(KEYSLEEPWAKEUP,25);
                             intent.putExtra("KEYTIME_T5_WU",t5_WU);
                             createAlarm(intent,mPdThursdayWakeUp,mALThursdayWakeUp,t5_WU,25);
                         } else {
@@ -347,8 +348,8 @@ public class MainActivity extends AppCompatActivity {
                             setmCalendarFridayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALFridayWakeUp, mPdFridaydayWakeUp);
-                            intent = new Intent(MainActivity.this,AlarmRecever.class);
-                            intent.putExtra(KEYSLEEP,26);
+                            intent = new Intent(MainActivity.this,AlarmReceverWakeUp.class);
+                            intent.putExtra(KEYSLEEPWAKEUP,26);
                             intent.putExtra("KEYTIME_T6_WU",t6_WU);
                             createAlarm(intent,mPdFridaydayWakeUp,mALFridayWakeUp,t6_WU,26);
                         } else {
@@ -359,8 +360,8 @@ public class MainActivity extends AppCompatActivity {
                             setmCalendarSaturdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALSaturdayWakeUp, mPdSaturdayWakeUp);
-                            intent = new Intent(MainActivity.this,AlarmRecever.class);
-                            intent.putExtra(KEYSLEEP,27);
+                            intent = new Intent(MainActivity.this,AlarmReceverWakeUp.class);
+                            intent.putExtra(KEYSLEEPWAKEUP,27);
                             intent.putExtra("KEYTIME_T7_WU",t7_WU);
                             createAlarm(intent,mPdSaturdayWakeUp,mALSaturdayWakeUp,t7_WU,27);
                         } else {
@@ -371,8 +372,8 @@ public class MainActivity extends AppCompatActivity {
                             setmCalendarSundayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALSundayWakeUp, mPdSundayWakeUp);
-                            intent = new Intent(MainActivity.this,AlarmRecever.class);
-                            intent.putExtra(KEYSLEEP,28);
+                            intent = new Intent(MainActivity.this,AlarmReceverWakeUp.class);
+                            intent.putExtra(KEYSLEEPWAKEUP,28);
                             intent.putExtra("KEYTIME_CN_WU",cn_WU);
                             createAlarm(intent,mPdSundayWakeUp,mALSundayWakeUp,cn_WU,28);
                         } else {
@@ -432,17 +433,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setTimeWakeupSaturday(long mlong) {
-        if (timeSystemWakeUp < (timeFridayWakeUp - mlong)) {
-            t6_WU = timeFridayWakeUp - mlong;
+        if (timeSystemWakeUp < (timeSaturdayWakeUp - mlong)) {
+            t7_WU = timeSaturdayWakeUp - mlong;
         } else {
-            t6_WU = timeFridayWakeUp - mlong + oneWeek;
+            t7_WU = timeSaturdayWakeUp - mlong + oneWeek;
         }
-        t3_WU = timeTuesdayWakeUp + (fourDay - mlong);
-        t4_WU = timeWednesdayWakeUp + (fiveDay - mlong);
-        t5_WU = timeFridayWakeUp + (sixDay - mlong);
-        t7_WU = timeSaturdayWakeUp + (oneDay - mlong);
-        cn_WU = timeSundayWakeUp + (twoDay - mlong);
-        t2_WU = timeMondayWakeUp + (threeDay - mlong);
+        t3_WU = timeTuesdayWakeUp + (threeDay - mlong);
+        t4_WU = timeWednesdayWakeUp + (fourDay - mlong);
+        t5_WU = timeThursdayWakeUp + (fiveDay - mlong);
+        t6_WU = timeFridayWakeUp + (sixDay - mlong);
+        cn_WU = timeSundayWakeUp + (oneDay - mlong);
+        t2_WU = timeMondayWakeUp + (twoDay - mlong);
     }
 
     private void timeWakeUpFriday() {
@@ -1017,10 +1018,15 @@ public class MainActivity extends AppCompatActivity {
         mTruoc5p = SharedPreferencesManager.get5p(MainActivity.this);
         mSleepNow = SharedPreferencesManager.getSleepNow(MainActivity.this);
 
-        MainActivity.hourWakeUp = SharedPreferencesManager.getHourWakeUp(MainActivity.this);
-        MainActivity.minuteWakeUp = SharedPreferencesManager.getMinuteWakeUp(MainActivity.this);
-        MainActivity.hourSleep = SharedPreferencesManager.getHourSleep(MainActivity.this);
-        MainActivity.minuteSleep = SharedPreferencesManager.getMinuteSleep(MainActivity.this);
+        hourWakeUp = SharedPreferencesManager.getHourWakeUp(MainActivity.this);
+        minuteWakeUp = SharedPreferencesManager.getMinuteWakeUp(MainActivity.this);
+        hourSleep = SharedPreferencesManager.getHourSleep(MainActivity.this);
+        minuteSleep = SharedPreferencesManager.getMinuteSleep(MainActivity.this);
+
+        Log.e(TAG, "hourWakeUp: "+hourWakeUp);
+        Log.e(TAG, "minuteWakeUp: "+minuteWakeUp);
+        Log.e(TAG, "hourSleep: "+hourSleep);
+        Log.e(TAG, "minuteSleep: "+minuteSleep);
 
 
     }

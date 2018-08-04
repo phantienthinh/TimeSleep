@@ -3,7 +3,6 @@ package com.example.tienthinh.timesleep;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -369,19 +368,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void DocLaiSharePreferences() {
-        if (SharedPreferencesManager.getSleepNow(SettingActivity.this)==true) {
+        if (SharedPreferencesManager.getSleepNow(SettingActivity.this) == true) {
             imv_checkSleep.setVisibility(View.VISIBLE);
         } else {
-            if (SharedPreferencesManager.get1hour(SettingActivity.this)==true){
+            if (SharedPreferencesManager.get1hour(SettingActivity.this) == true) {
                 imv_check1Hour.setVisibility(View.VISIBLE);
             } else {
-                if (SharedPreferencesManager.get15p(SettingActivity.this)==true) {
+                if (SharedPreferencesManager.get15p(SettingActivity.this) == true) {
                     imv_check15P.setVisibility(View.VISIBLE);
                 } else {
-                    if (SharedPreferencesManager.get5p(SettingActivity.this)==true) {
+                    if (SharedPreferencesManager.get5p(SettingActivity.this) == true) {
                         imv_check5P.setVisibility(View.VISIBLE);
                     } else {
-                        if (SharedPreferencesManager.get30p(SettingActivity.this)==true) {
+                        if (SharedPreferencesManager.get30p(SettingActivity.this) == true) {
                             imv_check30P.setVisibility(View.VISIBLE);
                         } else {
 
@@ -554,7 +553,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             public void onClick(View v) {
 //                Intent intent = new Intent(SettingActivity.this, MainActivity.class);
 //                startActivity(intent);
-               finish();
+                finish();
             }
         });
     }
@@ -639,6 +638,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void sharedPeferences() {
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, SharedPreferencesManager.getVolume(SettingActivity.this), 0);
         seekBar.setProgress(SharedPreferencesManager.getVolume(SettingActivity.this));
         txtSound.setText(SharedPreferencesManager.getTenBaiHat(SettingActivity.this));
         txtNhacNho.setText(SharedPreferencesManager.getNhacNho(SettingActivity.this));

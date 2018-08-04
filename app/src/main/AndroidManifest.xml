@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".SettingActivity"/>
         <receiver android:name=".Recever.AlarmRecever"/>
+        <receiver android:name=".Recever.AlarmReceverWakeUp"/>
         <service android:name=".services.MyServices"/>
     </application>
 

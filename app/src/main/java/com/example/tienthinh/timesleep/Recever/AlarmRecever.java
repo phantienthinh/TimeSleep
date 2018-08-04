@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.PowerManager;
 import android.util.Log;
 
 import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
@@ -26,12 +27,11 @@ public class AlarmRecever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.e(TAG, "onReceive: ");
         mTimeSleep = intent.getBooleanExtra("TimeSleep", false);
-        mTimeWakeUp = intent.getBooleanExtra("TimeWakeUp",false);
         id = intent.getIntExtra("KEY", 0);
 
         getIntentTimeSleep(intent);
 
-        getIntentTimeWakeUp(intent);
+
 
         getBooleanDay(context);
 
@@ -41,6 +41,7 @@ public class AlarmRecever extends BroadcastReceiver {
 
         switch (id) {
             case 2:
+                Log.e(TAG,"case = 2" );
                 checkNgayThang(context, intent, checkMonday);
 
 
@@ -53,6 +54,8 @@ public class AlarmRecever extends BroadcastReceiver {
                 alarmManagerMonday.setExact(AlarmManager.RTC_WAKEUP, timeSleept2 + oneweek, pendingIntent);
                 break;
             case 3:
+                Log.e(TAG,"case = 3" );
+
                 checkNgayThang(context, intent, checkTuesday);
 
                 AlarmManager alarmManagerTuesday = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -64,6 +67,8 @@ public class AlarmRecever extends BroadcastReceiver {
                 alarmManagerTuesday.setExact(AlarmManager.RTC_WAKEUP, timeSleept3 + oneweek, pendingIntentTuesday);
                 break;
             case 4:
+                Log.e(TAG,"case = 4" );
+
                 checkNgayThang(context, intent, checkWednesday);
 
                 AlarmManager alarmManagerWednesday = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -75,6 +80,7 @@ public class AlarmRecever extends BroadcastReceiver {
                 alarmManagerWednesday.setExact(AlarmManager.RTC_WAKEUP, timeSleept4 + oneweek, pendingIntentWednesday);
                 break;
             case 5:
+                Log.e(TAG,"case = 5" );
 
                 checkNgayThang(context, intent, checkThursday);
 
@@ -87,6 +93,8 @@ public class AlarmRecever extends BroadcastReceiver {
                 alarmManagerThursday.setExact(AlarmManager.RTC_WAKEUP, timeSleept5 + oneweek, pendingIntentThursday);
                 break;
             case 6:
+                Log.e(TAG,"case = 6" );
+
                 checkNgayThang(context, intent, checkFriday);
 
 
@@ -99,6 +107,8 @@ public class AlarmRecever extends BroadcastReceiver {
                 alarmManagerFriday.setExact(AlarmManager.RTC_WAKEUP, timeSleept6 + oneweek, pendingIntentFriday);
                 break;
             case 7:
+                Log.e(TAG,"case = 7" );
+
                 checkNgayThang(context, intent, checkSatuday);
 
 
@@ -111,6 +121,8 @@ public class AlarmRecever extends BroadcastReceiver {
                 alarmManagerSaturday.setExact(AlarmManager.RTC_WAKEUP, timeSleept7 + oneweek, pendingIntentSaturday);
                 break;
             case 8:
+                Log.e(TAG,"case = 8" );
+
                 checkNgayThang(context, intent, checkSunday);
 
                 AlarmManager alarmManagerSunday = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -121,77 +133,6 @@ public class AlarmRecever extends BroadcastReceiver {
                 PendingIntent pendingIntentSunday = PendingIntent.getBroadcast(context, 8, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 alarmManagerSunday.setExact(AlarmManager.RTC_WAKEUP, timeSleepCN + oneweek, pendingIntentSunday);
                 break;
-            case 22:
-                checkNgayThangWakeUp(context,intent,checkMonday);
-                AlarmManager mALMondayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmRecever.class);
-                intent.putExtra("KEY", 22);
-                intent.putExtra("TimeWakeUp", true);
-                intent.putExtra("KEYTIME_T2_WU", timeWakeUpt2 + oneweek);
-                PendingIntent mPDMondayWakeUp = PendingIntent.getBroadcast(context, 22, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mALMondayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpCN + oneweek, mPDMondayWakeUp);
-                break;
-            case 23:
-                checkNgayThangWakeUp(context,intent,checkTuesday);
-                AlarmManager mALTuesdayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmRecever.class);
-                intent.putExtra("KEY", 23);
-                intent.putExtra("TimeWakeUp", true);
-                intent.putExtra("KEYTIME_T3_WU", timeWakeUpt3 + oneweek);
-                PendingIntent mPDTuesdayWakeUp = PendingIntent.getBroadcast(context, 23, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mALTuesdayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt3 + oneweek, mPDTuesdayWakeUp);
-                break;
-            case 24:
-                checkNgayThangWakeUp(context,intent,checkWednesday);
-                AlarmManager mALWednesdayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmRecever.class);
-                intent.putExtra("KEY", 24);
-                intent.putExtra("TimeWakeUp", true);
-                intent.putExtra("KEYTIME_T4_WU", timeWakeUpt4 + oneweek);
-                PendingIntent mPDWednesdayWakeUp = PendingIntent.getBroadcast(context, 24, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mALWednesdayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt4 + oneweek, mPDWednesdayWakeUp);
-                break;
-            case 25:
-                checkNgayThangWakeUp(context,intent,checkThursday);
-                AlarmManager mALThursdayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmRecever.class);
-                intent.putExtra("KEY", 25);
-                intent.putExtra("TimeWakeUp", true);
-                intent.putExtra("KEYTIME_T5_WU", timeWakeUpt5 + oneweek);
-                PendingIntent mPDThursdayWakeUp = PendingIntent.getBroadcast(context, 25, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mALThursdayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt5 + oneweek, mPDThursdayWakeUp);
-                break;
-            case 26:
-                checkNgayThangWakeUp(context,intent,checkFriday);
-                AlarmManager mALFridayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmRecever.class);
-                intent.putExtra("KEY", 26);
-                intent.putExtra("TimeWakeUp", true);
-                intent.putExtra("KEYTIME_T6_WU", timeWakeUpt6 + oneweek);
-                PendingIntent mPDFridayWakeUp = PendingIntent.getBroadcast(context, 26, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mALFridayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt6 + oneweek, mPDFridayWakeUp);
-                break;
-            case 27:
-                checkNgayThangWakeUp(context,intent,checkSatuday);
-                AlarmManager mALSatudayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmRecever.class);
-                intent.putExtra("KEY", 27);
-                intent.putExtra("TimeWakeUp", true);
-                intent.putExtra("KEYTIME_T7_WU", timeWakeUpt7 + oneweek);
-                PendingIntent mPDSatudayWakeUp = PendingIntent.getBroadcast(context, 27, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mALSatudayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt7 + oneweek, mPDSatudayWakeUp);
-                break;
-            case 28:
-                checkNgayThangWakeUp(context,intent,checkSunday);
-                AlarmManager mALSundayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                intent = new Intent(context, AlarmRecever.class);
-                intent.putExtra("KEY", 28);
-                intent.putExtra("TimeWakeUp", true);
-                intent.putExtra("KEYTIME_CN_WU", timeWakeUpCN + oneweek);
-                PendingIntent mPDSundayWakeUp = PendingIntent.getBroadcast(context, 28, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                mALSundayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpCN + oneweek, mPDSundayWakeUp);
-                break;
-
         }
 
 
@@ -218,26 +159,22 @@ public class AlarmRecever extends BroadcastReceiver {
         timeSleepCN = intent.getLongExtra("KEYTIME_CN", 0);
     }
 
-    private void getIntentTimeWakeUp(Intent intent) {
-        timeWakeUpt2 = intent.getLongExtra("KEYTIME_T2_WU", 0);
-        timeWakeUpt3 = intent.getLongExtra("KEYTIME_T3_WU", 0);
-        timeWakeUpt4 = intent.getLongExtra("KEYTIME_T4_WU", 0);
-        timeWakeUpt5 = intent.getLongExtra("KEYTIME_T5_WU", 0);
-        timeWakeUpt6 = intent.getLongExtra("KEYTIME_T6_WU", 0);
-        timeWakeUpt7 = intent.getLongExtra("KEYTIME_T7_WU", 0);
-        timeWakeUpCN = intent.getLongExtra("KEYTIME_CN_WU", 0);
-    }
 
     private void startServiceSleepCall(Context context, Intent intent) {
         if (checkOnOff == true) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(new Intent(context, MyServices.class));
+                intent = new Intent(context,MyServices.class);
+                intent.putExtra("sleep",true);
+                context.startForegroundService(intent);
+
             } else {
-                context.startService(new Intent(context, MyServices.class));
+                intent = new Intent(context,MyServices.class);
+                intent.putExtra("sleep",true);
+                context.startService(intent);
             }
-            intent = new Intent("sendTimeSleep");
-            context.sendBroadcast(intent);
-            Log.e(TAG, "mTimeSleep=true");
+//            intent = new Intent("sendTimeSleep");
+//            context.sendBroadcast(intent);
+//            Log.e(TAG, "mTimeSleep=true");
         } else {
 
         }
@@ -249,6 +186,7 @@ public class AlarmRecever extends BroadcastReceiver {
             if (mTimeSleep == true) {
                 mTimeSleep=false;
                 startServiceSleepCall(context, intent);
+                Log.e(TAG, "vào sleep" );
 
             } else {
             }
@@ -257,33 +195,7 @@ public class AlarmRecever extends BroadcastReceiver {
         }
     }
 
-    private void checkNgayThangWakeUp(Context context, Intent intent, boolean b) {
-        if (b == true) {
-            if (mTimeWakeUp == true) {
-                mTimeWakeUp=false;
-                startServiceWakeUpCall(context, intent);
 
-            } else {
-            }
-        } else {
 
-        }
-    }
-
-    private void startServiceWakeUpCall(Context context, Intent intent) {
-        if (checkOnOff == true) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(new Intent(context, MyServices.class));
-            } else {
-                context.startService(new Intent(context, MyServices.class));
-            }
-            intent = new Intent("sendTimeWakeUp");
-            context.sendBroadcast(intent);
-            Log.e(TAG, "mTimeWakeUp=true");
-        } else {
-
-        }
-
-    }
 
 }
