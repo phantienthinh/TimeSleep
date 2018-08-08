@@ -24,7 +24,7 @@
             android:textSize="@dimen/_15sdp"
             android:gravity="center|left"
             android:textColor="@color/textColor"
-            android:text="On/Off"
+            android:text="@string/on_off"
             android:layout_weight="8.5"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
@@ -68,7 +68,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -84,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Giờ Đi Ngủ"
+                    android:text="@string/time_sleep"
                     android:textColor="@color/Yellow"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -92,7 +92,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.1"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -108,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Giờ Thức Dậy"
+                    android:text="@string/time_wake_up"
                     android:textColor="@color/Yellow"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -155,7 +155,7 @@
             <com.example.tienthinh.timesleep.Widget.CircularSliderRange
                 android:id="@+id/circular"
                 android:layout_width="@dimen/_240sdp"
-                android:layout_height="@dimen/_250sdp"
+                android:layout_height="@dimen/_220sdp"
                 android:layout_gravity="center"
                 android:paddingBottom="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
@@ -188,7 +188,7 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_249sdp"
+                android:layout_height="@dimen/_220sdp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true">
 
@@ -205,12 +205,13 @@
         <!--</FrameLayout>-->
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barchart"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp" />
+                android:layout_height="@dimen/_115sdp" />
             <RelativeLayout
                 android:id="@+id/relativeLayoutBarchar"
                 android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package com.example.tienthinh.timesleep;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -26,6 +27,7 @@ import com.example.tienthinh.timesleep.model.Sound;
 import java.util.ArrayList;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
+    private int positionSound;
     private int i;
     boolean dkT2 = false;
     boolean dkT3 = false;
@@ -85,6 +87,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
                 SharedPreferencesManager.setVolume(SettingActivity.this, i);
+                if (b==true){
+                    playMusic();
+                }else {}
             }
 
             @Override
@@ -97,6 +102,45 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+    }
+
+    private void playMusic() {
+        positionSound = SharedPreferencesManager.getPositionSound(SettingActivity.this);
+        switch (positionSound) {
+            case 0:
+                createMediaPlayer(R.raw.littlecomfort);
+                break;
+            case 1:
+                createMediaPlayer(R.raw.annieswonderland);
+                break;
+            case 2:
+                createMediaPlayer(R.raw.havana);
+                break;
+            case 3:
+                createMediaPlayer(R.raw.thisgame);
+                break;
+            case 4:
+                createMediaPlayer(R.raw.griefandsorrow);
+                break;
+            case 5:
+                createMediaPlayer(R.raw.frenchkiss);
+                break;
+            case 6:
+                createMediaPlayer(R.raw.beautifulgirl);
+                break;
+        }
+    }
+
+    private void createMediaPlayer(int uri) {
+        if (mediaPlayer.isPlaying() == true) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = MediaPlayer.create(SettingActivity.this, uri);
+            mediaPlayer.start();
+        } else {
+            mediaPlayer = MediaPlayer.create(SettingActivity.this, uri);
+            mediaPlayer.start();
+        }
     }
 
     private void onClickTextViewShound() {
@@ -115,7 +159,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 Array_List_sounds.add(new Sound("Havana", false));
                 Array_List_sounds.add(new Sound("This Game", false));
                 Array_List_sounds.add(new Sound("Grief And Sorrow", false));
-                Array_List_sounds.add(new Sound("Chúng ta không giống nhau", false));
+                Array_List_sounds.add(new Sound("French Kiss", false));
                 Array_List_sounds.add(new Sound("Beautiful Girl", false));
                 final SoundAdapter.OnItemClickListenner onItemClickListenner = new SoundAdapter.OnItemClickListenner() {
                     @Override
@@ -244,10 +288,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                                 if (mediaPlayer.isPlaying() == true) {
                                     mediaPlayer.stop();
-                                    mediaPlayer = MediaPlayer.create(SettingActivity.this, R.raw.chungtakhonggiongnhau);
+                                    mediaPlayer = MediaPlayer.create(SettingActivity.this, R.raw.frenchkiss);
                                     mediaPlayer.start();
                                 } else {
-                                    mediaPlayer = MediaPlayer.create(SettingActivity.this, R.raw.chungtakhonggiongnhau);
+                                    mediaPlayer = MediaPlayer.create(SettingActivity.this, R.raw.frenchkiss);
                                     mediaPlayer.start();
                                 }
 
@@ -332,8 +376,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 txtSound.setText("Grief And Sorrow");
                 break;
             case 5:
-                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Chúng ta không giống nhau");
-                txtSound.setText("Chúng ta không giống nhau");
+                SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "French Kiss");
+                txtSound.setText("French Kiss");
                 break;
             case 6:
                 SharedPreferencesManager.setTenBaiHat(SettingActivity.this, "Beautiful Girl");
@@ -403,53 +447,58 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void DieuKienSave() {
         if (imv_checkSleep.getVisibility() == View.VISIBLE) {
-            txtNhacNho.setText("Lúc Đi Ngủ");
+            txtNhacNho.setText(R.string.at_sleeping);
             SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
             SharedPreferencesManager.setSleepNow(SettingActivity.this, true);
             SharedPreferencesManager.set30p(SettingActivity.this, false);
             SharedPreferencesManager.set5p(SettingActivity.this, false);
             SharedPreferencesManager.set1hour(SettingActivity.this, false);
             SharedPreferencesManager.set15p(SettingActivity.this, false);
+            sendBroadcastReceiver();
             dialog.cancel();
         } else {
             if (imv_check5P.getVisibility() == View.VISIBLE) {
-                txtNhacNho.setText("5 Phút");
+                txtNhacNho.setText(R.string.five_minute);
                 SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                 SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
                 SharedPreferencesManager.set30p(SettingActivity.this, false);
                 SharedPreferencesManager.set5p(SettingActivity.this, true);
                 SharedPreferencesManager.set1hour(SettingActivity.this, false);
                 SharedPreferencesManager.set15p(SettingActivity.this, false);
+                sendBroadcastReceiver();
                 dialog.cancel();
             } else {
                 if (imv_check15P.getVisibility() == View.VISIBLE) {
-                    txtNhacNho.setText("15 Phút");
+                    txtNhacNho.setText(R.string.fifteen_minute);
                     SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                     SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
                     SharedPreferencesManager.set30p(SettingActivity.this, false);
                     SharedPreferencesManager.set5p(SettingActivity.this, false);
                     SharedPreferencesManager.set1hour(SettingActivity.this, false);
                     SharedPreferencesManager.set15p(SettingActivity.this, true);
+                    sendBroadcastReceiver();
                     dialog.cancel();
                 } else {
                     if (imv_check30P.getVisibility() == View.VISIBLE) {
-                        txtNhacNho.setText("30 Phút");
+                        txtNhacNho.setText(R.string.thirty_minute);
                         SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                         SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
                         SharedPreferencesManager.set30p(SettingActivity.this, true);
                         SharedPreferencesManager.set5p(SettingActivity.this, false);
                         SharedPreferencesManager.set1hour(SettingActivity.this, false);
                         SharedPreferencesManager.set15p(SettingActivity.this, false);
+                        sendBroadcastReceiver();
                         dialog.cancel();
                     } else {
                         if (imv_check1Hour.getVisibility() == View.VISIBLE) {
-                            txtNhacNho.setText("1 Giờ");
+                            txtNhacNho.setText(R.string.one_hour);
                             SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                             SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
                             SharedPreferencesManager.set30p(SettingActivity.this, false);
                             SharedPreferencesManager.set5p(SettingActivity.this, false);
                             SharedPreferencesManager.set1hour(SettingActivity.this, true);
                             SharedPreferencesManager.set15p(SettingActivity.this, false);
+                            sendBroadcastReceiver();
                             dialog.cancel();
                         } else {
                             Toast.makeText(this, "Bạn Chưa Chọn Thời Gian", Toast.LENGTH_SHORT).show();
@@ -471,6 +520,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 imv_check30P.setVisibility(View.GONE);
                 imv_check15P.setVisibility(View.GONE);
                 imv_check5P.setVisibility(View.GONE);
+
             }
         });
 
@@ -499,6 +549,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 imv_check30P.setVisibility(View.VISIBLE);
                 imv_check15P.setVisibility(View.GONE);
                 imv_check5P.setVisibility(View.GONE);
+
             }
         });
 
@@ -513,6 +564,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 imv_check30P.setVisibility(View.GONE);
                 imv_check15P.setVisibility(View.GONE);
                 imv_check5P.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -527,6 +579,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 imv_check30P.setVisibility(View.GONE);
                 imv_check15P.setVisibility(View.GONE);
                 imv_check5P.setVisibility(View.GONE);
+
             }
         });
 
@@ -554,6 +607,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 //                Intent intent = new Intent(SettingActivity.this, MainActivity.class);
 //                startActivity(intent);
                 finish();
+                if (mediaPlayer.isPlaying()==true){
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
             }
         });
     }
@@ -638,8 +695,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void sharedPeferences() {
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, SharedPreferencesManager.getVolume(SettingActivity.this), 0);
-        seekBar.setProgress(SharedPreferencesManager.getVolume(SettingActivity.this));
+        int a = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, a, 0);
+        seekBar.setProgress(a);
         txtSound.setText(SharedPreferencesManager.getTenBaiHat(SettingActivity.this));
         txtNhacNho.setText(SharedPreferencesManager.getNhacNho(SettingActivity.this));
 //
@@ -689,6 +747,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 //        Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
 //        SettingActivity.this.finish();
+        if (mediaPlayer.isPlaying()==true){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
         super.onBackPressed();
     }
 
@@ -787,6 +849,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 break;
         }
+    }
+
+    private void sendBroadcastReceiver() {
+        sendBroadcast(new Intent("TimeSleepActivity"));
+        sendBroadcast(new Intent("TimeWakeUpActivity"));
     }
 
 }

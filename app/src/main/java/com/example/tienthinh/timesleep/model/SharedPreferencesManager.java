@@ -239,4 +239,89 @@ public class SharedPreferencesManager {
     public static boolean get1hour(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("KEY_Check1hour", false);
     }
+
+    public static void setDK(Context context, boolean is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putBoolean("KEY_DK", is).apply();
+    }
+
+    public static boolean getDK(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("KEY_DK", false);
+    }
+
+    public static void setT2(Context context, float is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putFloat("KEY_T2", is).apply();
+    }
+
+    public static float getT2(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getFloat("KEY_T2", 0);
+    }
+    public static void setT3(Context context, float is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putFloat("KEY_T3", is).apply();
+    }
+
+    public static float getT3(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getFloat("KEY_T3", 0);
+    }
+
+    public static void setT4(Context context, float is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putFloat("KEY_T4", is).apply();
+    }
+
+    public static float getT4(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getFloat("KEY_T4", 0);
+    }
+    public static void setT5(Context context, float is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putFloat("KEY_T5", is).apply();
+    }
+
+    public static float getT5(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getFloat("KEY_T5", 0);
+    }
+    public static void setT6(Context context, float is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putFloat("KEY_T6", is).apply();
+    }
+
+    public static float getT6(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getFloat("KEY_T6", 0);
+    }
+    public static void setT7(Context context, float is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putFloat("KEY_T7", is).apply();
+    }
+
+    public static float getT7(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getFloat("KEY_T7", 0);
+    }
+    public static void setCN(Context context, float is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putFloat("KEY_CN", is).apply();
+    }
+
+    public static float getCN(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getFloat("KEY_CN", 0);
+    }
+
+    public static void setTongHourSleep(Context context, int is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putInt("KEY_TongHourSleep", is).apply();
+    }
+
+    public static int getTongHourSleep(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("KEY_TongHourSleep", 0);
+    }
+
+    public static void setTongMinuteSleep(Context context, int is) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putInt("KEY_TongMinuteSleep", is).apply();
+    }
+
+    public static int getTongMinuteSleep(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt("KEY_TongMinuteSleep", 0);
+    }
 }

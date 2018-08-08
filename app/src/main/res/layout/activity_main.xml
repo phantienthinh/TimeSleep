@@ -55,6 +55,7 @@
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
+        android:visibility="gone"
         android:id="@+id/navigation"
         android:layout_weight="1"
         android:layout_width="match_parent"

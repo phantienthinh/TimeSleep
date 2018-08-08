@@ -5,6 +5,7 @@
 
 
     <LinearLayout
+        android:background="#b0fffcfc"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_gravity="center"
@@ -18,15 +19,14 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/notification"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
+               />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Nhắc Nhở"
+                    android:text="@string/nhac_nho"
                     android:textColor="#000"
                     android:textStyle="bold"
                     android:typeface="monospace" />
@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Đến giờ thức dậy rồi bây bề"
+                    android:text="@string/den_gio_thuc_day"
                     android:textColor="#000"
                     android:textSize="12dp"
                     android:textStyle="italic"
@@ -63,14 +63,13 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <ImageView
                 android:id="@+id/profile_image1"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,45 +92,52 @@
                     android:weightSum="2">
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:id="@+id/replace"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
                         <ImageView
-                            android:src="@drawable/alarm1"
+                            android:padding="2dp"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
                             android:layout_marginLeft="3dp"
-                            android:layout_gravity="center"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp" />
+                            android:src="@drawable/alarm1" />
+
                         <TextView
-                            android:layout_marginLeft="10dp"
-                            android:text="REPLACE"
-                            android:layout_gravity="center"
+                            android:textColor="#5c5c5c"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/replace" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:id="@+id/cancel"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
                         <ImageView
-                            android:padding="5dp"
-                            android:src="@drawable/remove"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center"
                             android:layout_width="25dp"
-                            android:layout_height="25dp" />
-                        <TextView
-                            android:layout_marginLeft="10dp"
-                            android:text="REPLACE"
+                            android:layout_height="25dp"
                             android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:padding="5dp"
+                            android:src="@drawable/remove" />
+
+                        <TextView
+                            android:textColor="#5c5c5c"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/cancel" />
                     </LinearLayout>
 
 

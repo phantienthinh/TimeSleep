@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="Tùy Chọn Giờ Đi Ngủ"
+            android:text="@string/sleeping_time_options"
             android:textColor="#f1ecec"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
@@ -72,7 +72,7 @@
                 android:gravity="bottom"
                 android:paddingBottom="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_15sdp"
-                android:text="Các Ngày Trong Tuần"
+                android:text="@string/days_of_week"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_18sdp" />
         </LinearLayout>
@@ -176,7 +176,7 @@
                 android:layout_weight="7"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/_15sdp"
-                android:text="Lời Nhắc Đi Ngủ"
+                android:text="@string/sleep_reminders"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_18sdp" />
 
@@ -208,7 +208,7 @@
                 android:layout_weight="7"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/_15sdp"
-                android:text="Âm Thanh Thức Giậy"
+                android:text="@string/sounds_wake_up"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_18sdp" />
 
@@ -231,7 +231,7 @@
             android:gravity="bottom"
             android:paddingBottom="@dimen/_10sdp"
             android:paddingLeft="@dimen/_15sdp"
-            android:text="Âm Lượng Âm Thanh Thức Dậy"
+            android:text="@string/sound_volume_wakes_up"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_18sdp" />
 
@@ -250,7 +250,7 @@
                 android:layout_weight="3.5"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/_15sdp"
-                android:text="Âm Lượng"
+                android:text="@string/volume"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_18sdp" />
 

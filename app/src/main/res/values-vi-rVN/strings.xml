@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TimeSleep</string>
+    <string name="sleeping_time_options">Tùy Chọn Giờ Đi Ngủ</string>
+    <string name="days_of_week">Các Ngày Trong Tuần</string>
+    <string name="sleep_reminders">Lời Nhắc Đi Ngủ</string>
+    <string name="sounds_wake_up">Âm Thanh Thức Dậy</string>
+    <string name="sound_volume_wakes_up">Âm Lượng Âm Thanh Thức Dậy</string>
+    <string name="volume">Âm Lượng</string>
+    <string name="time_sleep">Giờ Đi Ngủ</string>
+    <string name="time_wake_up">Giờ Thức Dậy</string>
+    <string name="on_off">Bật/Tắt</string>
+    <string name="one_hour">1 Giờ</string>
+    <string name="thirty_minute">30 Phút</string>
+    <string name="fifteen_minute">15 Phút</string>
+    <string name="five_minute">5 Phút</string>
+    <string name="at_sleeping">Lúc Đi Ngủ</string>
+    <string name="nhac_nho">Nhắc Nhở</string>
+    <string name="den_gio_di_ngu">Đến giờ đi ngủ rồi</string>
+    <string name="den_gio_thuc_day">Đến giờ thức dậy rồi</string>
+    <string name="at_sleeping_dialog">Lúc Đi Ngủ</string>
+    <string name="replace">Báo Lại</string>
+    <string name="cancel">Hủy</string>
+    <string name="before_an_hour">Trước 1 giờ</string>
+    <string name="before_30_minutes">Trước 30 phút</string>
+    <string name="before_15_minutes">Trước 15 phút</string>
+    <string name="before_5_minutes">Trước 5 phút</string>
+</resources>

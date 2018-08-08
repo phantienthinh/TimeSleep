@@ -18,6 +18,7 @@ import android.widget.ToggleButton;
 
 import com.example.tienthinh.timesleep.MainActivity;
 import com.example.tienthinh.timesleep.R;
+import com.example.tienthinh.timesleep.Widget.CircularSliderRange;
 import com.example.tienthinh.timesleep.Widget.ThumbEvent;
 import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,18 +34,20 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 public class FragmentOne extends Fragment implements View.OnClickListener {
+    int minuteSleep;
+    int hourSleep;
     private ImageView iv_sleep;
     private ImageView iv_wake_up;
-
+    private float t2, t3, t4, t5, t6, t7, cn;
     BarChart barChart;
     private TextView tv_sleep;
     private TextView tv_wake_up;
     private RelativeLayout relativeLayout, relativeLayoutBarchar;
     private Context context;
-    private com.example.tienthinh.timesleep.Widget.CircularSliderRange sliderRange;
+    private CircularSliderRange sliderRange;
     private View view;
     // private int minute1;
-    private int nguTruoc, thuc, second,tongHourSleep, tongMinuteSleep;
+    private int nguTruoc, thuc, second, tongHourSleep, tongMinuteSleep;
     private ToggleButton toggleOnOff;
     private TextView txt_Tong_Time, txt_Time_Sleep, txt_Time_Weke_up;
 
@@ -57,10 +60,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
         //ánh xạ
         initView();
 
-        //khởi tạo barchart
-        createMPAndroidChart();
-        //thêm đối tượng arrlist +  BarDataSet
-        addArrayList();
+
         //createTouchEvent
         createTouchEvent();
         //click vào clock
@@ -78,7 +78,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
-                switch (action){
+                switch (action) {
                     case MotionEvent.ACTION_DOWN:
                         v.getParent().requestDisallowInterceptTouchEvent(true);
                         break;
@@ -128,7 +128,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
                 SharedPreferencesManager.setPositionClockSleep(context, nguTruoc);
                 SharedPreferencesManager.setHourSleep(context, MainActivity.hourSleep);
                 SharedPreferencesManager.setMinuteSleep(context, MainActivity.minuteSleep);
-                MainActivity.hourSleep=SharedPreferencesManager.getHourSleep(context);
+                MainActivity.hourSleep = SharedPreferencesManager.getHourSleep(context);
                 MainActivity.minuteSleep = SharedPreferencesManager.getMinuteSleep(context);
             }
 
@@ -156,6 +156,8 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
             public void onStartSliderEvent(ThumbEvent event) {
                 //là đi ngủ
                 TinhTimeNguEnd();
+                SharedPreferencesManager.setTongHourSleep(context, tongHourSleep);
+                SharedPreferencesManager.setTongMinuteSleep(context, tongMinuteSleep);
 
                 if (toggleOnOff.isChecked() == true) {
                     sendBroadcastTimeSleepActivity();
@@ -166,6 +168,8 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
             @Override
             public void onEndSliderEvent(ThumbEvent event) {
                 TinhTimeNguStart();
+                SharedPreferencesManager.setTongHourSleep(context, tongHourSleep);
+                SharedPreferencesManager.setTongMinuteSleep(context,tongMinuteSleep);
                 if (toggleOnOff.isChecked() == true) {
                     sendBroadcastTimeWakeUpActivity();
                 } else {
@@ -255,31 +259,36 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 //            tongNgu = so1 + thuc;
 //        }
         epKieu();
-        if (MainActivity.hourWakeUp > MainActivity.hourSleep) {
-            tongHourSleep = MainActivity.hourWakeUp - MainActivity.hourSleep;
-        } else {
-            if (MainActivity.hourSleep > MainActivity.hourWakeUp) {
-                int so1 = 24 - MainActivity.hourSleep;
-                tongHourSleep = so1 + MainActivity.hourWakeUp;
-            } else {
-            }
-        }
+//        if (MainActivity.hourWakeUp > MainActivity.hourSleep) {
+//            tongHourSleep = MainActivity.hourWakeUp - MainActivity.hourSleep;
+//        } else {
+//            if (MainActivity.hourSleep > MainActivity.hourWakeUp) {
+//                int so1 = 24 - MainActivity.hourSleep;
+//                tongHourSleep = so1 + MainActivity.hourWakeUp;
+//            } else {
+//            }
+//        }
+//
+//        if (MainActivity.minuteSleep > MainActivity.minuteWakeUp) {
+//            int so2 = 60 - MainActivity.minuteSleep;
+//            tongMinuteSleep = so2 + MainActivity.minuteWakeUp;
+//        } else {
+//            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
+//                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
+//            } else {
+//            }
+//
+//            if (MainActivity.hourSleep==0){
+//                tongHourSleep --;
+//            }else {}
+//
+//            if (MainActivity.hourWakeUp == MainActivity.hourSleep && MainActivity.minuteWakeUp == MainActivity.minuteSleep) {
+//                tongMinuteSleep = 0;
+//                tongHourSleep = 24;
+//            }
 
-        if (MainActivity.minuteSleep > MainActivity.minuteWakeUp) {
-            int so2 = 60 - MainActivity.minuteSleep;
-            tongMinuteSleep = so2 + MainActivity.minuteWakeUp;
-        } else {
-            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
-                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
-            } else {
-            }
-
-            if (MainActivity.hourWakeUp == MainActivity.hourSleep && MainActivity.minuteWakeUp == MainActivity.minuteSleep) {
-                tongMinuteSleep = 0;
-                tongHourSleep = 24;
-            }
-
-        }
+//        }
+        thuatToanTinhTimeWU();
         if (tongMinuteSleep < 10) {
             txt_Tong_Time.setText(tongHourSleep + ":" + "0" + tongMinuteSleep);
         } else {
@@ -288,6 +297,69 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 
         String chuoi = txt_Tong_Time.getText().toString().trim();
         SharedPreferencesManager.setTongTime(getContext(), chuoi);
+    }
+
+    private void thuatToanTinhTimeWU() {
+        if (MainActivity.hourSleep > MainActivity.hourWakeUp) {
+            hourSleep = 24 - MainActivity.hourSleep;
+            minuteSleep = 60 - MainActivity.minuteSleep;
+            if (minuteSleep == 60) {
+                minuteSleep = 0;
+            }
+            if (minuteSleep > 0) {
+                hourSleep--;
+            }
+            tongHourSleep = hourSleep + MainActivity.hourWakeUp;
+            tongMinuteSleep = minuteSleep + MainActivity.minuteWakeUp;
+            if (tongMinuteSleep >= 60) {
+                tongMinuteSleep = tongMinuteSleep - 60;
+                tongHourSleep++;
+            }
+        } else if (MainActivity.hourSleep < MainActivity.hourWakeUp) {
+            tongHourSleep = MainActivity.hourWakeUp - MainActivity.hourSleep;
+            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
+                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
+            } else if (MainActivity.minuteWakeUp < MainActivity.minuteSleep) {
+                tongHourSleep--;
+                int a1 = MainActivity.minuteSleep - MainActivity.minuteWakeUp;
+                tongMinuteSleep = 60 - a1;
+            }else if (MainActivity.minuteWakeUp ==MainActivity.minuteSleep){
+                tongMinuteSleep=0;
+            }
+
+        } else if (MainActivity.hourSleep == MainActivity.hourWakeUp) {
+            if (MainActivity.minuteSleep==MainActivity.minuteWakeUp){
+                if (thuc>nguTruoc){
+                    tongHourSleep = 0;
+                    tongMinuteSleep = 0;
+                }else if (thuc<nguTruoc){
+                    tongMinuteSleep=0;
+                    tongHourSleep=24;
+                }else if (thuc==nguTruoc){
+                    tongMinuteSleep = 0;
+                    tongHourSleep=0;
+                }
+            }
+
+            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
+                tongHourSleep = 0;
+                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
+            }
+            if (MainActivity.minuteSleep>MainActivity.minuteWakeUp){
+                tongHourSleep=23;
+                if (MainActivity.minuteSleep+MainActivity.minuteWakeUp==60){
+                    tongMinuteSleep = MainActivity.minuteSleep - MainActivity.minuteWakeUp;
+                }else {
+                    int a  = MainActivity.minuteSleep - MainActivity.minuteWakeUp;
+                    tongMinuteSleep = 60 - a;
+                }
+
+            }
+            if (MainActivity.hourSleep==0&&MainActivity.hourWakeUp==0){
+                tongHourSleep=24;
+                tongMinuteSleep=0;
+            }
+        }
     }
 
     private void TinhTimeNguEnd() {
@@ -308,46 +380,47 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 //            txt_Tong_Time.setText(hour + ":" + minute);
 //        }
         epKieu();
-        if (MainActivity.hourWakeUp > MainActivity.hourSleep) {
-            tongHourSleep = MainActivity.hourWakeUp - MainActivity.hourSleep;
-        } else {
-            if (MainActivity.hourSleep > MainActivity.hourWakeUp) {
-                int so1 = 24 - MainActivity.hourSleep;
-                tongHourSleep = so1 + MainActivity.hourWakeUp;
-            } else {
-
-            }
-        }
-
-
-        if (MainActivity.minuteSleep > MainActivity.minuteWakeUp) {
-            int so2 = 60 - MainActivity.minuteSleep;
-            tongMinuteSleep = so2 + MainActivity.minuteWakeUp;
-        } else {
-            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
-                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
-            } else {
-                if (MainActivity.minuteSleep == MainActivity.minuteWakeUp) {
-                    tongMinuteSleep = 0;
-                } else {
-//                    if (minuteSleep>0&&hourSleep<hourWakeUp){
-//                        tongHourSleep =tongHourSleep-1;
-//                        int so3;
-//                        so3 = 60-minuteSleep;
-//                        tongMinuteSleep=so3+minuteWakeUp;
-//                    }else {
+//        if (MainActivity.hourWakeUp > MainActivity.hourSleep) {
+//            tongHourSleep = MainActivity.hourWakeUp - MainActivity.hourSleep;
+//        } else {
+//            if (MainActivity.hourSleep > MainActivity.hourWakeUp) {
+//                int so1 = 24 - MainActivity.hourSleep;
+//                tongHourSleep = so1 + MainActivity.hourWakeUp;
+//            } else {
 //
-//                    }
-                }
-            }
-
-            if (MainActivity.hourWakeUp == MainActivity.hourSleep && MainActivity.minuteWakeUp == MainActivity.minuteSleep) {
-                tongMinuteSleep = 0;
-                tongHourSleep = 24;
-            }
-
-        }
-
+//            }
+//        }
+//
+//
+//        if (MainActivity.minuteSleep > MainActivity.minuteWakeUp) {
+//            int so2 = 60 - MainActivity.minuteSleep;
+//            tongMinuteSleep = so2 + MainActivity.minuteWakeUp;
+//        } else {
+//            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
+//                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
+//            } else {
+//                if (MainActivity.minuteSleep == MainActivity.minuteWakeUp) {
+//                    tongMinuteSleep = 0;
+//                } else {
+////                    if (minuteSleep>0&&hourSleep<hourWakeUp){
+////                        tongHourSleep =tongHourSleep-1;
+////                        int so3;
+////                        so3 = 60-minuteSleep;
+////                        tongMinuteSleep=so3+minuteWakeUp;
+////                    }else {
+////
+////                    }
+//                }
+//            }
+//
+//
+//            if (MainActivity.hourWakeUp == MainActivity.hourSleep && MainActivity.minuteWakeUp == MainActivity.minuteSleep) {
+//                tongMinuteSleep = 0;
+//                tongHourSleep = 24;
+//            }
+//
+//        }
+        thuatToanTinhTimeSl();
 
         if (tongMinuteSleep < 10) {
             txt_Tong_Time.setText(tongHourSleep + ":0" + tongMinuteSleep);
@@ -358,6 +431,74 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 
         String chuoi = txt_Tong_Time.getText().toString().trim();
         SharedPreferencesManager.setTongTime(getContext(), chuoi);
+    }
+
+    private void thuatToanTinhTimeSl() {
+        if (MainActivity.hourSleep > MainActivity.hourWakeUp) {
+            hourSleep = 24 - MainActivity.hourSleep;
+            minuteSleep = 60 - MainActivity.minuteSleep;
+            if (minuteSleep == 60) {
+                minuteSleep = 0;
+            }
+            if (minuteSleep > 0) {
+                hourSleep--;
+            }
+            tongHourSleep = hourSleep + MainActivity.hourWakeUp;
+            tongMinuteSleep = minuteSleep + MainActivity.minuteWakeUp;
+            if (tongMinuteSleep >= 60) {
+                tongMinuteSleep = tongMinuteSleep - 60;
+                tongHourSleep++;
+            }
+        } else if (MainActivity.hourSleep < MainActivity.hourWakeUp) {
+            tongHourSleep = MainActivity.hourWakeUp - MainActivity.hourSleep;
+            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
+                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
+            } else if (MainActivity.minuteWakeUp < MainActivity.minuteSleep) {
+                tongHourSleep--;
+                int a1 = MainActivity.minuteSleep - MainActivity.minuteWakeUp;
+                tongMinuteSleep = 60 - a1;
+            }else if (MainActivity.minuteWakeUp==MainActivity.minuteSleep){
+                tongMinuteSleep=0;
+            }
+
+        } else if (MainActivity.hourSleep == MainActivity.hourWakeUp) {
+            if (MainActivity.minuteWakeUp==MainActivity.minuteSleep){
+                if (thuc>nguTruoc){
+                    tongHourSleep = 0;
+                    tongMinuteSleep = 0;
+                }else if (thuc<nguTruoc){
+                    tongMinuteSleep=0;
+                    tongHourSleep=24;
+                }else if (thuc==nguTruoc){
+                    tongHourSleep=24;
+                    tongMinuteSleep=0;
+                }
+            }
+
+            if (MainActivity.minuteWakeUp > MainActivity.minuteSleep) {
+                tongHourSleep=0;
+                tongMinuteSleep = MainActivity.minuteWakeUp - MainActivity.minuteSleep;
+            }
+            if (MainActivity.minuteSleep>MainActivity.minuteWakeUp){
+//                tongHourSleep=23;
+//                tongMinuteSleep = MainActivity.minuteSleep - MainActivity.minuteWakeUp;
+                tongHourSleep=23;
+                if (MainActivity.minuteSleep+MainActivity.minuteWakeUp==60){
+                    tongMinuteSleep = MainActivity.minuteSleep - MainActivity.minuteWakeUp;
+                }else {
+                    int a  = MainActivity.minuteSleep - MainActivity.minuteWakeUp;
+                    tongMinuteSleep = 60 - a;
+                }
+            }
+            if (MainActivity.hourSleep==0&&MainActivity.hourWakeUp==0){
+                tongHourSleep=23;
+                if (MainActivity.minuteSleep>MainActivity.minuteWakeUp){
+                    tongMinuteSleep = 60 - MainActivity.minuteSleep;
+                }else if (MainActivity.minuteSleep<MainActivity.minuteWakeUp){
+                    tongMinuteSleep=60-MainActivity.minuteWakeUp;
+                }
+            }
+        }
     }
 
     private void epKieu() {
@@ -530,6 +671,9 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
         barChart.getXAxis().setTextColor(Color.WHITE);
         barChart.getLegend().setTextColor(Color.WHITE);
 
+        barChart.getAxisLeft().setAxisMaxValue(24);
+
+
         barChart.getAxisRight().setDrawGridLines(false);
         barChart.getAxisLeft().setDrawGridLines(false);
         barChart.getXAxis().setDrawGridLines(false);
@@ -537,16 +681,17 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
 
     private void addArrayList() {
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0, 4));
-        entries.add(new BarEntry(1, 7));
-        entries.add(new BarEntry(2, 15));
-        entries.add(new BarEntry(3, 12));
-        entries.add(new BarEntry(4, 6));
-        entries.add(new BarEntry(5, 16));
-        entries.add(new BarEntry(6, 10));
+        entries.add(new BarEntry(0, t2));
+        entries.add(new BarEntry(1, t3));
+        entries.add(new BarEntry(2, t4));
+        entries.add(new BarEntry(3, t5));
+        entries.add(new BarEntry(4, t6));
+        entries.add(new BarEntry(5, t7));
+        entries.add(new BarEntry(6, cn));
 
         BarDataSet barDataSet = new BarDataSet(entries, "Time Sleep");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        barDataSet.setValueTextColor(Color.WHITE);
         barChart.animateY(2000);
         barChart.getDescription().setEnabled(false);
 
@@ -578,19 +723,27 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
         txt_Tong_Time = (TextView) view.findViewById(R.id.txt_Tong_Time);
         txt_Time_Sleep = (TextView) view.findViewById(R.id.txt_Seep);
         txt_Time_Weke_up = (TextView) view.findViewById(R.id.txt_Time_WakeUp);
-        sliderRange = (com.example.tienthinh.timesleep.Widget.CircularSliderRange) view.findViewById(R.id.circular);
+        sliderRange = (CircularSliderRange) view.findViewById(R.id.circular);
         sliderRange.setRotation(-90);
 
         toggleOnOff.setOnClickListener(this);
         relativeLayout.setOnClickListener(this);
+
+        t2 = SharedPreferencesManager.getT2(context);
+        t3 = SharedPreferencesManager.getT3(context);
+        t4 = SharedPreferencesManager.getT4(context);
+        t5 = SharedPreferencesManager.getT5(context);
+        t6 = SharedPreferencesManager.getT6(context);
+        t7 = SharedPreferencesManager.getT7(context);
+        cn = SharedPreferencesManager.getCN(context);
     }
 
     @Override
     public void onResume() {
         readSharePre();
-        if (toggleOnOff.isChecked()==true){
+        if (toggleOnOff.isChecked() == true) {
             setUiViewOn();
-        }else {
+        } else {
             setUiViewOff();
         }
 
@@ -608,6 +761,18 @@ public class FragmentOne extends Fragment implements View.OnClickListener {
         MainActivity.hourSleep = SharedPreferencesManager.getHourSleep(getContext());
         MainActivity.minuteSleep = SharedPreferencesManager.getMinuteSleep(getContext());
         toggleOnOff.setChecked(SharedPreferencesManager.getToggleOnOff(getContext()));
+
+        t2 = SharedPreferencesManager.getT2(context);
+        t3 = SharedPreferencesManager.getT3(context);
+        t4 = SharedPreferencesManager.getT4(context);
+        t5 = SharedPreferencesManager.getT5(context);
+        t6 = SharedPreferencesManager.getT6(context);
+        t7 = SharedPreferencesManager.getT7(context);
+        cn = SharedPreferencesManager.getCN(context);
+        //khởi tạo barchart
+        createMPAndroidChart();
+        //thêm đối tượng arrlist +  BarDataSet
+        addArrayList();
     }
 
     @Override

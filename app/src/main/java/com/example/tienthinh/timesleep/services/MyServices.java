@@ -1,5 +1,6 @@
 package com.example.tienthinh.timesleep.services;
 
+import android.app.AlarmManager;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -14,19 +15,30 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.example.tienthinh.timesleep.R;
+import com.example.tienthinh.timesleep.Recever.AlarmReceverWakeUp;
 import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
+
+import java.util.Calendar;
 
 
 public class MyServices extends Service {
+    CountDownTimer countDownTimer;
+    Handler handler;
+    Runnable runnable;
+    private long timeSong;
+    private long fiveMinute = 300000;
+    private AlarmManager alarmManager;
     private Uri alarmSound;
     boolean wakeUp, sleep;
     private static final String TAG = "debug";
@@ -49,53 +61,76 @@ public class MyServices extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         mediaPlayer = MediaPlayer.create(this, R.raw.annieswonderland);
         i = SharedPreferencesManager.getPositionSound(this);
-//        mediaPlayer.getDuration();
-//        khoiTaoNoification();
         wakeUp = intent.getBooleanExtra("wakeup", false);
         sleep = intent.getBooleanExtra("sleep", false);
 
         if (wakeUp == true) {
             wakeUp = false;
             khoiTaoNoification1();
-            startForeground(notificationId, notification);
+            startForeground(notificationIdWU, notificationWU);
+            turnOnScreen();
             //stopSelf();
-            PowerManager pm = (PowerManager)getApplicationContext().getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
-            wakeLock.acquire();
             switch (i) {
                 case 0:
-                 playSong(R.raw.littlecomfort);
+                    playSong(R.raw.littlecomfort);
+                    timeSong = mediaPlayer.getDuration();
+                    createCountDownt();
                     break;
                 case 1:
                     playSong(R.raw.annieswonderland);
+                    timeSong = mediaPlayer.getDuration();
+                    createCountDownt();
                     break;
                 case 2:
                     playSong(R.raw.havana);
+                    timeSong = mediaPlayer.getDuration();
+                    createCountDownt();
                     break;
                 case 3:
                     playSong(R.raw.thisgame);
+                    timeSong = mediaPlayer.getDuration();
+                    createCountDownt();
                     break;
                 case 4:
                     playSong(R.raw.griefandsorrow);
+                    timeSong = mediaPlayer.getDuration();
+                    createCountDownt();
                     break;
                 case 5:
-                    playSong(R.raw.chungtakhonggiongnhau);
+                    playSong(R.raw.frenchkiss);
+                    timeSong = mediaPlayer.getDuration();
+                    createCountDownt();
                     break;
                 case 6:
                     playSong(R.raw.beautifulgirl);
+                    timeSong = mediaPlayer.getDuration();
+                    createCountDownt();
                     break;
             }
 
-            Handler handler = new Handler();
-            Runnable runnable = new Runnable() {
+            handler = new Handler();
+            runnable = new Runnable() {
                 @Override
                 public void run() {
-                    KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
-                    KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
-                    keyguardLock.disableKeyguard();
+                    cancelTurnOnScreen();
                     stopForeground(false);
                     stopSelf();
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.MILLISECOND, 0);
+                    calendar.set(Calendar.SECOND, 0);
+                    long time = calendar.getTimeInMillis();
+
+//                    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                    Intent intent = new Intent(MyServices.this, AlarmReceverWakeUp.class);
+//                    intent.putExtra("KEYWU", 1998);
+//                    intent.putExtra("TimeWakeUp", true);
+//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(MyServices.this, 1998, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, time + fiveMinute, pendingIntent);
                 }
+
             };
             handler.postDelayed(runnable, 5 * 60 * 1000);
         } else {
@@ -103,12 +138,17 @@ public class MyServices extends Service {
         }
         if (sleep == true) {
             khoiTaoNoification();
-//            startForeground(notificationIdWU, notificationWU);
+            turnOnScreen();
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+                startForeground(notificationId, notification);
+            }
             Handler handler = new Handler();
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     // stopForeground(false);
+                    cancelTurnOnScreen();
+                    stopForeground(false);
                     stopSelf();
                 }
             };
@@ -118,32 +158,52 @@ public class MyServices extends Service {
         }
 
 
-//
-//        receiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                switch (intent.getAction()) {
-//                    case "sendTimeSleep":
-//                        khoiTaoNoification();
-//                        startForeground(notificationId, notification);
-//                        Log.e(TAG, "sendTimeSleep = ok" );
-//                        //stopSelf();
-//                        Toast.makeText(context, "sendTimeSleep", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case "sendTimeWakeUp":
-//                        khoiTaoNoification1();
-//                        startForeground(notificationIdWU,notificationWU);
-//                        Log.e(TAG, "sendTimeWakeUp = ok" );
-//                        Toast.makeText(context, "sendTimeWakeUp", Toast.LENGTH_SHORT).show();
-//                       // stopSelf();
-//                        break;
-//                }
-//            }
-//        };
-//        filter = new IntentFilter();
-//        filter.addAction("sendTimeSleep");
-//        filter.addAction("sendTimeWakeUp");
-//        getBaseContext().registerReceiver(receiver, filter);
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (intent.getAction()) {
+                    case "replace":
+                        notificationManagerWU.cancel(notificationIdWU);
+                        mediaPlayer.release();
+                        handler.removeCallbacks(runnable);
+                        handler = null;
+                        countDownTimer.cancel();
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.MILLISECOND, 0);
+                        calendar.set(Calendar.SECOND, 0);
+                        long time = calendar.getTimeInMillis();
+
+                        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+                        intent = new Intent(MyServices.this, AlarmReceverWakeUp.class);
+                        intent.putExtra("KEYWU", 1998);
+                        intent.putExtra("TimeWakeUp", true);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1998, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time + fiveMinute, pendingIntent);
+                        stopSelf();
+                        break;
+                    case "cancel":
+                        countDownTimer.cancel();
+                        try {
+                            handler.removeCallbacks(runnable);
+                            handler = null;
+                        }catch (Exception e){
+
+                        }
+
+                        mediaPlayer.stop();
+                        mediaPlayer.release();
+//                        SharedPreferencesManager.setDK(MyServices.this, true);
+                        cancelTurnOnScreen();
+                        stopSelf();
+                        break;
+                }
+            }
+        };
+        filter = new IntentFilter();
+        filter.addAction("replace");
+        filter.addAction("cancel");
+        getBaseContext().registerReceiver(receiver, filter);
 
         return START_NOT_STICKY;
 
@@ -181,8 +241,8 @@ public class MyServices extends Service {
                 .setAutoCancel(false)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(alarmSound)
-                .setContentTitle("Nhắc Nhở")
-                .setContentText("Đến giờ đi ngủ rồi bây bề");
+                .setContentTitle(this.getResources().getString(R.string.nhac_nho))
+                .setContentText(this.getResources().getString(R.string.den_gio_di_ngu));
 
 
         notification = builder.build();
@@ -267,11 +327,11 @@ public class MyServices extends Service {
 
     private void khoiTaoNoification1() {
         String channelId = "channelWU";
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//        } else {
-//           // alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+        } else {
+            alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
         builderWU = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -279,10 +339,11 @@ public class MyServices extends Service {
                 .setAutoCancel(false)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(alarmSound)
-                .setContentTitle("Nhắc Nhở")
-                .setContentText("Đến giờ thức dậy rồi bây bề");
+                .setContentTitle(this.getResources().getString(R.string.nhac_nho))
+                .setContentText(this.getResources().getString(R.string.den_gio_thuc_day));
 
 
+        //builderWU.setDefaults(0);
         notificationWU = builderWU.build();
         notificationWU.flags = Notification.FLAG_AUTO_CANCEL;
 
@@ -299,54 +360,20 @@ public class MyServices extends Service {
 
         //sự kiện bấm vào replace trên notification
         String replace = "replace";
-        Intent pinkIntent = new Intent(replace);
-        PendingIntent replacePending = PendingIntent.getBroadcast(this, 2010, pinkIntent, 0);
+        Intent replaceIntent = new Intent(replace);
+        PendingIntent replacePending = PendingIntent.getBroadcast(this, 2010, replaceIntent, 0);
         builderWU.addAction(R.id.replace, replace, replacePending);
         builderWU.setContentIntent(replacePending);
         remoteViews.setOnClickPendingIntent(R.id.replace, replacePending);
 
 
-        //sự kiện bấm vào green trên notification
+        //sự kiện bấm vào cancel trên notification
         String cancel = "cancel";
         Intent greenIntent = new Intent(cancel);
         PendingIntent cancelPending = PendingIntent.getBroadcast(this, 2011, greenIntent, 0);
-        builder.addAction(R.id.cancel, cancel, cancelPending);
-        builder.setContentIntent(cancelPending);
+        builderWU.addAction(R.id.cancel, cancel, cancelPending);
+        builderWU.setContentIntent(cancelPending);
         remoteViews.setOnClickPendingIntent(R.id.cancel, cancelPending);
-//
-//        //sự kiện bấm vào blue trên notification
-//        String blue = "img_blue";
-//        Intent blueIntent = new Intent(blue);
-//        PendingIntent bluePendingIntent = PendingIntent.getBroadcast(this, 2, blueIntent, 0);
-//        builder.addAction(R.id.img_blue, blue, bluePendingIntent);
-//        builder.setContentIntent(bluePendingIntent);
-//        remoteViews.setOnClickPendingIntent(R.id.img_blue, bluePendingIntent);
-//
-//        //sự kiện bấm vào red trên notification
-//        String red = "img_red";
-//        Intent redIntent = new Intent(red);
-//        PendingIntent redPendingIntent = PendingIntent.getBroadcast(this, 3, redIntent, 0);
-//        builder.addAction(R.id.img_red, red, redPendingIntent);
-//        builder.setContentIntent(redPendingIntent);
-//        remoteViews.setOnClickPendingIntent(R.id.img_red, redPendingIntent);
-//
-//        //sự kiện bấm vào yellow trên notification
-//        String yellow = "img_yellow";
-//        Intent yellowIntent = new Intent(yellow);
-//        PendingIntent yellowPendingIntent = PendingIntent.getBroadcast(this, 4, yellowIntent, 0);
-//        builder.addAction(R.id.img_yellow, yellow, yellowPendingIntent);
-//        builder.setContentIntent(yellowPendingIntent);
-//        remoteViews.setOnClickPendingIntent(R.id.img_yellow, yellowPendingIntent);
-//
-//        //sự kiện bấm vào setting trên notification
-//        String setting = "img_setting";
-//        Intent settingIntent = new Intent(this, MainActivity.class);
-//        settingIntent.setFlags(settingIntent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        PendingIntent settingPendingIntent = PendingIntent.getActivity(this, 5, settingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        builder.addAction(R.id.img_go_app, setting, settingPendingIntent);
-//        builder.setContentIntent(greenPendingIntent);
-//        remoteViews.setOnClickPendingIntent(R.id.img_go_app, settingPendingIntent);
-
 
         notificationManagerWU = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -364,16 +391,42 @@ public class MyServices extends Service {
     }
 
     private void playSong(int uri) {
-        if (mediaPlayer.isPlaying()==true){
+        if (mediaPlayer.isPlaying() == true) {
             mediaPlayer.stop();
-            mediaPlayer = MediaPlayer.create(this,uri);
+            mediaPlayer = MediaPlayer.create(this, uri);
             mediaPlayer.start();
-        }else {
-            mediaPlayer = MediaPlayer.create(this,uri);
+        } else {
+            mediaPlayer = MediaPlayer.create(this, uri);
             mediaPlayer.start();
         }
     }
 
-    ;
+    private void cancelTurnOnScreen() {
+        KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
+        keyguardLock.disableKeyguard();
+    }
+
+    private void turnOnScreen() {
+        PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
+        wakeLock.acquire();
+
+    }
+
+    private void createCountDownt() {
+        countDownTimer = new CountDownTimer(timeSong + 1000, 1000) {
+            @Override
+            public void onTick(long l) {
+                Log.e(TAG, "onTick: " + l);
+            }
+
+            @Override
+            public void onFinish() {
+                mediaPlayer.start();
+            }
+        };
+        countDownTimer.start();
+    }
 
 }

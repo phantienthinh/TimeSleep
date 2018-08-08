@@ -25,11 +25,39 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
         id = intent.getIntExtra("KEYWU", 0);
         getIntentTimeWakeUp(intent);
         getBooleanDay(context);
+        Log.e(TAG, "onReceive: ");
 
 
         switch (id) {
             case 22:
                 Log.e(TAG, "case = 22");
+
+                if (checkOnOff == true) {
+                    if (checkMonday == true) {
+                        if (mTimeWakeUp == true) {
+                            int hourT2 = SharedPreferencesManager.getTongHourSleep(context);
+                            int minuteT2 = SharedPreferencesManager.getTongMinuteSleep(context);
+                            if (minuteT2<10){
+                                String k = String.valueOf(hourT2+".0"+minuteT2);
+                                float t2 = Float.valueOf(k);
+                                SharedPreferencesManager.setT2(context,t2);
+                            }else {
+                                String k = String.valueOf(hourT2 + "." + minuteT2);
+                                float t2 = Float.valueOf(k);
+                                SharedPreferencesManager.setT2(context, t2);
+                            }
+
+                        } else {
+                        }
+
+                    } else {
+                    }
+
+                } else {
+                }
+
+                //Log.e(TAG,hourT2+"thứ 2" );
+
 
                 checkNgayThangWakeUp(context, intent, checkMonday);
                 AlarmManager mALMondayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -41,7 +69,33 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
                 mALMondayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpCN + oneweek, mPDMondayWakeUp);
                 break;
             case 23:
+                if (checkOnOff == true) {
+                    if (checkTuesday == true) {
+                        if (mTimeWakeUp == true) {
+                            int hourT3 = SharedPreferencesManager.getTongHourSleep(context);
+                            int minutet3 = SharedPreferencesManager.getTongMinuteSleep(context);
+
+                            if (minutet3<10){
+                                String k =String.valueOf(hourT3+".0"+minutet3);
+                                float t3 = Float.valueOf(k);
+                                SharedPreferencesManager.setT3(context, t3);
+                            }else {
+                                String k =String.valueOf(hourT3+"."+minutet3);
+                                float t3 = Float.valueOf(k);
+                                SharedPreferencesManager.setT3(context, t3);
+                            }
+
+
+                        } else {
+                        }
+
+                    } else {
+                    }
+
+                } else {
+                }
                 Log.e(TAG, "case = 23");
+
 
                 checkNgayThangWakeUp(context, intent, checkTuesday);
                 AlarmManager mALTuesdayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -53,6 +107,32 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
                 mALTuesdayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt3 + oneweek, mPDTuesdayWakeUp);
                 break;
             case 24:
+                if (checkOnOff == true) {
+                    if (checkWednesday == true) {
+                        if (mTimeWakeUp == true) {
+                            int hourT4 = SharedPreferencesManager.getTongHourSleep(context);
+                            int minuteT4 = SharedPreferencesManager.getTongMinuteSleep(context);
+
+                            if (minuteT4<10){
+                                String k =String.valueOf(hourT4+".0"+minuteT4);
+                                float t4 = Float.valueOf(k);
+                                SharedPreferencesManager.setT4(context, t4);
+                            }else {
+                                String k =String.valueOf(hourT4+"."+minuteT4);
+                                float t4 = Float.valueOf(k);
+                                SharedPreferencesManager.setT4(context, t4);
+                            }
+
+                        } else {
+                        }
+
+                    } else {
+                    }
+
+                } else {
+                }
+
+
                 Log.e(TAG, "case = 24");
 
                 checkNgayThangWakeUp(context, intent, checkWednesday);
@@ -65,6 +145,31 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
                 mALWednesdayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt4 + oneweek, mPDWednesdayWakeUp);
                 break;
             case 25:
+                if (checkOnOff == true) {
+                    if (checkThursday == true) {
+                        if (mTimeWakeUp == true) {
+                            int hourT5 = SharedPreferencesManager.getTongHourSleep(context);
+                            int minuteT5 = SharedPreferencesManager.getTongMinuteSleep(context);
+                            if (minuteT5<10){
+                                String k =String.valueOf(hourT5+".0"+minuteT5);
+                                float t5 = Float.valueOf(k);
+                                SharedPreferencesManager.setT5(context, t5);
+                            }else {
+                                String k =String.valueOf(hourT5+"."+minuteT5);
+                                float t5 = Float.valueOf(k);
+                                SharedPreferencesManager.setT5(context, t5);
+                            }
+
+                        } else {
+                        }
+
+                    } else {
+                    }
+
+                } else {
+                }
+
+
                 Log.e(TAG, "case = 25");
 
                 checkNgayThangWakeUp(context, intent, checkThursday);
@@ -77,6 +182,32 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
                 mALThursdayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt5 + oneweek, mPDThursdayWakeUp);
                 break;
             case 26:
+                if (checkOnOff == true) {
+                    if (checkFriday == true) {
+                        if (mTimeWakeUp == true) {
+                            int hourT6 = SharedPreferencesManager.getTongHourSleep(context);
+                            int minuteT6 = SharedPreferencesManager.getTongMinuteSleep(context);
+                            if (minuteT6<10){
+                                String k =String.valueOf(hourT6+".0"+minuteT6);
+                                float T6 = Float.valueOf(k);
+                                SharedPreferencesManager.setT6(context, T6);
+                            }
+                            else {
+                                String k =String.valueOf(hourT6+"."+minuteT6);
+                                float T6 = Float.valueOf(k);
+                                SharedPreferencesManager.setT6(context, T6);
+                            }
+
+                        } else {
+                        }
+
+                    } else {
+                    }
+
+                } else {
+                }
+
+
                 Log.e(TAG, "case = 26");
 
                 checkNgayThangWakeUp(context, intent, checkFriday);
@@ -89,6 +220,35 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
                 mALFridayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt6 + oneweek, mPDFridayWakeUp);
                 break;
             case 27:
+                if (checkOnOff == true) {
+                    if (checkSatuday == true) {
+                        if (mTimeWakeUp == true) {
+                            int hourT7 = SharedPreferencesManager.getTongHourSleep(context);
+
+                            int minuteT7 = SharedPreferencesManager.getTongMinuteSleep(context);
+
+                            if (minuteT7<10){
+                                String k = String.valueOf(hourT7 + ".0" + minuteT7);
+                                float v = Float.valueOf(k);
+
+                                SharedPreferencesManager.setT7(context, v);
+                            }else {
+                                String k = String.valueOf(hourT7 + "." + minuteT7);
+                                float v = Float.valueOf(k);
+
+                                SharedPreferencesManager.setT7(context, v);
+                            }
+
+                        } else {
+                        }
+
+                    } else {
+                    }
+
+                } else {
+                }
+
+
                 Log.e(TAG, "case = 27");
 
                 checkNgayThangWakeUp(context, intent, checkSatuday);
@@ -101,6 +261,33 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
                 mALSatudayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpt7 + oneweek, mPDSatudayWakeUp);
                 break;
             case 28:
+                if (checkOnOff == true) {
+                    if (checkSunday == true) {
+                        if (mTimeWakeUp == true) {
+                            int hourCN = SharedPreferencesManager.getTongHourSleep(context);
+                            int minuteCN = SharedPreferencesManager.getTongMinuteSleep(context);
+                            if (minuteCN<10){
+                                String k =String.valueOf(hourCN+"."+minuteCN);
+                                float cn = Float.valueOf(k);
+
+                                SharedPreferencesManager.setCN(context, cn);
+                            }else {
+                                String k =String.valueOf(hourCN+".0"+minuteCN);
+                                float cn = Float.valueOf(k);
+
+                                SharedPreferencesManager.setCN(context, cn);
+                            }
+
+                        } else {
+                        }
+
+                    } else {
+                    }
+
+                } else {
+                }
+
+
                 Log.e(TAG, "case = 28");
                 checkNgayThangWakeUp(context, intent, checkSunday);
                 AlarmManager mALSundayWakeUp = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -110,6 +297,10 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
                 intent.putExtra("KEYTIME_CN_WU", timeWakeUpCN + oneweek);
                 PendingIntent mPDSundayWakeUp = PendingIntent.getBroadcast(context, 28, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 mALSundayWakeUp.setExact(AlarmManager.RTC_WAKEUP, timeWakeUpCN + oneweek, mPDSundayWakeUp);
+                break;
+            case 1998:
+                Log.e(TAG, "vào alarm replace");
+                checkNgayThangWakeUp(context, intent, true);
                 break;
         }
     }
@@ -130,12 +321,12 @@ public class AlarmReceverWakeUp extends BroadcastReceiver {
     private void startServiceWakeUpCall(Context context, Intent intent) {
         if (checkOnOff == true) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                intent = new Intent(context,MyServices.class);
-                intent.putExtra("wakeup",true);
+                intent = new Intent(context, MyServices.class);
+                intent.putExtra("wakeup", true);
                 context.startForegroundService(intent);
             } else {
-                intent = new Intent(context,MyServices.class);
-                intent.putExtra("wakeup",true);
+                intent = new Intent(context, MyServices.class);
+                intent.putExtra("wakeup", true);
                 context.startService(intent);
             }
 //            intent = new Intent("sendTimeWakeUp");

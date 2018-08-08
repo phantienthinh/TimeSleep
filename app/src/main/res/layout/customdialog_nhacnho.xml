@@ -35,7 +35,7 @@ android:layout_height="wrap_content">
             android:layout_height="40dp"
             android:layout_weight="9"
             android:gravity="center"
-            android:text="Lúc Đi Ngủ"
+            android:text="@string/at_sleeping"
             android:textColor="@color/textColor"
             android:textSize="20sp" />
 
@@ -65,7 +65,7 @@ android:layout_height="wrap_content">
             android:layout_height="40dp"
             android:layout_weight="9"
             android:gravity="center"
-            android:text="Trước 1 Tiếng"
+            android:text="@string/before_an_hour"
             android:textColor="@color/textColor"
             android:textSize="20sp" />
 
@@ -95,7 +95,7 @@ android:layout_height="wrap_content">
             android:layout_height="40dp"
             android:layout_weight="9"
             android:gravity="center"
-            android:text="Trước 30 Phút"
+            android:text="@string/before_30_minutes"
             android:textColor="@color/textColor"
             android:textSize="20sp" />
 
@@ -123,7 +123,7 @@ android:layout_height="wrap_content">
             android:layout_height="40dp"
             android:layout_weight="9"
             android:gravity="center"
-            android:text="Trước 15 Phút"
+            android:text="@string/before_15_minutes"
             android:textColor="@color/textColor"
             android:textSize="20sp" />
 
@@ -154,7 +154,7 @@ android:layout_height="wrap_content">
             android:layout_height="40dp"
             android:layout_weight="9"
             android:gravity="center"
-            android:text="Trước 5 Phút"
+            android:text="@string/before_5_minutes"
             android:textColor="@color/textColor"
             android:textSize="20sp" />
 

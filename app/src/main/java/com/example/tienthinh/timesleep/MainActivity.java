@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                         readSharedPreDay();
 
                         //thứ2
-                        if (mBooleanMonday == true) {
+//                        if (mBooleanMonday == true) {
                             setCalendarMondaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerMondaySleep, mPendingIntentMondaySleep);
@@ -200,11 +200,11 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEP, 2);
                             intent.putExtra("KEYTIME_T2", t2);
                             createCalenda(intent, mPendingIntentMondaySleep, mAlarmManagerMondaySleep, t2, 2);
-                        } else {
-                            cancleAlarm(mAlarmManagerMondaySleep, mPendingIntentMondaySleep);
-                        }
+//                        } else {
+//                            cancleAlarm(mAlarmManagerMondaySleep, mPendingIntentMondaySleep);
+//                        }
                         //thứ 3
-                        if (mBooleanTuesday == true) {
+//                        if (mBooleanTuesday == true) {
                             setCalendarTuesdaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerTuesdaySleep, mPendingIntentTuesdaySleep);
@@ -212,12 +212,12 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEP, 3);
                             intent.putExtra("KEYTIME_T3", t3);
                             createCalenda(intent, mPendingIntentTuesdaySleep, mAlarmManagerTuesdaySleep, t3, 3);
-                        } else {
-                            cancleAlarm(mAlarmManagerTuesdaySleep, mPendingIntentTuesdaySleep);
-                        }
+//                        } else {
+//                            cancleAlarm(mAlarmManagerTuesdaySleep, mPendingIntentTuesdaySleep);
+//                        }
 
                         //thứ 4
-                        if (mBooleanWednesday == true) {
+//                        if (mBooleanWednesday == true) {
                             setCalendarWednesdaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerWednesdaySleep, mPendingIntentWednesdaySleep);
@@ -226,12 +226,12 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("KEYTIME_T4", t4);
                             createCalenda(intent, mPendingIntentWednesdaySleep, mAlarmManagerWednesdaySleep, t4, 4);
 
-                        } else {
-                            cancleAlarm(mAlarmManagerWednesdaySleep, mPendingIntentWednesdaySleep);
-                        }
+//                        } else {
+//                            cancleAlarm(mAlarmManagerWednesdaySleep, mPendingIntentWednesdaySleep);
+//                        }
 
                         //thứ 5
-                        if (mBooleanThursday == true) {
+//                        if (mBooleanThursday == true) {
                             setCalendarThursdaySleep();
                             soSanh();
 
@@ -241,12 +241,12 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("KEYTIME_T5", t5);
                             createCalenda(intent, mPendingIntentThursdaySleep, mAlarmManagerThursdaySleep, t5, 5);
 
-                        } else {
-                            cancleAlarm(mAlarmManagerThursdaySleep, mPendingIntentThursdaySleep);
-                        }
+//                        } else {
+//                            cancleAlarm(mAlarmManagerThursdaySleep, mPendingIntentThursdaySleep);
+//                        }
 
                         //thứ 6
-                        if (mBooleanFriday == true) {
+//                        if (mBooleanFriday == true) {
                             setCalendarFridaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerFridaySleep, mPendingIntentFridaySleep);
@@ -254,12 +254,12 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEP, 6);
                             intent.putExtra("KEYTIME_T6", t6);
                             createCalenda(intent, mPendingIntentFridaySleep, mAlarmManagerFridaySleep, t6, 6);
-                        } else {
-                            cancleAlarm(mAlarmManagerFridaySleep, mPendingIntentFridaySleep);
-                        }
+//                        } else {
+//                            cancleAlarm(mAlarmManagerFridaySleep, mPendingIntentFridaySleep);
+//                        }
 
 //                        thứ 7
-                        if (mBooleanSaturday == true) {
+//                        if (mBooleanSaturday == true) {
                             setCalendarSaturdaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerSaturdaySleep, mPendingIntentSaturdaySleep);
@@ -268,13 +268,13 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("KEYTIME_T7", t7);
                             createCalenda(intent, mPendingIntentSaturdaySleep, mAlarmManagerSaturdaySleep, t7, 7);
 
-                        } else {
-                            cancleAlarm(mAlarmManagerSaturdaySleep, mPendingIntentSaturdaySleep);
-                        }
+//                        } else {
+//                            cancleAlarm(mAlarmManagerSaturdaySleep, mPendingIntentSaturdaySleep);
+//                        }
 
 
                         //chủ nhật
-                        if (mBooleanSunday == true) {
+//                        if (mBooleanSunday == true) {
                             setCalendarSundaySleep();
                             soSanh();
                             cancleAlarm(mAlarmManagerSundaySleep, mPendingIntentSundaySleep);
@@ -283,9 +283,9 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("KEYTIME_CN", cn);
                             createCalenda(intent, mPendingIntentSundaySleep, mAlarmManagerSundaySleep, cn, 8);
 
-                        } else {
-                            cancleAlarm(mAlarmManagerSundaySleep, mPendingIntentSundaySleep);
-                        }
+//                        } else {
+//                            cancleAlarm(mAlarmManagerSundaySleep, mPendingIntentSundaySleep);
+//                        }
                         break;
 
                     case "TimeWakeUpActivity":
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                         readSharedPreDay();
                         Log.e(TAG, "vao TimeWakeUpActivity" );
                         //thứ 2
-                        if (mBooleanMonday == true) {
+//                        if (mBooleanMonday == true) {
                             setCalendarMondayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALMondayWakeUp, mPdMondayWakeUp);
@@ -301,12 +301,12 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEPWAKEUP,22);
                             intent.putExtra("KEYTIME_T2_WU",t2_WU);
                             createAlarm(intent,mPdMondayWakeUp,mALMondayWakeUp,t2_WU,22);
-                        } else {
-                            cancleAlarm(mALMondayWakeUp, mPdMondayWakeUp);
-                        }
+//                        } else {
+//                            cancleAlarm(mALMondayWakeUp, mPdMondayWakeUp);
+//                        }
 
                         //thứ 3
-                        if (mBooleanTuesday == true) {
+//                        if (mBooleanTuesday == true) {
                             setCalendarTuesdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALTuesdayWakeUp, mPdTuesdayWakeUp);
@@ -315,12 +315,12 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("KEYTIME_T3_WU",t3_WU);
                             createAlarm(intent,mPdTuesdayWakeUp,mALTuesdayWakeUp,t3_WU,23);
 
-                        } else {
-                            cancleAlarm(mALTuesdayWakeUp, mPdTuesdayWakeUp);
-                        }
+//                        } else {
+//                            cancleAlarm(mALTuesdayWakeUp, mPdTuesdayWakeUp);
+//                        }
 
                         //thứ 4
-                        if (mBooleanWednesday == true) {
+//                        if (mBooleanWednesday == true) {
                             setmCalendarWednesdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALWednesdayWakeUp, mPdWednesdayWakeUp);
@@ -328,11 +328,11 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEPWAKEUP,24);
                             intent.putExtra("KEYTIME_T4_WU",t4_WU);
                             createAlarm(intent,mPdWednesdayWakeUp,mALWednesdayWakeUp,t4_WU,24);
-                        } else {
-                            cancleAlarm(mALWednesdayWakeUp, mPdWednesdayWakeUp);
-                        }
+//                        } else {
+//                            cancleAlarm(mALWednesdayWakeUp, mPdWednesdayWakeUp);
+//                        }
                         //thứ 5
-                        if (mBooleanThursday == true) {
+//                        if (mBooleanThursday == true) {
                             setmCalendarThursdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALThursdayWakeUp, mPdThursdayWakeUp);
@@ -340,11 +340,11 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEPWAKEUP,25);
                             intent.putExtra("KEYTIME_T5_WU",t5_WU);
                             createAlarm(intent,mPdThursdayWakeUp,mALThursdayWakeUp,t5_WU,25);
-                        } else {
-                            cancleAlarm(mALThursdayWakeUp, mPdThursdayWakeUp);
-                        }
+//                        } else {
+//                            cancleAlarm(mALThursdayWakeUp, mPdThursdayWakeUp);
+//                        }
                         //thứ 6
-                        if (mBooleanFriday == true) {
+//                        if (mBooleanFriday == true) {
                             setmCalendarFridayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALFridayWakeUp, mPdFridaydayWakeUp);
@@ -352,11 +352,11 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEPWAKEUP,26);
                             intent.putExtra("KEYTIME_T6_WU",t6_WU);
                             createAlarm(intent,mPdFridaydayWakeUp,mALFridayWakeUp,t6_WU,26);
-                        } else {
-                            cancleAlarm(mALFridayWakeUp, mPdFridaydayWakeUp);
-                        }
+//                        } else {
+//                            cancleAlarm(mALFridayWakeUp, mPdFridaydayWakeUp);
+//                        }
                         //thứ 7
-                        if (mBooleanSaturday == true) {
+//                        if (mBooleanSaturday == true) {
                             setmCalendarSaturdayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALSaturdayWakeUp, mPdSaturdayWakeUp);
@@ -364,11 +364,11 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEPWAKEUP,27);
                             intent.putExtra("KEYTIME_T7_WU",t7_WU);
                             createAlarm(intent,mPdSaturdayWakeUp,mALSaturdayWakeUp,t7_WU,27);
-                        } else {
-                            cancleAlarm(mALSaturdayWakeUp, mPdSaturdayWakeUp);
-                        }
+//                        } else {
+//                            cancleAlarm(mALSaturdayWakeUp, mPdSaturdayWakeUp);
+//                        }
                         //chủ nhật
-                        if (mBooleanSunday == true) {
+//                        if (mBooleanSunday == true) {
                             setmCalendarSundayWakeUp();
                             soSanhTimeWakeUp();
                             cancleAlarm(mALSundayWakeUp, mPdSundayWakeUp);
@@ -376,9 +376,9 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra(KEYSLEEPWAKEUP,28);
                             intent.putExtra("KEYTIME_CN_WU",cn_WU);
                             createAlarm(intent,mPdSundayWakeUp,mALSundayWakeUp,cn_WU,28);
-                        } else {
-                            cancleAlarm(mALSundayWakeUp, mPdSundayWakeUp);
-                        }
+//                        } else {
+//                            cancleAlarm(mALSundayWakeUp, mPdSundayWakeUp);
+//                        }
 
 
                         break;
