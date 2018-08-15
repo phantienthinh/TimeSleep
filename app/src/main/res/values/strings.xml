@@ -3,17 +3,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Level_of_sleep_quality">Level of sleep quality</string>
+    <string name="m">m</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="sleeping_time_options">Sleeping Time Options</string>
-    <string name="days_of_week">Days Of Week</string>
+    <string name="sleeping_time_options">Options</string>
+    <string name="days_of_week">Days of week</string>
     <string name="sleep_reminders">Sleep Reminders</string>
     <string name="sounds_wake_up">Sounds Wake Up</string>
     <string name="sound_volume_wakes_up">Sound Volume Wakes Up</string>
     <string name="volume">Volume</string>
-    <string name="time_sleep">Time Sleep</string>
     <string name="time_wake_up">Time Wake Up</string>
     <string name="on_off">On/Off</string>
     <string name="at_sleeping">At Sleeping</string>
@@ -23,12 +24,30 @@
     <string name="one_hour">1 Hour</string>
     <string name="nhac_nho">Remind</string>
     <string name="den_gio_di_ngu">It is bed time</string>
-    <string name="den_gio_thuc_day">It is time to wake up</string>
+    <string name="den_gio_di_ngu_5">5 minutes to hour sleep</string>
+    <string name="den_gio_di_ngu_15">15 minutes to hour sleep</string>
+    <string name="den_gio_di_ngu_30">30 minutes to hour sleep</string>
+    <string name="den_gio_di_ngu_1h">1 hour to hour sleep</string>
+    <string name="den_gio_thuc_day">It is time to wake up!</string>
     <string name="at_sleeping_dialog">At Sleeping</string>
-    <string name="replace">REPLACE</string>
-    <string name="cancel">CANCEL</string>
+    <string name="replace">Replace</string>
+    <string name="cancel">Cancel</string>
     <string name="before_an_hour">Before an hour</string>
     <string name="before_30_minutes">Before 30 minutes</string>
     <string name="before_15_minutes">Before 15 minutes</string>
     <string name="before_5_minutes">Before 5 minutes</string>
+    <string name="invalid_data">invalid data</string>
+    <string name="Time_sleep">Time Sleep</string>
+    <string name="sleep_time_statistics">Sleep time statistics</string>
+    <string name="save">Save</string>
+    <string name="ring_alarm">Ring alarm</string>
+    <string name="when_do_you_want_to_be_notified">When do you want to be notified?</string>
+    <string name="time_sleep">Time Sleep</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+    <string name="thu">Thu</string>
 </resources>

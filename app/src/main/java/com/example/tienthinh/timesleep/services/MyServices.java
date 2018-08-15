@@ -23,16 +23,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
+import com.example.tienthinh.timesleep.MainActivity;
 import com.example.tienthinh.timesleep.R;
-import com.example.tienthinh.timesleep.Recever.AlarmReceverWakeUp;
-import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
+import com.example.tienthinh.timesleep.recevers.AlarmReceverWakeUp;
+import com.example.tienthinh.timesleep.recevers.ListenTurnOffScreen;
+import com.example.tienthinh.timesleep.models.SharedPreferencesManager;
 
 import java.util.Calendar;
 
 
 public class MyServices extends Service {
+    ListenTurnOffScreen screen;
+    private String text;
     CountDownTimer countDownTimer;
     Handler handler;
     Runnable runnable;
@@ -47,6 +50,7 @@ public class MyServices extends Service {
     private NotificationCompat.Builder builder;
     private NotificationCompat.Builder builderWU;
     private RemoteViews remoteViews;
+    private RemoteViews remoteViewsSleep;
     private NotificationManager notificationManager;
     private NotificationManager notificationManagerWU;
     private Notification notification;
@@ -64,9 +68,18 @@ public class MyServices extends Service {
         wakeUp = intent.getBooleanExtra("wakeup", false);
         sleep = intent.getBooleanExtra("sleep", false);
 
+
         if (wakeUp == true) {
             wakeUp = false;
+
+            screen = new ListenTurnOffScreen();
+            IntentFilter filterScreen = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+            filterScreen.addAction(Intent.ACTION_SCREEN_OFF);
+            registerReceiver(screen,filterScreen);
+
+
             khoiTaoNoification1();
+
             startForeground(notificationIdWU, notificationWU);
             turnOnScreen();
             //stopSelf();
@@ -112,6 +125,7 @@ public class MyServices extends Service {
             runnable = new Runnable() {
                 @Override
                 public void run() {
+                    int i =0;
                     cancelTurnOnScreen();
                     stopForeground(false);
                     stopSelf();
@@ -123,12 +137,15 @@ public class MyServices extends Service {
                     calendar.set(Calendar.SECOND, 0);
                     long time = calendar.getTimeInMillis();
 
-//                    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                    Intent intent = new Intent(MyServices.this, AlarmReceverWakeUp.class);
-//                    intent.putExtra("KEYWU", 1998);
-//                    intent.putExtra("TimeWakeUp", true);
-//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(MyServices.this, 1998, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, time + fiveMinute, pendingIntent);
+//                    if (i<=3) {
+////                        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+////                        Intent intent = new Intent(MyServices.this, AlarmReceverWakeUp.class);
+////                        intent.putExtra("KEYWU", 1998);
+////                        intent.putExtra("TimeWakeUp", true);
+////                        PendingIntent pendingIntent = PendingIntent.getBroadcast(MyServices.this, 1998, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+////                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time + fiveMinute, pendingIntent);
+////                    }
+
                 }
 
             };
@@ -139,20 +156,20 @@ public class MyServices extends Service {
         if (sleep == true) {
             khoiTaoNoification();
             turnOnScreen();
-            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-                startForeground(notificationId, notification);
-            }
+//            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+////                startForeground(notificationId, notification);
+////            }
             Handler handler = new Handler();
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    // stopForeground(false);
+                    //stopForeground(false);
                     cancelTurnOnScreen();
-                    stopForeground(false);
-                    stopSelf();
+//                    stopSelf();
+//                    khoiTaoNoification();
                 }
             };
-            handler.postDelayed(runnable, 6000);
+            handler.postDelayed(runnable, 4000);
         } else {
 
         }
@@ -197,12 +214,31 @@ public class MyServices extends Service {
                         cancelTurnOnScreen();
                         stopSelf();
                         break;
+                    case "turnoffScreen":
+                        if (sleep==true){}
+                        else {
+                        countDownTimer.cancel();
+                        try {
+                            handler.removeCallbacks(runnable);
+                            handler = null;
+                        }catch (Exception e){
+
+                        }
+
+                        mediaPlayer.stop();
+                        mediaPlayer.release();
+//                        SharedPreferencesManager.setDK(MyServices.this, true);
+                        cancelTurnOnScreen();
+                        stopSelf();
+                        }
+                        break;
                 }
             }
         };
         filter = new IntentFilter();
         filter.addAction("replace");
         filter.addAction("cancel");
+        filter.addAction("turnoffScreen");
         getBaseContext().registerReceiver(receiver, filter);
 
         return START_NOT_STICKY;
@@ -212,10 +248,14 @@ public class MyServices extends Service {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "Service Cancle", Toast.LENGTH_SHORT).show();
         try {
             getBaseContext().unregisterReceiver(receiver);
         } catch (Exception e) {
+
+        }
+        try {
+            unregisterReceiver(screen);
+        }catch (Exception e){
 
         }
         super.onDestroy();
@@ -228,6 +268,7 @@ public class MyServices extends Service {
     }
 
     private void khoiTaoNoification() {
+        checkTime();
         String channelId = "channel-01";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -235,19 +276,61 @@ public class MyServices extends Service {
             alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
         builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.notification)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setChannelId(channelId)
                 .setAutoCancel(false)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(alarmSound)
                 .setContentTitle(this.getResources().getString(R.string.nhac_nho))
-                .setContentText(this.getResources().getString(R.string.den_gio_di_ngu));
+                .setContentText(text);
 
 
         notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
+//        notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
+        remoteViewsSleep = new RemoteViews(getPackageName(),R.layout.custom_notification_sleep);
+        notification.contentView = remoteViewsSleep;
+
+
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+
+
+        remoteViewsSleep.setTextViewText(R.id.tv_noti_sleep,text);
+
+        int hourSleep = SharedPreferencesManager.getHourSleep(this);
+        int minuteSleep = SharedPreferencesManager.getMinuteSleep(this);
+        String hourSleep1 = hourSleep+"";
+        String minuteSleep1 = minuteSleep + "";
+        if (hourSleep<10){
+            hourSleep1 = "0"+hourSleep;
+        }
+        if (minuteSleep<10){
+            minuteSleep1 = "0"+minuteSleep;
+        }
+        String Hm = hourSleep1+":"+minuteSleep1;
+        remoteViewsSleep.setTextViewText(R.id.time_sleep_noti,Hm);
+
+        String s = "go_app";
+        Intent go_app = new Intent(getBaseContext(), MainActivity.class);
+        go_app.setFlags(go_app.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,1234,go_app,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.addAction(R.id.go_app,s,pendingIntent);
+        remoteViewsSleep.setOnClickPendingIntent(R.id.go_app,pendingIntent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+            notificationManager.notify(notificationId, notification);
+        } else {
+            notificationManager.notify(notificationId, notification);
+        }
 
 //        String mau = "#5c5c5c";
 //
@@ -310,19 +393,23 @@ public class MyServices extends Service {
 //        remoteViews.setOnClickPendingIntent(R.id.img_go_app, settingPendingIntent);
 
 
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        String channelName = "Channel Name";
-        int importance = NotificationManager.IMPORTANCE_HIGH;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
-            notificationManager.createNotificationChannel(mChannel);
-        } else {
-            notificationManager.notify(notificationId, notification);
+
+    }
+
+    private void checkTime() {
+        if (SharedPreferencesManager.get5p(this)==true){
+            text = getResources().getString(R.string.den_gio_di_ngu_5);
+        }else if (SharedPreferencesManager.get15p(this)==true){
+            text =getResources().getString( R.string.den_gio_di_ngu_15);
+        }else if (SharedPreferencesManager.get1hour(this)==true){
+            text =getResources().getString( R.string.den_gio_di_ngu_1h);
+        }else if (SharedPreferencesManager.get30p(this)==true){
+            text = getResources().getString(R.string.den_gio_di_ngu_30);
+        }else if (SharedPreferencesManager.getSleepNow(this)==true){
+            text = getResources().getString(R.string.den_gio_di_ngu);
         }
-
-
     }
 
     private void khoiTaoNoification1() {
@@ -333,7 +420,7 @@ public class MyServices extends Service {
             alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
         builderWU = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.notification)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setChannelId(channelId)
                 .setAutoCancel(false)
@@ -350,7 +437,7 @@ public class MyServices extends Service {
 
 //        String mau = "#5c5c5c";
 //
-        remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
+        remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification_wakeup);
 //
 //
         notificationWU.contentView = remoteViews;
@@ -365,6 +452,20 @@ public class MyServices extends Service {
         builderWU.addAction(R.id.replace, replace, replacePending);
         builderWU.setContentIntent(replacePending);
         remoteViews.setOnClickPendingIntent(R.id.replace, replacePending);
+
+        int hourWakeUp = SharedPreferencesManager.getHourWakeUp(this);
+        int minuteWakeUp = SharedPreferencesManager.getMinuteWakeUp(this);
+        String timehour = hourWakeUp+"";
+        String minutehour = minuteWakeUp + "";
+        if (hourWakeUp<10){
+            timehour = "0"+hourWakeUp;
+        }
+        if (minuteWakeUp<10){
+            minutehour = "0"+minuteWakeUp;
+        }
+        String Hm = timehour+":"+minutehour;
+        remoteViews.setTextViewText(R.id.time_noti,Hm);
+
 
 
         //sự kiện bấm vào cancel trên notification

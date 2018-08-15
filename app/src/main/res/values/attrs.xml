@@ -16,5 +16,4 @@
         <attr name="arc_color" format="color" />
         <attr name="arc_dash_size" format="dimension" />
     </declare-styleable>
-
 </resources>

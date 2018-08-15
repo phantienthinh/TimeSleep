@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="MySeekBarTheme" parent="Widget.AppCompat.SeekBar" >
-        <item name="colorAccent">@color/Yellow</item>
+        <item name="colorAccent">@color/textWakeUp</item>
     </style>
 
 </resources>

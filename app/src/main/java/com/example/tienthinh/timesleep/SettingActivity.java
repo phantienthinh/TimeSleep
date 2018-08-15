@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -15,14 +18,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tienthinh.timesleep.Adapter.SoundAdapter;
-import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
-import com.example.tienthinh.timesleep.model.Sound;
+import com.example.tienthinh.timesleep.adapters.SoundAdapter;
+import com.example.tienthinh.timesleep.models.SharedPreferencesManager;
+import com.example.tienthinh.timesleep.models.Sound;
 
 import java.util.ArrayList;
 
@@ -52,7 +56,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView iv_comback;
     private Dialog dialog;
     private Dialog dialogSound;
-    private ImageView imv_checkSleep, imv_check1Hour, imv_check30P, imv_check15P, imv_check5P;
+    private LinearLayout ln_nhac_nho,ln_sound;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private String SHARED_PREFERENCES_NAME = "sharePreferences";
@@ -61,12 +65,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private SoundAdapter soundAdapter;
     private MediaPlayer mediaPlayer;
     private Button btn_Save_Sound;
+    private TextView tv_title_header;
+    private Typeface typeface;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        textstyle();
         mediaPlayer = MediaPlayer.create(SettingActivity.this, R.raw.littlecomfort);
         preferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
         editor = preferences.edit();
@@ -75,6 +82,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         onClickTimeNhacNho();
         onClickTextViewShound();
         onClickSeekBar();
+    }
+
+    private void textstyle() {
+        typeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium_0.ttf");
     }
 
     private void onClickSeekBar() {
@@ -144,15 +155,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onClickTextViewShound() {
-        txtSound.setOnClickListener(new View.OnClickListener() {
+        ln_sound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogSound = new Dialog(SettingActivity.this);
                 dialogSound.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialogSound.setCancelable(true);
                 dialogSound.setContentView(R.layout.custom_dialog_amthanh);
-
+                dialogSound.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 lvSound = (ListView) dialogSound.findViewById(R.id.listView_AmThanh);
+                TextView tv_sound = dialogSound.findViewById(R.id.tv_sound);
+                Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium_0.ttf");
+                tv_sound.setTypeface(typeface);
+                tv_sound.setTextColor(Color.WHITE);
                 Array_List_sounds = new ArrayList<Sound>();
                 Array_List_sounds.add(new Sound("Little Comfort", false));
                 Array_List_sounds.add(new Sound("Annie's Wonderland", false));
@@ -388,12 +403,13 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onClickTimeNhacNho() {
-        txtNhacNho.setOnClickListener(new View.OnClickListener() {
+        ln_nhac_nho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog = new Dialog(SettingActivity.this);
                 dialog.setCancelable(true);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 dialog.setContentView(R.layout.customdialog_nhacnho);
                 dialog.show();
                 initViewDiaLog();
@@ -413,19 +429,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void DocLaiSharePreferences() {
         if (SharedPreferencesManager.getSleepNow(SettingActivity.this) == true) {
-            imv_checkSleep.setVisibility(View.VISIBLE);
+            txtSleep.setTextColor(getResources().getColor(R.color.textWakeUp));
         } else {
             if (SharedPreferencesManager.get1hour(SettingActivity.this) == true) {
-                imv_check1Hour.setVisibility(View.VISIBLE);
+                txt1Hour.setTextColor(getResources().getColor(R.color.textWakeUp));
             } else {
                 if (SharedPreferencesManager.get15p(SettingActivity.this) == true) {
-                    imv_check15P.setVisibility(View.VISIBLE);
+                    txt15P.setTextColor(getResources().getColor(R.color.textWakeUp));
                 } else {
                     if (SharedPreferencesManager.get5p(SettingActivity.this) == true) {
-                        imv_check5P.setVisibility(View.VISIBLE);
+                        txt5P.setTextColor(getResources().getColor(R.color.textWakeUp));
                     } else {
                         if (SharedPreferencesManager.get30p(SettingActivity.this) == true) {
-                            imv_check30P.setVisibility(View.VISIBLE);
+                            txt30P.setTextColor(getResources().getColor(R.color.textWakeUp));
                         } else {
 
                         }
@@ -446,7 +462,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void DieuKienSave() {
-        if (imv_checkSleep.getVisibility() == View.VISIBLE) {
+        if (txtSleep.getCurrentTextColor() == getResources().getColor(R.color.textWakeUp)) {
             txtNhacNho.setText(R.string.at_sleeping);
             SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
             SharedPreferencesManager.setSleepNow(SettingActivity.this, true);
@@ -454,10 +470,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             SharedPreferencesManager.set5p(SettingActivity.this, false);
             SharedPreferencesManager.set1hour(SettingActivity.this, false);
             SharedPreferencesManager.set15p(SettingActivity.this, false);
-            sendBroadcastReceiver();
+
+            checkTime();
+
             dialog.cancel();
         } else {
-            if (imv_check5P.getVisibility() == View.VISIBLE) {
+            if (txt5P.getCurrentTextColor() == getResources().getColor(R.color.textWakeUp)) {
                 txtNhacNho.setText(R.string.five_minute);
                 SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                 SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
@@ -465,10 +483,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 SharedPreferencesManager.set5p(SettingActivity.this, true);
                 SharedPreferencesManager.set1hour(SettingActivity.this, false);
                 SharedPreferencesManager.set15p(SettingActivity.this, false);
-                sendBroadcastReceiver();
+                checkTime();
                 dialog.cancel();
             } else {
-                if (imv_check15P.getVisibility() == View.VISIBLE) {
+                if (txt15P.getCurrentTextColor() == getResources().getColor(R.color.textWakeUp)){
                     txtNhacNho.setText(R.string.fifteen_minute);
                     SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                     SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
@@ -476,10 +494,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     SharedPreferencesManager.set5p(SettingActivity.this, false);
                     SharedPreferencesManager.set1hour(SettingActivity.this, false);
                     SharedPreferencesManager.set15p(SettingActivity.this, true);
-                    sendBroadcastReceiver();
+                    checkTime();
                     dialog.cancel();
                 } else {
-                    if (imv_check30P.getVisibility() == View.VISIBLE) {
+                    if (txt30P.getCurrentTextColor() == getResources().getColor(R.color.textWakeUp)) {
                         txtNhacNho.setText(R.string.thirty_minute);
                         SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                         SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
@@ -487,10 +505,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                         SharedPreferencesManager.set5p(SettingActivity.this, false);
                         SharedPreferencesManager.set1hour(SettingActivity.this, false);
                         SharedPreferencesManager.set15p(SettingActivity.this, false);
-                        sendBroadcastReceiver();
+                        checkTime();
                         dialog.cancel();
                     } else {
-                        if (imv_check1Hour.getVisibility() == View.VISIBLE) {
+                        if (txt1Hour.getCurrentTextColor() == getResources().getColor(R.color.textWakeUp)) {
                             txtNhacNho.setText(R.string.one_hour);
                             SharedPreferencesManager.setNhacNho(SettingActivity.this, txtNhacNho.getText().toString().trim());
                             SharedPreferencesManager.setSleepNow(SettingActivity.this, false);
@@ -498,7 +516,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                             SharedPreferencesManager.set5p(SettingActivity.this, false);
                             SharedPreferencesManager.set1hour(SettingActivity.this, true);
                             SharedPreferencesManager.set15p(SettingActivity.this, false);
-                            sendBroadcastReceiver();
+                            checkTime();
                             dialog.cancel();
                         } else {
                             Toast.makeText(this, "Bạn Chưa Chọn Thời Gian", Toast.LENGTH_SHORT).show();
@@ -511,15 +529,34 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void checkTime() {
+        int hS = SharedPreferencesManager.getHourSleep(this);
+        int mS = SharedPreferencesManager.getMinuteSleep(this);
+        int hW = SharedPreferencesManager.getHourWakeUp(this);
+        int mW = SharedPreferencesManager.getMinuteWakeUp(this);
+
+        if (SharedPreferencesManager.getToggleOnOff(this) == true) {
+            if (hS == hW) {
+                if (mS == mW) {
+                    //Toast.makeText(this, R.string.invalid_data, Toast.LENGTH_SHORT).show();
+                } else {
+                    sendBroadcastReceiver();
+                }
+            } else {
+                sendBroadcastReceiver();
+            }
+        }
+    }
+
     private void onClickTxtSleep() {
         txtSleep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imv_check1Hour.setVisibility(View.GONE);
-                imv_checkSleep.setVisibility(View.VISIBLE);
-                imv_check30P.setVisibility(View.GONE);
-                imv_check15P.setVisibility(View.GONE);
-                imv_check5P.setVisibility(View.GONE);
+                txt1Hour.setTextColor(getResources().getColor(R.color.textColor));
+                txtSleep.setTextColor(getResources().getColor(R.color.textWakeUp));
+                txt30P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt15P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt5P   .setTextColor(getResources().getColor(R.color.textColor));
 
             }
         });
@@ -530,11 +567,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         txt15P.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imv_check1Hour.setVisibility(View.GONE);
-                imv_checkSleep.setVisibility(View.GONE);
-                imv_check30P.setVisibility(View.GONE);
-                imv_check15P.setVisibility(View.VISIBLE);
-                imv_check5P.setVisibility(View.GONE);
+                txt1Hour.setTextColor(getResources().getColor(R.color.textColor));
+                txtSleep.setTextColor(getResources().getColor(R.color.textColor));
+                txt30P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt15P  .setTextColor(getResources().getColor(R.color.textWakeUp));
+                txt5P   .setTextColor(getResources().getColor(R.color.textColor));
             }
         });
 
@@ -544,11 +581,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         txt30P.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imv_check1Hour.setVisibility(View.GONE);
-                imv_checkSleep.setVisibility(View.GONE);
-                imv_check30P.setVisibility(View.VISIBLE);
-                imv_check15P.setVisibility(View.GONE);
-                imv_check5P.setVisibility(View.GONE);
+                txt1Hour.setTextColor(getResources().getColor(R.color.textColor));
+                txtSleep.setTextColor(getResources().getColor(R.color.textColor));
+                txt30P  .setTextColor(getResources().getColor(R.color.textWakeUp));
+                txt15P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt5P   .setTextColor(getResources().getColor(R.color.textColor));
 
             }
         });
@@ -559,11 +596,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         txt5P.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imv_check1Hour.setVisibility(View.GONE);
-                imv_checkSleep.setVisibility(View.GONE);
-                imv_check30P.setVisibility(View.GONE);
-                imv_check15P.setVisibility(View.GONE);
-                imv_check5P.setVisibility(View.VISIBLE);
+                txt1Hour.setTextColor(getResources().getColor(R.color.textColor));
+                txtSleep.setTextColor(getResources().getColor(R.color.textColor));
+                txt30P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt15P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt5P   .setTextColor(getResources().getColor(R.color.textWakeUp));
 
             }
         });
@@ -574,11 +611,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         txt1Hour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imv_check1Hour.setVisibility(View.VISIBLE);
-                imv_checkSleep.setVisibility(View.GONE);
-                imv_check30P.setVisibility(View.GONE);
-                imv_check15P.setVisibility(View.GONE);
-                imv_check5P.setVisibility(View.GONE);
+                txt1Hour.setTextColor(getResources().getColor(R.color.textWakeUp));
+                txtSleep.setTextColor(getResources().getColor(R.color.textColor));
+                txt30P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt15P  .setTextColor(getResources().getColor(R.color.textColor));
+                txt5P   .setTextColor(getResources().getColor(R.color.textColor));
 
             }
         });
@@ -586,6 +623,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initViewDiaLog() {
+        TextView tv = dialog.findViewById(R.id.textView);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium_0.ttf");
+        tv.setTypeface(typeface);
         txt_Save = (TextView) dialog.findViewById(R.id.textSave);
         txt1Hour = (TextView) dialog.findViewById(R.id.text1Hour);
         txt5P = (TextView) dialog.findViewById(R.id.textView5P);
@@ -593,11 +633,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         txt30P = (TextView) dialog.findViewById(R.id.textView30P);
         txtSleep = (TextView) dialog.findViewById(R.id.textSleep);
 
-        imv_check1Hour = (ImageView) dialog.findViewById(R.id.check1Hour);
-        imv_check5P = (ImageView) dialog.findViewById(R.id.check5P);
-        imv_check15P = (ImageView) dialog.findViewById(R.id.check15P);
-        imv_check30P = (ImageView) dialog.findViewById(R.id.check30P);
-        imv_checkSleep = (ImageView) dialog.findViewById(R.id.checkSleep);
+
     }
 
     private void onClickHuy() {
@@ -617,9 +653,18 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initView() {
         //txt_xong = findViewById(R.id.txt_xong);
+
+        ln_nhac_nho = findViewById(R.id.ln_nhac_nho);
+        ln_sound = findViewById(R.id.ln_sound);
+        tv_title_header = findViewById(R.id.title_header);
+        tv_title_header.setTypeface(typeface);
         iv_comback = (ImageView) findViewById(R.id.comeback);
         txtNhacNho = (TextView) findViewById(R.id.textViewNhacNho);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
+        txtNhacNho.setTypeface(typeface);
         txtSound = (TextView) findViewById(R.id.textView_music);
+        Typeface typeface1 = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
+        txtSound.setTypeface(typeface1);
         seekBar = (SeekBar) findViewById(R.id.seekbar);
         btn_t2 = findViewById(R.id.btn_t2);
         btn_t3 = findViewById(R.id.btn_t3);
@@ -657,40 +702,57 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void showNgayThang() {
+        int colorCam = getResources().getColor(R.color.textWakeUp);
+        int colorDen = getResources().getColor(R.color.Black);
+
         if (SharedPreferencesManager.getMonday(SettingActivity.this) == true) {
-            btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
-        } else {
             btn_t2.setBackgroundResource(R.drawable.custom_toggle);
+            btn_t2.setTextColor(colorDen);
+        } else {
+            btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
+            btn_t2.setTextColor(colorCam);
         }
         if (SharedPreferencesManager.getTuesday(SettingActivity.this) == true) {
-            btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
-        } else {
             btn_t3.setBackgroundResource(R.drawable.custom_toggle);
+            btn_t3.setTextColor(colorDen);
+        } else {
+            btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
+            btn_t3.setTextColor(colorCam);
         }
         if (SharedPreferencesManager.getWednesday(SettingActivity.this) == true) {
-            btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
-        } else {
             btn_t4.setBackgroundResource(R.drawable.custom_toggle);
+            btn_t4.setTextColor(colorDen);
+        } else {
+            btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
+            btn_t4.setTextColor(colorCam);
         }
         if (SharedPreferencesManager.getThursday(SettingActivity.this) == true) {
-            btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
-        } else {
             btn_t5.setBackgroundResource(R.drawable.custom_toggle);
+            btn_t5.setTextColor(colorDen);
+        } else {
+            btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
+            btn_t5.setTextColor(colorCam);
         }
         if (SharedPreferencesManager.getFriday(SettingActivity.this) == true) {
-            btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
-        } else {
             btn_t6.setBackgroundResource(R.drawable.custom_toggle);
+            btn_t6.setTextColor(colorDen);
+        } else {
+            btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
+            btn_t6.setTextColor(colorCam);
         }
         if (SharedPreferencesManager.getSaturday(SettingActivity.this) == true) {
-            btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
-        } else {
             btn_t7.setBackgroundResource(R.drawable.custom_toggle);
+            btn_t7.setTextColor(colorDen);
+        } else {
+            btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
+            btn_t7.setTextColor(colorCam);
         }
         if (SharedPreferencesManager.getSunday(SettingActivity.this) == true) {
-            btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
-        } else {
             btn_cn.setBackgroundResource(R.drawable.custom_toggle);
+            btn_cn.setTextColor(colorDen);
+        } else {
+            btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
+            btn_cn.setTextColor(colorCam);
         }
     }
 
@@ -756,17 +818,21 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+        int colorCam = getResources().getColor(R.color.textWakeUp);
+        int colorDen = getResources().getColor(R.color.Black);
         switch (view.getId()) {
             case R.id.btn_t2:
                 if (dkT2 == false) {
                     dkT2 = true;
                     aBooleanT2 = true;
-                    btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t2.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t2.setTextColor(colorDen);
                     SharedPreferencesManager.setMonday(this, true);
                 } else {
                     dkT2 = false;
                     aBooleanT2 = false;
-                    btn_t2.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t2.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t2.setTextColor(colorCam);
                     SharedPreferencesManager.setMonday(this, false);
                 }
                 break;
@@ -774,12 +840,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if (dkT3 == false) {
                     dkT3 = true;
                     aBooleanT3 = true;
-                    btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t3.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t3.setTextColor(colorDen);
                     SharedPreferencesManager.setTuesday(this, true);
                 } else {
                     dkT3 = false;
                     aBooleanT3 = false;
-                    btn_t3.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t3.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t3.setTextColor(colorCam);
                     SharedPreferencesManager.setTuesday(this, false);
                 }
                 break;
@@ -787,12 +855,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if (dkT4 == false) {
                     dkT4 = true;
                     aBooleanT4 = true;
-                    btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t4.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t4.setTextColor(colorDen);
                     SharedPreferencesManager.setWednesday(this, true);
                 } else {
                     dkT4 = false;
                     aBooleanT4 = false;
-                    btn_t4.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t4.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t4.setTextColor(colorCam);
                     SharedPreferencesManager.setWednesday(this, false);
                 }
                 break;
@@ -800,12 +870,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if (dkT5 == false) {
                     dkT5 = true;
                     aBooleanT5 = true;
-                    btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t5.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t5.setTextColor(colorDen);
                     SharedPreferencesManager.setThursday(this, true);
                 } else {
                     dkT5 = false;
                     aBooleanT5 = false;
-                    btn_t5.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t5.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t5.setTextColor(colorCam);
                     SharedPreferencesManager.setThursday(this, false);
                 }
                 break;
@@ -813,12 +885,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if (dkT6 == false) {
                     dkT6 = true;
                     aBooleanT6 = true;
-                    btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t6.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t6.setTextColor(colorDen);
                     SharedPreferencesManager.setFriday(this, true);
                 } else {
                     dkT6 = false;
                     aBooleanT6 = false;
-                    btn_t6.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t6.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t6.setTextColor(colorCam);
                     SharedPreferencesManager.setFriday(this, false);
                 }
                 break;
@@ -826,12 +900,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if (dkT7 == false) {
                     dkT7 = true;
                     aBooleanT7 = true;
-                    btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t7.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t7.setTextColor(colorDen);
                     SharedPreferencesManager.setSaturday(this, true);
                 } else {
                     dkT7 = false;
                     aBooleanT7 = false;
-                    btn_t7.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_t7.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_t7.setTextColor(colorCam);
                     SharedPreferencesManager.setSaturday(this, false);
                 }
                 break;
@@ -839,12 +915,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if (dkCN == false) {
                     dkCN = true;
                     aBooleanCn = true;
-                    btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_cn.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_cn.setTextColor(colorDen);
                     SharedPreferencesManager.setSunday(this, true);
                 } else {
                     dkCN = false;
                     aBooleanCn = false;
-                    btn_cn.setBackgroundResource(R.drawable.custom_toggle);
+                    btn_cn.setBackgroundResource(R.drawable.custom_toggle1);
+                    btn_cn.setTextColor(colorCam);
                     SharedPreferencesManager.setSunday(this, false);
                 }
                 break;

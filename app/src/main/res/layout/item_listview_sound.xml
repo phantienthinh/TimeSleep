@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        android:weightSum="10"
-        android:orientation="horizontal"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="#363636"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
-            android:background="@color/colorBackground"
-            android:textColor="@color/textColor"
-            android:textSize="20sp"
-            android:text="dđ"
-            android:gravity="center"
             android:id="@+id/textView_Name_Sound"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="9"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:gravity="left|center"
+            android:paddingLeft="20dp"
+            android:text="dđ"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
+
         <RadioButton
-            android:background="@color/colorBackground"
             android:id="@+id/radioButton"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:buttonTint="@color/textWakeUp" />
 
     </LinearLayout>
+
     <LinearLayout
-        android:background="#6ebe76"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp">
-    </LinearLayout>
+        android:layout_height="@dimen/_1sdp"
+        android:background="#868686"></LinearLayout>
 
 </LinearLayout>

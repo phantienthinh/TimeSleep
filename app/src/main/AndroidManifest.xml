@@ -8,9 +8,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/iconslauch"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:largeHeap="true"
+        android:hardwareAccelerated="false"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -22,8 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingActivity"/>
-        <receiver android:name=".Recever.AlarmRecever"/>
-        <receiver android:name=".Recever.AlarmReceverWakeUp"/>
+        <receiver android:name=".recevers.AlarmRecever"/>
+        <receiver android:name=".recevers.AlarmReceverWakeUp"/>
         <service android:name=".services.MyServices"/>
     </application>
 

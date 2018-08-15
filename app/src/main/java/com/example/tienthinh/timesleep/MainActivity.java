@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,14 +17,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tienthinh.timesleep.Recever.AlarmRecever;
-import com.example.tienthinh.timesleep.Recever.AlarmReceverWakeUp;
-import com.example.tienthinh.timesleep.fragment.FragmentOne;
-import com.example.tienthinh.timesleep.fragment.FragmentThree;
-import com.example.tienthinh.timesleep.fragment.FragmentTwo;
-import com.example.tienthinh.timesleep.model.SharedPreferencesManager;
+import com.example.tienthinh.timesleep.recevers.AlarmRecever;
+import com.example.tienthinh.timesleep.recevers.AlarmReceverWakeUp;
+import com.example.tienthinh.timesleep.fragments.FragmentOne;
+import com.example.tienthinh.timesleep.fragments.FragmentThree;
+import com.example.tienthinh.timesleep.fragments.FragmentTwo;
+import com.example.tienthinh.timesleep.models.SharedPreferencesManager;
 
 import java.util.Calendar;
 
@@ -1129,6 +1131,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        TextView tv_title = findViewById(R.id.title_main);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium_0.ttf");
+        tv_title.setTypeface(typeface);
         imv_setting = (ImageView) findViewById(R.id.imageViewSetting);
     }
 

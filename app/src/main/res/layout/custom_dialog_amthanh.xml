@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_border_dialog"
     android:gravity="center"
-    android:background="#181717"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:orientation="vertical"
         android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_sound"
+            android:textColor="#fff"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="@string/ring_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ListView
             android:id="@+id/listView_AmThanh"
@@ -20,20 +31,20 @@
 
         </ListView>
     </LinearLayout>
-    <LinearLayout
 
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
-            android:text="Save"
-            android:background="@color/colorBackground"
-            android:textColor="@color/textColor"
+            android:background="@drawable/custom_button_save_dialog"
             android:id="@+id/btn_Save_Sound"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:text="@string/save"
+            android:textColor="#000" />
 
     </LinearLayout>
 

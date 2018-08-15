@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:background="#000"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="#000"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -19,55 +18,57 @@
         android:weightSum="10">
 
         <TextView
-            android:paddingLeft="@dimen/_80sdp"
+            android:id="@+id/title_main"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:gravity="center"
-            android:text="Giờ Đi Ngủ"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/_13sdp"
+            android:text="@string/Time_sleep"
             android:textColor="#f1ecec"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_20sdp" />
+
         <ImageView
-        android:id="@+id/imageViewSetting"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:src="@drawable/setting"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent" />
+
+            android:id="@+id/imageViewSetting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingBottom="@dimen/_12sdp"
+            android:paddingLeft="@dimen/_22sdp"
+            android:paddingTop="@dimen/_12sdp"
+            android:src="@drawable/setting" />
 
     </LinearLayout>
 
-<LinearLayout
-    android:weightSum="10"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <FrameLayout
-        android:layout_weight="9"
-        android:id="@+id/fragmnet_container"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:orientation="vertical"
+        android:weightSum="10">
 
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/fragmnet_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9">
 
-    <android.support.design.widget.BottomNavigationView
-        android:visibility="gone"
-        android:id="@+id/navigation"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="@dimen/_45sdp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        app:itemTextColor="@color/textColor"
-        app:itemIconTint="#d3e4971b"
-        android:background="@color/colorBackground"
-        app:menu="@menu/navigation" />
+        </FrameLayout>
 
-</LinearLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorBackground"
+            android:visibility="gone"
+            app:itemIconTint="#d3e4971b"
+            app:itemTextColor="@color/textColor"
+            app:menu="@menu/navigation" />
+
+    </LinearLayout>
 
 </LinearLayout>
