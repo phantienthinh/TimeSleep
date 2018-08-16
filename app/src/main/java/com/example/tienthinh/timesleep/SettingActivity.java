@@ -666,6 +666,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         Typeface typeface1 = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
         txtSound.setTypeface(typeface1);
         seekBar = (SeekBar) findViewById(R.id.seekbar);
+//        seekBar.setback
         btn_t2 = findViewById(R.id.btn_t2);
         btn_t3 = findViewById(R.id.btn_t3);
         btn_t4 = findViewById(R.id.btn_t4);

@@ -20,16 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tienthinh.timesleep.recevers.AlarmRecever;
-import com.example.tienthinh.timesleep.recevers.AlarmReceverWakeUp;
 import com.example.tienthinh.timesleep.fragments.FragmentOne;
 import com.example.tienthinh.timesleep.fragments.FragmentThree;
 import com.example.tienthinh.timesleep.fragments.FragmentTwo;
 import com.example.tienthinh.timesleep.models.SharedPreferencesManager;
+import com.example.tienthinh.timesleep.recevers.AlarmRecever;
+import com.example.tienthinh.timesleep.recevers.AlarmReceverWakeUp;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean dem;
     long timeMondayWakeUp, timeTuesdayWakeUp, timeWednesdayWakeUp, timeThursdayWakeUp, timeFridayWakeUp, timeSaturdayWakeUp, timeSundayWakeUp;
     private static final String KEYSLEEP = "KEY";
     private static final String KEYSLEEPWAKEUP = "KEYWU";
@@ -126,6 +127,15 @@ public class MainActivity extends AppCompatActivity {
         createAlarmService();
         khoiTaoBroadCast();
         createWakeLock();
+        Intent intent = getIntent();
+        dem =intent.getBooleanExtra("go_app",false);
+
+        if (dem==true){
+           dem=false;
+           Intent intent1 = new Intent("go_app1");
+           sendBroadcast(intent1);
+        }
+
         //lấy thứ
         Calendar calendar = Calendar.getInstance();
         date = calendar.get(Calendar.DAY_OF_WEEK);
@@ -384,12 +394,18 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
+                    case "go_app":
+                        Log.e(TAG,"ok=))))))))))))" );
+                        intent = new Intent("go_app");
+                        context.sendBroadcast(intent);
+                        break;
                 }
             }
         };
         filter = new IntentFilter();
         filter.addAction("TimeSleepActivity");
         filter.addAction("TimeWakeUpActivity");
+        filter.addAction("go_app");
         MainActivity.this.registerReceiver(receiver, filter);
     }
 

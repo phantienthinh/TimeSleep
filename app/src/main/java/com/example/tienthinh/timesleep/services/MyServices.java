@@ -232,6 +232,14 @@ public class MyServices extends Service {
                         stopSelf();
                         }
                         break;
+                    case "go_app1":
+                        try {
+                            notificationManager.cancel(notificationId);
+                        }
+                        catch (Exception e){
+
+                        }
+                        break;
                 }
             }
         };
@@ -239,6 +247,7 @@ public class MyServices extends Service {
         filter.addAction("replace");
         filter.addAction("cancel");
         filter.addAction("turnoffScreen");
+        filter.addAction("go_app1");
         getBaseContext().registerReceiver(receiver, filter);
 
         return START_NOT_STICKY;
@@ -270,6 +279,7 @@ public class MyServices extends Service {
     private void khoiTaoNoification() {
         checkTime();
         String channelId = "channel-01";
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
         } else {
@@ -279,27 +289,21 @@ public class MyServices extends Service {
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setChannelId(channelId)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(alarmSound)
                 .setContentTitle(this.getResources().getString(R.string.nhac_nho))
                 .setContentText(text);
 
-
+        builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
         notification = builder.build();
-        notification.flags = Notification.FLAG_AUTO_CANCEL;
 //        notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
         remoteViewsSleep = new RemoteViews(getPackageName(),R.layout.custom_notification_sleep);
         notification.contentView = remoteViewsSleep;
 
-
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
         String channelName = "Channel Name";
         int importance = NotificationManager.IMPORTANCE_HIGH;
-
-
 
         remoteViewsSleep.setTextViewText(R.id.tv_noti_sleep,text);
 
@@ -318,6 +322,7 @@ public class MyServices extends Service {
 
         String s = "go_app";
         Intent go_app = new Intent(getBaseContext(), MainActivity.class);
+        go_app.putExtra("go_app",true);
         go_app.setFlags(go_app.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,1234,go_app,PendingIntent.FLAG_UPDATE_CURRENT);

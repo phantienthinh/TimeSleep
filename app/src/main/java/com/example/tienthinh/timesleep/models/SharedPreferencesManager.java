@@ -3,6 +3,7 @@ package com.example.tienthinh.timesleep.models;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.tienthinh.timesleep.R;
 
@@ -50,7 +51,7 @@ public class SharedPreferencesManager {
     }
 
     public static String getTenBaiHat(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("KEY_BH", "Little Comfortv");
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("KEY_BH", "Little Comfort");
     }
 
     public static void setPositionSound(Context context, int is) {
@@ -278,6 +279,7 @@ public class SharedPreferencesManager {
     }
     public static void setT5(Context context, float is) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.e("abc", is+"");
         preferences.edit().putFloat("KEY_T5", is).apply();
     }
 
